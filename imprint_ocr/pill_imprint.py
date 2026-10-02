@@ -615,6 +615,14 @@ def _setup_font():
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     from matplotlib import font_manager as fm
+    # 코랩(리눅스)처럼 새로 설치한 폰트가 목록에 아직 없을 수 있어 파일 경로로 직접 등록
+    for path in ["/usr/share/fonts/truetype/nanum/NanumGothic.ttf",
+                 "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"]:
+        if os.path.exists(path):
+            try:
+                fm.fontManager.addfont(path)
+            except Exception:
+                pass
     names = {f.name for f in fm.fontManager.ttflist}
     for cand in ["Malgun Gothic", "AppleGothic", "NanumGothic", "Noto Sans CJK KR", "Noto Sans CJK JP"]:
         if cand in names:
