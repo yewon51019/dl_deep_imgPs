@@ -1,0 +1,5 @@
+﻿method,n,exact_acc_%,char_acc_%,oracle_exact_%,avg_ms
+M0_원본,12,0.0,13.9,0.0,971.9
+M1_CLAHE,12,0.0,0.0,8.3,1055.6
+M2_CLAHE+적응형threshold,12,0.0,0.0,0.0,1647.7
+M3_Tophat/Blackhat+Otsu,12,0.0,5.6,0.0,903.8

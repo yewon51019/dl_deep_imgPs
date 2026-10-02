@@ -1,0 +1,13 @@
+# AI Hub 원천/라벨 데이터 등 대용량 파일은 올리지 않음
+*.zip
+*.zip.part*
+*.tar
+*.tar.gz
+data_raw/
+# 파이썬·OS 임시 파일
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+.vscode/
+.ipynb_checkpoints/

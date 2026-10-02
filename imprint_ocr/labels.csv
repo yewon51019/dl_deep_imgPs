@@ -1,0 +1,13 @@
+# 파일경로,정답각인  (대소문자·공백 무시)
+crops/crop_00.png,alza18
+crops/crop_01.png,alza27
+crops/crop_02.png,DK
+crops/crop_03.png,YJ
+crops/crop_04.png,DK
+crops/crop_05.png,alza36
+images/single_YJ.jpg,YJ
+images/single_DK_1.jpg,DK
+images/single_DK_2.jpg,DK
+images/single_alza18.jpg,alza18
+images/single_alza27.jpg,alza27
+images/single_alza36.jpg,alza36

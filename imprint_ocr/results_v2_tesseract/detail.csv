@@ -1,0 +1,25 @@
+﻿image,type,gt,method,pred,exact,char_acc,shape,color,ms,error,id_none,ok_none,id_edit,ok_edit,id_edit+attr,ok_edit+attr
+crops/crop_00.png,인쇄,ALZA18,M0_원본,F81210,0,0.167,장방형,노랑,326.5,오인식,,0,,0,콘서타OROS서방정 18mg,1
+crops/crop_00.png,인쇄,ALZA18,M1_CLAHE,FSI0Z0,0,0.0,장방형,노랑,293.3,오인식,,0,,0,콘서타OROS서방정 18mg,1
+crops/crop_01.png,인쇄,ALZA27,M0_원본,SEEMAN,0,0.0,장방형,무채색,281.4,오인식,,0,,0,,0
+crops/crop_01.png,인쇄,ALZA27,M1_CLAHE,,0,0.0,장방형,무채색,237.2,빈 결과(아무것도 못 읽음),,0,,0,,0
+crops/crop_02.png,음각,DK,M0_원본,MER,0,0.0,원형,무채색,1698.1,오인식,,0,,0,,0
+crops/crop_02.png,음각,DK,M1_CLAHE,JYJ,0,0.0,원형,무채색,1838.3,오인식,,0,미확인 원형정(YJ),0,미확인 원형정(YJ),0
+crops/crop_03.png,음각,YJ,M0_원본,E,0,0.0,원형,무채색,1582.5,오인식,,0,,0,,0
+crops/crop_03.png,음각,YJ,M1_CLAHE,G,0,0.0,원형,무채색,1803.4,오인식,,0,,0,,0
+crops/crop_04.png,음각,DK,M0_원본,G,0,0.0,원형,무채색,1720.0,오인식,,0,,0,,0
+crops/crop_04.png,음각,DK,M1_CLAHE,IA,0,0.0,원형,무채색,1964.7,오인식,,0,,0,,0
+crops/crop_05.png,인쇄,ALZA36,M0_원본,GIZA36,0,0.667,장방형,무채색,255.1,부분 인식(헷갈리는 글자),,0,콘서타OROS서방정 36mg,1,콘서타OROS서방정 36mg,1
+crops/crop_05.png,인쇄,ALZA36,M1_CLAHE,FOEAL,0,0.167,장방형,무채색,264.7,오인식,,0,,0,,0
+images/single_YJ.jpg,음각,YJ,M0_원본,AA,0,0.0,원형,무채색,1582.4,오인식,,0,,0,,0
+images/single_YJ.jpg,음각,YJ,M1_CLAHE,2,0,0.0,원형,무채색,1990.2,오인식,,0,,0,,0
+images/single_DK_1.jpg,음각,DK,M0_원본,ON,0,0.0,원형,무채색,1715.8,오인식,,0,,0,,0
+images/single_DK_1.jpg,음각,DK,M1_CLAHE,G,0,0.0,원형,무채색,1882.7,오인식,,0,,0,,0
+images/single_DK_2.jpg,음각,DK,M0_원본,CI,0,0.0,원형,무채색,1665.2,오인식,,0,,0,,0
+images/single_DK_2.jpg,음각,DK,M1_CLAHE,CN,0,0.0,원형,무채색,1854.9,오인식,,0,,0,,0
+images/single_alza18.jpg,인쇄,ALZA18,M0_원본,NY,0,0.0,장방형,노랑,337.1,오인식,,0,,0,콘서타OROS서방정 18mg,1
+images/single_alza18.jpg,인쇄,ALZA18,M1_CLAHE,OY,0,0.0,장방형,노랑,271.0,오인식,,0,,0,콘서타OROS서방정 18mg,1
+images/single_alza27.jpg,인쇄,ALZA27,M0_원본,ALZA27P,0,0.833,장방형,무채색,253.6,부분 인식(헷갈리는 글자),,0,콘서타OROS서방정 27mg,1,콘서타OROS서방정 27mg,1
+images/single_alza27.jpg,인쇄,ALZA27,M1_CLAHE,ROSH,0,0.0,장방형,무채색,252.6,오인식,,0,,0,,0
+images/single_alza36.jpg,인쇄,ALZA36,M0_원본,,0,0.0,장방형,무채색,238.7,빈 결과(아무것도 못 읽음),,0,,0,,0
+images/single_alza36.jpg,인쇄,ALZA36,M1_CLAHE,,0,0.0,장방형,무채색,217.5,빈 결과(아무것도 못 읽음),,0,,0,,0
