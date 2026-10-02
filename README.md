@@ -7,7 +7,8 @@
 
 | 경로 | 내용 |
 |---|---|
-| `imprint_ocr/` | 각인 인식 실험 코드(1~3차), 정답 라벨, 판별 후보 목록, 테스트 사진, 결과 |
+| `imprint_ocr/pill_imprint.py` | **최종 실행 코드** — 사광 합성(fuse), 알약 잘라내기(crop), 각인 인식 실험(run). EasyOCR 기본 |
+| `imprint_ocr/` | 1~3차 실험 코드, 정답 라벨, 판별 후보 목록, 테스트 사진, 결과 |
 | `tools/scan_ai_hub_labels.py` | AI Hub 경구약제 라벨(zip)을 풀지 않고 정신과약 항목을 찾는 스크립트 |
 
 ## 빠른 실행
@@ -15,10 +16,11 @@
 ```
 pip install -r requirements.txt
 cd imprint_ocr
-python imprint_experiment_v3.py run --labels labels_v2.csv --db pill_db.csv --engine easyocr
+python pill_imprint.py check
+python pill_imprint.py run
 ```
 
-자세한 실행 방법은 `imprint_ocr/README.md` 참고.
+촬영 방법(사광 포함)과 자세한 실행 방법은 `imprint_ocr/README.md` 참고.
 
 ## 실험 기록 (테스트 사진 12장: 인쇄 각인 alza 18·27·36 / 음각 DK·YJ)
 
