@@ -1,0 +1,10 @@
+# 이미지경로,정답각인,각인유형
+shots/ac_shot1.png,AC,음각
+shots/ac_shot2.png,AC,음각
+shots/ac_shot3.png,AC,음각
+shots/ac_shot4.png,AC,음각
+shots/ac_shot1_norm.png,AC,음각
+shots/ac_shot2_norm.png,AC,음각
+shots/ac_shot3_norm.png,AC,음각
+shots/ac_shot4_norm.png,AC,음각
+shots/ac_fused_min_123.png,AC,음각

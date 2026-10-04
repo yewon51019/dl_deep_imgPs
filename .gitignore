@@ -11,3 +11,8 @@ __pycache__/
 Thumbs.db
 .vscode/
 .ipynb_checkpoints/
+
+# 사광 촬영 원본/중간 산출물(용량 큼)
+imprint_ocr/shots/raw_*.jpg
+imprint_ocr/shots/crop_*/
+imprint_ocr/shots/fused/
