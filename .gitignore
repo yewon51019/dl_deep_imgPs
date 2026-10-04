@@ -16,3 +16,7 @@ Thumbs.db
 imprint_ocr/shots/raw_*.jpg
 imprint_ocr/shots/crop_*/
 imprint_ocr/shots/fused/
+imprint_ocr/shots2/raw_*.jpg
+imprint_ocr/shots2/crop_*/
+imprint_ocr/shots2/up_*.png
+imprint_ocr/shots2/fused*
