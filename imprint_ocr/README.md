@@ -122,6 +122,7 @@ python pill_imprint.py run
 | `--step` | 원형 알약 회전 간격(도). 크게 하면 빨라짐 | `--step 45` (8방향) |
 | `--engine tesseract` | Tesseract로 비교 실행 | 윈도우는 `--tesseract-cmd "C:\Program Files\Tesseract-OCR\tesseract.exe"` 도 필요 |
 | `--out` | 결과 폴더 이름 | `--out results_easyocr_사광` |
+| `--ocr-mode` | EasyOCR 읽는 방식. `detect`(기본) / `sensitive`(희미한 글자까지 찾음) / `recognize`(글자 위치 찾기 생략) / `fallback`(못 읽으면 recognize로 재시도) | `--ocr-mode recognize` |
 
 전처리 종류:
 

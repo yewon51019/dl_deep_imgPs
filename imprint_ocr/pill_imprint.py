@@ -359,17 +359,48 @@ class EasyOCREngine:
     처음 실행 시 모델 파일(약 100MB)을 인터넷에서 자동으로 내려받음."""
     name = "easyocr"
 
-    def __init__(self, gpu=False):
+    # 읽는 방식(mode)
+    #   detect    : 기본. 글자 위치를 먼저 찾고(검출) 그 부분만 읽음
+    #   sensitive : 검출 기준을 낮추고 이미지를 2배 키워서 희미한 글자도 찾게 함
+    #   recognize : 글자 위치 찾기를 건너뛰고 이미지 전체를 한 줄 글자로 보고 읽음 (음각용 시험)
+    #   fallback  : detect 로 먼저 읽고, 아무것도 못 읽으면 recognize 로 다시 읽음
+    MODES = ("detect", "sensitive", "recognize", "fallback")
+
+    def __init__(self, gpu=False, mode="detect"):
         import easyocr
+        if mode not in self.MODES:
+            raise ValueError(f"mode 는 {self.MODES} 중 하나여야 해요: {mode}")
+        self.mode = mode
         self.reader = easyocr.Reader(["en"], gpu=gpu, verbose=False)
 
-    def __call__(self, img):
-        # detail=1 → [(상자좌표, 글자, 신뢰도0~1), ...]
-        res = self.reader.readtext(img, allowlist=ALLOW, detail=1)
+    def _join(self, res):
         if not res:
             return "", 0.0
         res.sort(key=lambda r: min(p[0] for p in r[0]))   # 왼쪽 글자부터 이어 붙임
         return "".join(t for _, t, _ in res), float(np.mean([c for _, _, c in res]) * 100)
+
+    def _detect(self, img, sensitive=False):
+        # detail=1 → [(상자좌표, 글자, 신뢰도0~1), ...]
+        if sensitive:
+            return self.reader.readtext(img, allowlist=ALLOW, detail=1,
+                                        text_threshold=0.3, low_text=0.2, link_threshold=0.3, mag_ratio=2.0)
+        return self.reader.readtext(img, allowlist=ALLOW, detail=1)
+
+    def _recognize(self, img):
+        # 글자 위치 찾기를 건너뛰고 이미지 전체를 상자 하나로 넘김: [[x최소, x최대, y최소, y최대]]
+        g = img if img.ndim == 2 else cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        h, w = g.shape[:2]
+        return self.reader.recognize(g, horizontal_list=[[0, w, 0, h]], free_list=[], allowlist=ALLOW, detail=1)
+
+    def __call__(self, img):
+        if self.mode == "recognize":
+            return self._join(self._recognize(img))
+        if self.mode == "sensitive":
+            return self._join(self._detect(img, sensitive=True))
+        res = self._detect(img)
+        if not res and self.mode == "fallback":
+            res = self._recognize(img)
+        return self._join(res)
 
 
 class TesseractEngine:
@@ -496,7 +527,7 @@ def error_type(pred, gt, all_texts):
 # ║ 8. run : 실험 실행                                                  ║
 # ╚════════════════════════════════════════════════════════════════════╝
 
-def run(labels_path, db_path, engine_name, out_dir, methods, gpu=False, step=30, tess_cmd=None):
+def run(labels_path, db_path, engine_name, out_dir, methods, gpu=False, step=30, tess_cmd=None, ocr_mode="detect"):
     out_dir = out_dir or f"results_{engine_name}"
     os.makedirs(out_dir, exist_ok=True)
 
@@ -508,7 +539,7 @@ def run(labels_path, db_path, engine_name, out_dir, methods, gpu=False, step=30,
     name_of = {d["imprint"]: d["name"] for d in db}
 
     print(f"[run] 엔진={engine_name}, 전처리={methods}, 이미지 {len(items)}장, 후보 약 {len(db)}종")
-    ocr = EasyOCREngine(gpu=gpu) if engine_name == "easyocr" else TesseractEngine(tess_cmd)
+    ocr = EasyOCREngine(gpu=gpu, mode=ocr_mode) if engine_name == "easyocr" else TesseractEngine(tess_cmd)
 
     rows = []
     for idx, (path, gt_raw, ptype) in enumerate(items, 1):
@@ -722,6 +753,8 @@ def main():
     r.add_argument("--step", type=int, default=30, help="원형 알약 회전 간격(도). 크게 하면 빨라짐. 기본 30")
     r.add_argument("--out", default=None, help="결과 폴더 (기본: results_엔진이름)")
     r.add_argument("--gpu", action="store_true", help="EasyOCR에서 GPU 사용")
+    r.add_argument("--ocr-mode", default="detect", choices=EasyOCREngine.MODES,
+                   help="EasyOCR 읽는 방식: detect(기본) / sensitive(희미한 글자) / recognize(위치찾기 생략) / fallback")
     r.add_argument("--tesseract-cmd", default=None, help="윈도우에서 tesseract.exe 경로")
 
     a = ap.parse_args()
@@ -733,7 +766,7 @@ def main():
     elif a.cmd == "crop":
         crop_pills(a.input, a.out)
     else:
-        run(a.labels, a.db, a.engine, a.out, a.methods, a.gpu, a.step, a.tesseract_cmd)
+        run(a.labels, a.db, a.engine, a.out, a.methods, a.gpu, a.step, a.tesseract_cmd, a.ocr_mode)
 
 
 if __name__ == "__main__":
