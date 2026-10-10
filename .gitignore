@@ -20,3 +20,7 @@ imprint_ocr/shots2/raw_*.jpg
 imprint_ocr/shots2/crop_*/
 imprint_ocr/shots2/up_*.png
 imprint_ocr/shots2/fused*
+
+# 300장 실험 데이터(AI Hub, 재배포 금지 여부 확인 전)
+exp300/data/
+exp300/manifest*.csv
