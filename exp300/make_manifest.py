@@ -183,12 +183,19 @@ def collect_rows(roots):
 # 함수 5) 개발용(dev) / 평가용(test) 나누기
 #   - 약제(약 종류)마다 따로 섞어서, 각 약제가 dev와 test에 모두 들어가게 해요.
 #   - dev_ratio=0.2 이면 약제별로 약 20%가 dev, 나머지 80%가 test.
+#   - dev_ratio=0 이면 나누지 않고 전부 test (방법을 고르지 않고 결과만 나란히 볼 때).
 #   - seed(난수 시드)를 고정하므로 같은 코드를 돌리면 팀원도 똑같이 나뉘어요.
 #
 #   dev : 전처리/모델/설정을 고르고 조정할 때만 사용
 #   test: 최종 점수를 낼 때 "한 번만" 사용 (여기서 설정을 고치면 안 돼요!)
 # ---------------------------------------------------------------------
 def assign_split(rows, dev_ratio, seed):
+    # dev_ratio 가 0 이하이면 "나누지 않기" -> 전부 test 로 표시
+    if dev_ratio <= 0:
+        for row in rows:
+            row["split"] = "test"
+        return
+
     rng = random.Random(seed)            # 시드를 고정한 섞기 도구
 
     by_drug = defaultdict(list)          # 약제별로 행을 묶는 상자
@@ -239,7 +246,7 @@ def main():
     parser = argparse.ArgumentParser(description="이미지+정답 목록표(manifest.csv) 만들기")
     parser.add_argument("--roots", nargs="+", required=True, help="images/, labels/ 가 들어있는 폴더(여러 개 가능)")
     parser.add_argument("--out", default="manifest.csv", help="저장할 표 파일 이름")
-    parser.add_argument("--dev-ratio", type=float, default=0.2, help="개발용 비율 (기본 0.2 = 20%%)")
+    parser.add_argument("--dev-ratio", type=float, default=0.2, help="개발용 비율 (기본 0.2 = 20%%, 0이면 나누지 않음)")
     parser.add_argument("--seed", type=int, default=42, help="섞기 시드 (같으면 같은 결과)")
     args = parser.parse_args()
 
