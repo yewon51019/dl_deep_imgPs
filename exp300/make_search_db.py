@@ -50,7 +50,9 @@ COLUMNS = [
 
 # 각인 글자 다듬기: manifest.py 와 "똑같은 규칙"이어야 비교가 공정해요.
 def normalize(text):
-    text = unicodedata.normalize("NFKC", text or "")
+    text = "" if str(text).strip().lower() == "nan" else str(text or "")
+    text = text.replace("마크", " ")                     # '마크' = 그림 표시 → 지움
+    text = unicodedata.normalize("NFKC", text)
     text = re.sub(r"\s+", "", text)
     return text.upper()
 

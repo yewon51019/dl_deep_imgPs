@@ -52,11 +52,20 @@ def imread_any(path):
     return cv2.imdecode(data, cv2.IMREAD_COLOR) if data.size else None
 
 
+MARK_WORDS = ("마크",)   # AI Hub 라벨에서 '글자 대신 그림(로고)'이라는 뜻. 읽을 수 없으니 지움
+
+
 def norm(text):
     """각인 글자 정리 규칙 (채점·검색 모두 이 규칙 하나만 써요)
-       대문자로 바꾸고, 글자·숫자만 남김 (공백, 하이픈, 기호 삭제)
-       예) 'Sp eed-1' -> 'SPEED1'"""
-    return "".join(ch for ch in str(text or "").upper() if ch.isalnum())
+       1) '마크'(그림 표시)라는 단어를 지우고
+       2) 대문자로 바꾸고, 글자·숫자만 남김 (공백, 하이픈, 기호 삭제)
+       예) 'Sp eed-1' -> 'SPEED1',  '마크' -> '' (채점에서 빠짐)"""
+    text = str(text or "")
+    if text.strip().lower() == "nan":
+        return ""
+    for w in MARK_WORDS:
+        text = text.replace(w, " ")
+    return "".join(ch for ch in text.upper() if ch.isalnum())
 
 
 ALLOW = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"   # OCR에 허용할 글자
@@ -471,9 +480,13 @@ OUT_COLS = ["file_name", "split", "model", "prep", "combo", "truth_drug", "truth
 
 def load_manifest(path, split):
     with open(path, encoding="utf-8-sig") as f:
-        rows = [r for r in csv.DictReader(f) if norm(r["truth"])]          # 정답 각인이 빈 사진은 제외
+        allrows = list(csv.DictReader(f))
     if split != "all":
-        rows = [r for r in rows if r["split"] == split]
+        allrows = [r for r in allrows if r["split"] == split]
+    rows = [r for r in allrows if norm(r["truth"])]           # 정답 각인이 비거나 '마크'뿐인 사진은 제외
+    if len(rows) < len(allrows):
+        marks = sum(1 for r in allrows if not norm(r["truth"]) and str(r["truth"]).strip())
+        print(f"채점 제외: {len(allrows) - len(rows)}장 (그 중 정답이 '마크'뿐인 사진 {marks}장)")
     return rows
 
 

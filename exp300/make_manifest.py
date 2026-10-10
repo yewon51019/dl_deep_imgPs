@@ -67,7 +67,9 @@ COLUMNS = [
 #   ※ 팀이 채점 규칙을 다르게 정하면 이 함수만 고치면 돼요.
 # ---------------------------------------------------------------------
 def normalize(text):
-    text = unicodedata.normalize("NFKC", text or "")   # 글자 모양 통일 (없으면 빈 글자 취급)
+    text = "" if str(text).strip().lower() == "nan" else str(text or "")
+    text = text.replace("마크", " ")                     # '마크' = 그림 표시 → 지움
+    text = unicodedata.normalize("NFKC", text)   # 글자 모양 통일 (없으면 빈 글자 취급)
     text = re.sub(r"\s+", "", text)                    # 공백/줄바꿈 모두 삭제
     return text.upper()                                # 대문자로 통일
 
