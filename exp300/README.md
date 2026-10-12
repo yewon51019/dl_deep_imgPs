@@ -38,3 +38,8 @@ run_exp300.py 는 건드리지 않고 PaddleOCR 모델 하나만 끼워 넣어 �
 PaddleOCR 실험(run_exp300_paddle.py)에서는 P0~P4 에 더해 6종이 기본으로 같이 실행됩니다 (총 11개).
 P5 adaptive_threshold · P6 blackhat · P7 closing · P8 global_otsu · P9 localized_otsu(3×3 칸별 Otsu) · P10 tophat
 (grayscale = P0, clahe = P3 과 같은 처리). 일부만 쓰려면 `--preps P0,P5,P9` 처럼 지정. 커널·블록 크기는 extra_preps.py 맨 위 상수로 조절.
+
+### PaddleOCR B 방식 점수 (run_exp300_paddle_b.py)
+팀원 val_paddle.py 와 같은 방식(원본 사진, 검출 기준 0.0, 글자 조각 중 하나라도 정답이면 성공)으로 같은 평가용 237장을 재서 팀원의 B 실험 결과와 이어 보기 위한 보조 점수입니다.
+`hit_B`(팀원 코드 그대로) / `hit_norm`(정규화, 빈값·'마크' 제외) 두 가지로 셉니다. A 방식의 정확도/F1 과 직접 비교하지 마세요.
+`python run_exp300_paddle_b.py --manifest manifest.csv --split test --out pred_test_paddle_B.csv`
