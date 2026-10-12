@@ -33,3 +33,8 @@ run_exp300.py 는 건드리지 않고 PaddleOCR 모델 하나만 끼워 넣어 �
 2. 전처리 고르기: `python evaluate_exp300.py --pred pred_dev_paddle.csv --top 1`
 3. 평가용(한 번만): `python run_exp300_paddle.py --manifest manifest.csv --db search_db.csv --split test --combos paddleocr:P3 --out pred_test_paddle.csv` → `python evaluate_exp300.py --pred pred_test_paddle.csv --cm all`
 ※ manifest.csv 는 A실험과 같은 파일을 쓸 것(같은 개발/평가 분할). 평가용 점수를 보고 전처리를 다시 고르지 말 것.
+
+### 추가 전처리 6종 (extra_preps.py, P5~P10)
+PaddleOCR 실험(run_exp300_paddle.py)에서는 P0~P4 에 더해 6종이 기본으로 같이 실행됩니다 (총 11개).
+P5 adaptive_threshold · P6 blackhat · P7 closing · P8 global_otsu · P9 localized_otsu(3×3 칸별 Otsu) · P10 tophat
+(grayscale = P0, clahe = P3 과 같은 처리). 일부만 쓰려면 `--preps P0,P5,P9` 처럼 지정. 커널·블록 크기는 extra_preps.py 맨 위 상수로 조절.

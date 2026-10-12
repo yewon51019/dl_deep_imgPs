@@ -36,6 +36,7 @@ import cv2
 import numpy as np
 
 import run_exp300 as base
+from extra_preps import PREPS_EXTRA
 from run_exp300 import join_boxes
 
 
@@ -74,6 +75,8 @@ class PaddleOCRModel:
 
 # A실험의 모델 표에 PaddleOCR 한 줄 추가
 base.MODELS["paddleocr"] = ("PaddleOCR (DB 검출 + SVTR 읽기)", PaddleOCRModel)
+# 전처리 표에 추가 6종(P5~P10) 추가 → 기본값으로 P0~P10 모두 실행. 일부만 쓰려면 --preps P0,P5 처럼 지정
+base.PREPS.update(PREPS_EXTRA)
 
 
 def main():
