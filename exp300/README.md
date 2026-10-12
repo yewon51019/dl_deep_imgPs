@@ -24,3 +24,11 @@ V0 기준선 → V1 부분일치 → V2 헷갈리는 글자(0/O 등) → V3 후�
 ## 분리 실험 + 오류 분석 (analyze_exp300.py)
 A: 후보 전체만 / +부분일치 / +글자통일 / +둘 다 를 개발·시험 세트에서 비교.
 B: V3로도 틀린 사진을 원인(읽은 글자 없음, DB와 너무 다름, 동점, DB상 각인 동일, 정답을 읽고도 다른 약 선택, 일부만 읽음, 잘못 읽음)별로 분류하고 `errors_*.csv` 저장.
+
+## PaddleOCR 실험 (run_exp300_paddle.py) — 팀원(B)용
+run_exp300.py 는 건드리지 않고 PaddleOCR 모델 하나만 끼워 넣어 같은 조건(자르기·전처리 P0~P4·회전 투표·매칭·CSV 형식)으로 실행합니다. 결과 CSV 는 evaluate_exp300.py 로 그대로 채점돼요.
+설치: `pip install paddlepaddle paddleocr` (v2.x / v3.x 자동 판별)
+1. 개발용: `python run_exp300_paddle.py --manifest manifest.csv --db search_db.csv --split dev --out pred_dev_paddle.csv`
+2. 전처리 고르기: `python evaluate_exp300.py --pred pred_dev_paddle.csv --top 1`
+3. 평가용(한 번만): `python run_exp300_paddle.py --manifest manifest.csv --db search_db.csv --split test --combos paddleocr:P3 --out pred_test_paddle.csv` → `python evaluate_exp300.py --pred pred_test_paddle.csv --cm all`
+※ manifest.csv 는 A실험과 같은 파일을 쓸 것(같은 개발/평가 분할). 평가용 점수를 보고 전처리를 다시 고르지 말 것.
