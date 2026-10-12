@@ -26,20 +26,18 @@ A: 후보 전체만 / +부분일치 / +글자통일 / +둘 다 를 개발·시�
 B: V3로도 틀린 사진을 원인(읽은 글자 없음, DB와 너무 다름, 동점, DB상 각인 동일, 정답을 읽고도 다른 약 선택, 일부만 읽음, 잘못 읽음)별로 분류하고 `errors_*.csv` 저장.
 
 ## PaddleOCR 실험 (run_exp300_paddle.py + run_exp300_paddle.ipynb) — 팀원(B)용
-Colab에서는 `run_exp300_paddle.ipynb` 를 열고 위에서부터 실행하면 됩니다 (3번 셀 zip 경로만 수정).
-run_exp300.py 는 건드리지 않고 PaddleOCR 모델 하나만 끼워 넣어 같은 조건(자르기·전처리 P0~P4·회전 투표·매칭·CSV 형식)으로 실행합니다. 결과 CSV 는 evaluate_exp300.py 로 그대로 채점돼요.
-설치: `pip install paddlepaddle paddleocr` (v2.x / v3.x 자동 판별)
+PaddleOCR '모델 구조'만 가져오고, 자르기·전처리·회전 투표·DB 매칭·채점은 A실험과 똑같이 합니다 (run_exp300.py 는 그대로).
+두 설정을 같이 돌려서 비교: `paddleocr`(기본 검출 기준) / `paddleocr_t0`(검출 기준 0.0, B실험 설정).
+Colab 에서는 `run_exp300_paddle.ipynb` 를 열고 위에서부터 실행하면 됩니다 (3번 셀 zip 경로만 수정).
+설치: `pip install paddlepaddle paddleocr` (v2.x / v3.x 자동 판별, Colab CPU 의 oneDNN 오류 방지로 enable_mkldnn=False)
 1. 개발용: `python run_exp300_paddle.py --manifest manifest.csv --db search_db.csv --split dev --out pred_dev_paddle.csv`
-2. 전처리 고르기: `python evaluate_exp300.py --pred pred_dev_paddle.csv --top 1`
-3. 평가용(한 번만): `python run_exp300_paddle.py --manifest manifest.csv --db search_db.csv --split test --combos paddleocr:P3 --out pred_test_paddle.csv` → `python evaluate_exp300.py --pred pred_test_paddle.csv --cm all`
-※ manifest.csv 는 A실험과 같은 파일을 쓸 것(같은 개발/평가 분할). 평가용 점수를 보고 전처리를 다시 고르지 말 것.
+2. 설정마다 가장 좋은 전처리 고르기: `python evaluate_exp300.py --pred pred_dev_paddle.csv --top 5`
+3. 평가용(한 번만): `python run_exp300_paddle.py --manifest manifest.csv --db search_db.csv --split test --combos paddleocr:P3,paddleocr_t0:P9 --out pred_test_paddle.csv` → `python evaluate_exp300.py --pred pred_test_paddle.csv --cm all`
+※ manifest.csv 는 A실험과 같은 분할이어야 하고, 평가용 점수를 보고 전처리를 다시 고르지 말 것.
+(참고: run_exp300_paddle_b.py 는 팀원 val_paddle.py 방식의 '하나라도 맞으면 성공' 보조 점수용으로 남겨 둔 파일이며 이번 실험에는 쓰지 않습니다.)
 
 ### 추가 전처리 6종 (extra_preps.py, P5~P10)
 PaddleOCR 실험(run_exp300_paddle.py)에서는 P0~P4 에 더해 6종이 기본으로 같이 실행됩니다 (총 11개).
 P5 adaptive_threshold · P6 blackhat · P7 closing · P8 global_otsu · P9 localized_otsu(3×3 칸별 Otsu) · P10 tophat
 (grayscale = P0, clahe = P3 과 같은 처리). 일부만 쓰려면 `--preps P0,P5,P9` 처럼 지정. 커널·블록 크기는 extra_preps.py 맨 위 상수로 조절.
 
-### PaddleOCR B 방식 점수 (run_exp300_paddle_b.py)
-팀원 val_paddle.py 와 같은 방식(원본 사진, 검출 기준 0.0, 글자 조각 중 하나라도 정답이면 성공)으로 같은 평가용 237장을 재서 팀원의 B 실험 결과와 이어 보기 위한 보조 점수입니다.
-`hit_B`(팀원 코드 그대로) / `hit_norm`(정규화, 빈값·'마크' 제외) 두 가지로 셉니다. A 방식의 정확도/F1 과 직접 비교하지 마세요.
-`python run_exp300_paddle_b.py --manifest manifest.csv --split test --out pred_test_paddle_B.csv`
