@@ -25,7 +25,8 @@ V0 기준선 → V1 부분일치 → V2 헷갈리는 글자(0/O 등) → V3 후�
 A: 후보 전체만 / +부분일치 / +글자통일 / +둘 다 를 개발·시험 세트에서 비교.
 B: V3로도 틀린 사진을 원인(읽은 글자 없음, DB와 너무 다름, 동점, DB상 각인 동일, 정답을 읽고도 다른 약 선택, 일부만 읽음, 잘못 읽음)별로 분류하고 `errors_*.csv` 저장.
 
-## PaddleOCR 실험 (run_exp300_paddle.py) — 팀원(B)용
+## PaddleOCR 실험 (run_exp300_paddle.py + run_exp300_paddle.ipynb) — 팀원(B)용
+Colab에서는 `run_exp300_paddle.ipynb` 를 열고 위에서부터 실행하면 됩니다 (3번 셀 zip 경로만 수정).
 run_exp300.py 는 건드리지 않고 PaddleOCR 모델 하나만 끼워 넣어 같은 조건(자르기·전처리 P0~P4·회전 투표·매칭·CSV 형식)으로 실행합니다. 결과 CSV 는 evaluate_exp300.py 로 그대로 채점돼요.
 설치: `pip install paddlepaddle paddleocr` (v2.x / v3.x 자동 판별)
 1. 개발용: `python run_exp300_paddle.py --manifest manifest.csv --db search_db.csv --split dev --out pred_dev_paddle.csv`
