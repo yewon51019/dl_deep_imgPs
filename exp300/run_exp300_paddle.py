@@ -30,6 +30,7 @@
 #  [PaddleOCR 버전]  v2.x (.ocr) 와 v3.x (.predict) 를 둘 다 지원해요. 설치된 쪽을 자동으로 씁니다.
 # =====================================================================
 
+import os
 import sys
 
 import cv2
@@ -40,18 +41,29 @@ from extra_preps import PREPS_EXTRA
 from run_exp300 import join_boxes
 
 
+os.environ.setdefault("FLAGS_use_mkldnn", "0")      # Colab CPU 에서 oneDNN 오류(ConvertPirAttribute2RuntimeAttribute) 방지
+
+
+def build_paddle(v3_kwargs, v2_kwargs):
+    """PaddleOCR 만들기. v3 이면 oneDNN(enable_mkldnn)을 꺼서 Colab CPU 의 NotImplementedError 를 피하고,
+       그 인자를 모르는 v3 면 빼고, v2 면 v2 이름의 인자로 만듭니다."""
+    from paddleocr import PaddleOCR
+    for extra in ({"enable_mkldnn": False}, {}):
+        try:
+            return PaddleOCR(**v3_kwargs, **extra)
+        except (TypeError, ValueError):
+            continue
+    return PaddleOCR(**v2_kwargs)
+
+
 class PaddleOCRModel:
     """PaddleOCR (글자 위치 찾기 + 읽기). 흑백 이미지 -> (읽은 글자, 신뢰도 0~100)"""
 
     def __init__(self):
-        from paddleocr import PaddleOCR
-        self.v3 = False
-        try:                                           # v3.x : 문서 회전·펴기 기능은 끄고, 글자만 읽게 함
-            self.ocr = PaddleOCR(lang="en", use_doc_orientation_classify=False,
-                                 use_doc_unwarping=False, use_textline_orientation=False)
-            self.v3 = hasattr(self.ocr, "predict")
-        except (TypeError, ValueError):                # v2.x
-            self.ocr = PaddleOCR(use_angle_cls=False, lang="en", show_log=False)
+        self.ocr = build_paddle(
+            dict(lang="en", use_doc_orientation_classify=False, use_doc_unwarping=False, use_textline_orientation=False),
+            dict(use_angle_cls=False, lang="en", show_log=False))
+        self.v3 = hasattr(self.ocr, "predict")             # v3: .predict / v2: .ocr
 
     def __call__(self, g):
         rgb = cv2.cvtColor(g, cv2.COLOR_GRAY2BGR)      # PaddleOCR 은 3채널 이미지를 받음

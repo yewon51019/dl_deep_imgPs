@@ -38,13 +38,12 @@ COLS = ["file_name", "split", "truth_drug", "print_front", "print_back", "texts"
 
 
 def make_ocr():
-    from paddleocr import PaddleOCR
-    try:                                      # v3.x (팀원 코드와 같은 설정)
-        return PaddleOCR(use_doc_orientation_classify=False, use_doc_unwarping=False, use_textline_orientation=False,
-                         text_det_thresh=0.0, text_det_box_thresh=0.0, text_rec_score_thresh=0.0)
-    except (TypeError, ValueError):           # v2.x : 같은 뜻의 옛 이름
-        return PaddleOCR(use_angle_cls=False, lang="en", det_db_thresh=0.0, det_db_box_thresh=0.0,
-                         drop_score=0.0, show_log=False)
+    """팀원 코드와 같은 설정(v3, 검출 기준 0.0). Colab CPU 오류 방지로 oneDNN 은 끔 (결과에는 영향 없음)"""
+    from run_exp300_paddle import build_paddle
+    return build_paddle(
+        dict(use_doc_orientation_classify=False, use_doc_unwarping=False, use_textline_orientation=False,
+             text_det_thresh=0.0, text_det_box_thresh=0.0, text_rec_score_thresh=0.0),
+        dict(use_angle_cls=False, lang="en", det_db_thresh=0.0, det_db_box_thresh=0.0, drop_score=0.0, show_log=False))
 
 
 def read_texts(ocr, path):
