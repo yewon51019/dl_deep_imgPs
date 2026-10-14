@@ -5,9 +5,10 @@
 #  [하는 일]
 #   300장 중 30장을 뽑아서(알약 회전각 6종 × 5장, 카메라 각도 60/90° 반반),
 #   '잘라낸 알약' 위에 세 가지 방식의 검출 박스를 그려 PNG 로 저장해요.
-#   · CRAFT          : PARSeq / TrOCR 이 쓰는 글자 위치 찾기 (전처리 P0)
+#   · CRAFT+PARSeq   : CRAFT 로 박스를 찾고 박스마다 PARSeq 로 읽음 (전처리 P0, A실험 1등 조합)
 #   · Paddle 기본    : PaddleOCR 기본 검출 기준 (전처리 P1)
 #   · Paddle 0.0     : PaddleOCR 검출 기준 0.0   (전처리 P1)
+#   각 박스 위에 읽은 글자를, 칸 아래에는 박스 글자를 이어 붙인 최종 읽기(대문자·숫자만)와 정답 비교(O 정확 / ~ 포함 / X 불일치)를 적어요.
 #   본 실험 점수·CSV 는 건드리지 않아요. (사진 30장을 한 번씩만 읽음, 몇 분)
 #
 #  [저장]  --out 폴더
@@ -38,9 +39,10 @@ from run_exp300_paddle import PaddleOCRModel, PaddleOCRModelT0     # 두 설정 
 from run_exp300 import imread_any, crop_pill
 
 COLORS = {"craft": (60, 180, 60), "paddle": (220, 90, 30), "paddle_t0": (30, 140, 240)}   # BGR
-TITLES = {"craft": "EasyOCR CRAFT", "paddle": "Paddle default", "paddle_t0": "Paddle thr=0.0"}
+TITLES = {"craft": "CRAFT+PARSeq", "paddle": "Paddle default", "paddle_t0": "Paddle thr=0.0"}
 METHODS = ["craft", "paddle", "paddle_t0"]
 CELL_W = 420
+FOOT = 30
 
 
 # ----------------------------- 사진 고르기 -----------------------------
@@ -71,8 +73,33 @@ def sample_rows(rows, n=30, seed=42):
 
 
 # ----------------------------- 검출 -----------------------------
-def craft_detect(g):
-    return [list(b) for b in base.craft_boxes(g)], []            # 상자 [(x0,y0,x1,y1)], 글자 없음
+def craft_detect(g, parseq):
+    """CRAFT 박스 + 박스마다 PARSeq 읽기 (A실험 PARSeq 와 같은 방식: 박스가 없으면 알약 전체를 한 줄로 읽음)"""
+    boxes = [list(b) for b in base.craft_boxes(g)]
+    fallback = not boxes
+    if fallback:
+        boxes = [[0, 0, g.shape[1], g.shape[0]]]
+    texts = [str(parseq.read_crop(g[y0:y1, x0:x1])[0]) for x0, y0, x1, y1 in boxes]
+    return boxes, texts, fallback
+
+
+def joined_read(boxes, texts):
+    """박스별 글자를 A실험과 같은 규칙(위→아래·왼→오른, 글자·숫자만, 대문자)으로 이어 붙인 최종 읽기"""
+    items = []
+    for b, t in zip(boxes, texts):
+        t = "".join(ch for ch in t if ch.isalnum())
+        if t:
+            items.append((b[0], b[1], t, 1.0))
+    return base.norm(base.join_boxes(items)[0]) if items else ""
+
+
+def judge(read, truth_norm):
+    """정답과 비교: O 정확히 같음 / ~ 정답을 포함 / X 다름 / - 정답 없음"""
+    if not truth_norm:
+        return "-"
+    if read == truth_norm:
+        return "O"
+    return "~" if truth_norm in read else "X"
 
 
 def paddle_detect(model, g):
@@ -116,24 +143,29 @@ def draw_panel(g, method, boxes, texts, polys=None, err=None):
     return img, head
 
 
-def pad_cell(img, head, col, w, h):
-    cell = np.full((h + 30, w, 3), 255, np.uint8)
+JCOL = {"O": (0, 150, 0), "~": (0, 140, 255), "X": (0, 0, 200), "-": (90, 90, 90)}
+
+
+def pad_cell(img, head, col, w, h, foot="", foot_col=(0, 0, 0)):
+    cell = np.full((h + 30 + FOOT, w, 3), 255, np.uint8)
     y = 30 + (h - img.shape[0]) // 2
     x = (w - img.shape[1]) // 2
     cell[y:y + img.shape[0], x:x + img.shape[1]] = img
     cv2.putText(cell, head, (6, 21), cv2.FONT_HERSHEY_SIMPLEX, 0.6, col, 2, cv2.LINE_AA)
-    cv2.rectangle(cell, (0, 0), (w - 1, h + 29), (190, 190, 190), 1)
+    cv2.putText(cell, foot[:34], (6, h + 30 + 21), cv2.FONT_HERSHEY_SIMPLEX, 0.6, foot_col, 2, cv2.LINE_AA)
+    cv2.rectangle(cell, (0, 0), (w - 1, h + 29 + FOOT), (190, 190, 190), 1)
     return cell
 
 
-def compose(g, results, caption):
+def compose(g, results, caption, truth_norm=""):
     """2×2 : 잘라낸 알약 / CRAFT / Paddle 기본 / Paddle 0.0"""
     H, W = g.shape[:2]
     w, h = max(CELL_W, W + 20), H + 20
-    cells = [pad_cell(cv2.cvtColor(g, cv2.COLOR_GRAY2BGR), "cropped pill (P0)", (60, 60, 60), w, h)]
+    cells = [pad_cell(cv2.cvtColor(g, cv2.COLOR_GRAY2BGR), "cropped pill (P0)", (60, 60, 60), w, h,
+                      f"truth: {ascii_only(truth_norm) or '(none)'}", (60, 60, 60))]
     for m in METHODS:
-        img, head, _ = results[m]
-        cells.append(pad_cell(img, head, COLORS[m], w, h))
+        img, head, _, read, j = results[m]
+        cells.append(pad_cell(img, head, COLORS[m], w, h, f"[{j}] read: {ascii_only(read) or '(empty)'}", JCOL[j]))
     grid = np.vstack([np.hstack(cells[:2]), np.hstack(cells[2:])])
     bar = np.full((34, grid.shape[1], 3), 245, np.uint8)
     cv2.putText(bar, caption, (8, 23), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 0, 0), 2, cv2.LINE_AA)
@@ -174,8 +206,9 @@ def main():
         cnt_cam[r.get("camera_la", "")] += 1
     print(f"뽑은 사진 {len(picked)}장 | 회전각별 {dict(sorted(cnt_rot.items()))} | 카메라각도별 {dict(sorted(cnt_cam.items()))}")
 
-    print("모델 불러오는 중... (EasyOCR CRAFT, PaddleOCR 두 설정)")
+    print("모델 불러오는 중... (EasyOCR CRAFT, PARSeq, PaddleOCR 두 설정)")
     base.easy_reader()
+    parseq = base.PARSeq()
     models = {"paddle": PaddleOCRModel(), "paddle_t0": PaddleOCRModelT0()}
     p0, p1 = base.PREPS["P0"][1], base.PREPS["P1"][1]
 
@@ -188,11 +221,12 @@ def main():
         crop, *_ = crop_pill(img)
         g0, g1 = p0(crop), p1(crop)
         results = {}
+        truth_norm = base.norm(r.get("truth", ""))
         for m in METHODS:
-            t0, err, polys = time.time(), None, None
+            t0, err, polys, fb = time.time(), None, None, False
             try:
                 if m == "craft":
-                    boxes, texts = craft_detect(g0)
+                    boxes, texts, fb = craft_detect(g0, parseq)
                     g = g0
                 else:
                     boxes, texts, polys = paddle_detect(models[m], g1)
@@ -200,16 +234,21 @@ def main():
             except Exception as e:                       # 한 방식이 실패해도 나머지는 계속
                 boxes, texts, g, err = [], [], g1, f"{type(e).__name__}: {e}"
                 print(f"  [경고] {r['file_name'][:20]} {m}: {err}")
+            read = joined_read(boxes, texts)
+            j = judge(read, truth_norm)
             im, head = draw_panel(g, m, boxes, texts, polys, err)
-            results[m] = (im, head, boxes)
+            if fb:
+                head += " (fallback)"
+            results[m] = (im, head, boxes, read, j)
             csv_rows.append({"file_name": r["file_name"], "rot_deg": r.get("rot_deg", ""), "camera_la": r.get("camera_la", ""),
                              "form": r.get("form", ""), "truth": r.get("truth", ""), "method": m,
                              "prep": "P0" if m == "craft" else "P1", "n_boxes": len(boxes), "n_text": len(texts),
                              "ms": int((time.time() - t0) * 1000), "error": err or "",
-                             "boxes": json.dumps([[round(v) for v in b] for b in boxes]), "texts": "|".join(texts)})
+                             "boxes": json.dumps([[round(v) for v in b] for b in boxes]), "texts": "|".join(texts),
+                             "read": read, "truth_norm": truth_norm, "judge": j, "fallback": int(fb)})
         cap = f"{k:02d}  rot={r.get('rot_deg', '')}  camera={r.get('camera_la', '')}  truth={ascii_only(r.get('truth', ''))}"
         path = os.path.join(a.out, f"boxes_{k:02d}_rot{r.get('rot_deg', '')}_cam{r.get('camera_la', '')}.png")
-        cv2.imwrite(path, compose(g0, results, cap))
+        cv2.imwrite(path, compose(g0, results, cap, truth_norm))
         files.append(path)
         print(f"  {k:2d}/{len(picked)}  " + "  ".join(f"{TITLES[m]}={len(results[m][2])}" for m in METHODS))
 
@@ -220,12 +259,14 @@ def main():
         w.writerows(csv_rows)
 
     print("\n[방식별 요약]")
-    print(f"{'방식':<16} {'사진':>4} {'평균 박스':>9} {'박스 0개':>8} {'오류':>4}")
+    print(f"{'방식':<16} {'사진':>4} {'평균 박스':>9} {'박스 0개':>8} {'오류':>4} | {'정확(O)':>7} {'포함(~)':>7} {'불일치(X)':>9}")
     for m in METHODS:
         rs = [x for x in csv_rows if x["method"] == m]
         if rs:
             print(f"{TITLES[m]:<16} {len(rs):4d} {np.mean([x['n_boxes'] for x in rs]):9.1f} "
-                  f"{sum(x['n_boxes'] == 0 for x in rs):8d} {sum(bool(x['error']) for x in rs):4d}")
+                  f"{sum(x['n_boxes'] == 0 for x in rs):8d} {sum(bool(x['error']) for x in rs):4d} | "
+                  f"{sum(x['judge'] == 'O' for x in rs):7d} {sum(x['judge'] == '~' for x in rs):7d} {sum(x['judge'] == 'X' for x in rs):9d}")
+    print("  ※ 0° 한 번만 읽은 값이라 본 실험(12방향 투표)의 점수와는 달라요. '정확/포함'은 읽은 글자가 정답 각인과 같은지 보는 것(약 이름 맞힘 아님).")
     print(f"\n저장 완료: {a.out}/  (사진별 PNG {len(files)}장, sheet_*.png, boxes.csv)")
 
 
