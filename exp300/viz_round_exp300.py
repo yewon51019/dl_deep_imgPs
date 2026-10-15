@@ -34,7 +34,7 @@ import numpy as np
 import run_exp300 as base
 from run_exp300 import imread_any, crop_pill, shape_group
 from run_exp300_paddle import PaddleOCRModel, PaddleOCRModelT0
-from viz_boxes_exp300 import (METHODS, TITLES, paddle_detect, draw_panel, compose, make_sheets, ascii_only)
+from viz_boxes_exp300 import (METHODS, TITLES, paddle_detect, draw_panel, compose, make_sheets, ascii_only, print_versions)
 
 
 def main():
@@ -72,6 +72,7 @@ def main():
         rounds = rounds[: a.limit]
         print(f"※ 시험 운전: 앞 {len(rounds)}장만")
 
+    print_versions()
     print("모델 불러오는 중... (EasyOCR CRAFT, PaddleOCR 두 설정)")
     base.easy_reader()
     models = {"paddle": PaddleOCRModel(), "paddle_t0": PaddleOCRModelT0()}
@@ -81,12 +82,12 @@ def main():
         g0, g1 = p0(crop), p1(crop)
         results = {}
         for m in METHODS:
-            t0, err, polys = time.time(), None, None
+            t0, err, polys, pinfo = time.time(), None, None, {}
             try:
                 if m == "craft":
                     boxes, g = [list(b) for b in base.craft_boxes(g0)], g0
                 else:
-                    boxes, _texts, polys = paddle_detect(models[m], g1)
+                    boxes, _texts, polys, pinfo = paddle_detect(models[m], g1)
                     g = g1
             except Exception as e:                       # 한 방식이 실패해도 나머지는 계속
                 boxes, g, err = [], g1, f"{type(e).__name__}: {e}"
@@ -96,6 +97,7 @@ def main():
             csv_rows.append({"file_name": r["file_name"], "split": r.get("split", ""), "rot_deg": r.get("rot_deg", ""),
                              "camera_la": r.get("camera_la", ""), "form": r.get("form", ""), "method": m,
                              "prep": "P0" if m == "craft" else "P1", "n_boxes": len(boxes),
+                             "n_dt": pinfo.get("n_dt", ""), "n_text": pinfo.get("n_text", ""),
                              "ms": int((time.time() - t0) * 1000), "error": err or "",
                              "boxes": json.dumps([[round(v) for v in b] for b in boxes])})
         cap = f"{k:03d}  round  rot={r.get('rot_deg', '')}  camera={r.get('camera_la', '')}  {r.get('split', '')}"
@@ -119,6 +121,12 @@ def main():
             z = sum(x["n_boxes"] == 0 for x in rs)
             print(f"{TITLES[m].split('+')[0]:<16} {len(rs):4d} {np.mean([x['n_boxes'] for x in rs]):9.1f} {z:8d} "
                   f"{z / len(rs) * 100:7.1f}% {sum(bool(x['error']) for x in rs):4d}")
+    print("\n[PaddleOCR: 검출 박스 vs 글자가 실제로 나온 박스]  (검출은 됐는데 글자가 비면 '읽기 단계'에서 사라진 것)")
+    for m in ("paddle", "paddle_t0"):
+        rs = [x for x in csv_rows if x["method"] == m and x["n_dt"] != ""]
+        if rs:
+            print(f"  {TITLES[m]:<16} 검출 박스 평균 {np.mean([x['n_dt'] for x in rs]):.1f}, 글자 나온 박스 평균 {np.mean([x['n_text'] for x in rs]):.1f}, "
+                  f"글자 0개인 사진 {sum(x['n_text'] == 0 for x in rs)}장 / {len(rs)}장")
     print("\n[카메라 각도별 박스 0개 비율]")
     for cam in sorted({x["camera_la"] for x in csv_rows}):
         line = f"  카메라 {cam}°: "

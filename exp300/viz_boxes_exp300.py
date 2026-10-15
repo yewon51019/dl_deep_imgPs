@@ -105,9 +105,11 @@ def judge(read, truth_norm):
 def paddle_detect(model, g):
     """PaddleOCR 한 설정으로 (상자 목록, 읽은 글자 목록). 상자는 (x0,y0,x1,y1) 바깥 사각형, 폴리곤도 같이"""
     rgb = cv2.cvtColor(g, cv2.COLOR_GRAY2BGR)
-    polys, texts = [], []
+    polys, texts, n_dt = [], [], 0
     if model.v3:
         for res in model.ocr.predict(rgb):
+            dt = res.get("dt_polys")
+            n_dt += 0 if dt is None else len(dt)                 # 검출기가 찾은 박스 수 (읽기 전)
             rp = res.get("rec_polys")
             if rp is None or len(rp) == 0:
                 rp = res.get("dt_polys")
@@ -118,8 +120,22 @@ def paddle_detect(model, g):
         for box, (t, c) in (lines[0] if lines and lines[0] else []):
             polys.append(np.asarray(box).reshape(-1, 2))
             texts.append(str(t))
+        n_dt = len(polys)
     boxes = [[float(p[:, 0].min()), float(p[:, 1].min()), float(p[:, 0].max()), float(p[:, 1].max())] for p in polys]
-    return boxes, texts, polys
+    info = {"n_dt": n_dt, "n_text": sum(1 for t in texts if any(ch.isalnum() for ch in t))}   # 글자가 실제로 나온 박스 수
+    return boxes, texts, polys, info
+
+
+def print_versions():
+    """결과가 환경마다 달라질 수 있어서 버전을 같이 남김"""
+    out = {}
+    for name in ("paddleocr", "paddle", "easyocr", "numpy"):
+        try:
+            out[name] = getattr(__import__(name), "__version__", "?")
+        except Exception:
+            out[name] = "없음"
+    print("버전:", ", ".join(f"{k} {v}" for k, v in out.items()))
+    return out
 
 
 # ----------------------------- 그리기 -----------------------------
@@ -209,6 +225,7 @@ def main():
         cnt_cam[r.get("camera_la", "")] += 1
     print(f"뽑은 사진 {len(picked)}장 | 회전각별 {dict(sorted(cnt_rot.items()))} | 카메라각도별 {dict(sorted(cnt_cam.items()))}")
 
+    print_versions()
     print("모델 불러오는 중... (EasyOCR CRAFT, PARSeq, PaddleOCR 두 설정)")
     base.easy_reader()
     parseq = base.PARSeq()
@@ -226,13 +243,13 @@ def main():
         results = {}
         truth_norm = base.norm(r.get("truth", ""))
         for m in METHODS:
-            t0, err, polys, fb = time.time(), None, None, False
+            t0, err, polys, fb, pinfo = time.time(), None, None, False, {}
             try:
                 if m == "craft":
                     boxes, texts, fb = craft_detect(g0, parseq)
                     g = g0
                 else:
-                    boxes, texts, polys = paddle_detect(models[m], g1)
+                    boxes, texts, polys, pinfo = paddle_detect(models[m], g1)
                     g = g1
             except Exception as e:                       # 한 방식이 실패해도 나머지는 계속
                 boxes, texts, g, err = [], [], g1, f"{type(e).__name__}: {e}"
@@ -245,10 +262,11 @@ def main():
             results[m] = (im, head, boxes, read, j)
             csv_rows.append({"file_name": r["file_name"], "rot_deg": r.get("rot_deg", ""), "camera_la": r.get("camera_la", ""),
                              "form": r.get("form", ""), "truth": r.get("truth", ""), "method": m,
-                             "prep": "P0" if m == "craft" else "P1", "n_boxes": len(boxes), "n_text": len(texts),
+                             "prep": "P0" if m == "craft" else "P1", "n_boxes": len(boxes), "n_texts_all": len(texts),
                              "ms": int((time.time() - t0) * 1000), "error": err or "",
                              "boxes": json.dumps([[round(v) for v in b] for b in boxes]), "texts": "|".join(texts),
-                             "read": read, "truth_norm": truth_norm, "judge": j, "fallback": int(fb)})
+                             "read": read, "truth_norm": truth_norm, "judge": j, "fallback": int(fb),
+                             "n_dt": pinfo.get("n_dt", ""), "n_text": pinfo.get("n_text", "")})
         cap = f"{k:02d}  rot={r.get('rot_deg', '')}  camera={r.get('camera_la', '')}  truth={ascii_only(r.get('truth', ''))}"
         path = os.path.join(a.out, f"boxes_{k:02d}_rot{r.get('rot_deg', '')}_cam{r.get('camera_la', '')}.png")
         cv2.imwrite(path, compose(g0, results, cap, truth_norm))
