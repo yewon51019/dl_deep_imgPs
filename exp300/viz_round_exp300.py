@@ -99,8 +99,8 @@ def main():
             read = joined_read(boxes, texts)
             j = judge(read, truth_norm)
             im, head = draw_panel(g, m, boxes, texts, polys, err)
-            if fb:
-                head += " (fallback)"
+            if fb:                                       # CRAFT 박스 0개 → 알약 전체를 한 줄로 읽음
+                head = f"{TITLES[m]}  boxes=0 (fallback)"
             results[m] = (im, head, boxes, read, j)
             csv_rows.append({"file_name": r["file_name"], "split": r.get("split", ""), "rot_deg": r.get("rot_deg", ""),
                              "camera_la": r.get("camera_la", ""), "form": r.get("form", ""), "method": m,

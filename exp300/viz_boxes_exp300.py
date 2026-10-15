@@ -173,6 +173,32 @@ def pad_cell(img, head, col, w, h, foot="", foot_col=(0, 0, 0)):
     return cell
 
 
+def summary_column(results, truth_norm, height, show_read=True, width=380):
+    """그림 오른쪽 요약 칸: 정답 + 방식별 박스 수·최종 읽기·판정을 한눈에"""
+    col = np.full((height, width, 3), 255, np.uint8)
+    cv2.rectangle(col, (0, 0), (width - 1, height - 1), (190, 190, 190), 1)
+    y = 34
+    cv2.putText(col, "SUMMARY", (12, y), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2, cv2.LINE_AA)
+    y += 40
+    cv2.putText(col, f"truth : {ascii_only(truth_norm) or '(none)'}", (12, y), cv2.FONT_HERSHEY_SIMPLEX, 0.6,
+                (60, 60, 60), 2, cv2.LINE_AA)
+    for m in METHODS:
+        _, head, boxes, read, j = results[m]
+        y += 48
+        cv2.putText(col, TITLES[m], (12, y), cv2.FONT_HERSHEY_SIMPLEX, 0.6, COLORS[m], 2, cv2.LINE_AA)
+        y += 26
+        nb = "0 (fallback)" if "(fallback)" in head else str(len(boxes))
+        cv2.putText(col, f"  boxes: {nb}", (12, y), cv2.FONT_HERSHEY_SIMPLEX, 0.55, (60, 60, 60), 1, cv2.LINE_AA)
+        if show_read:
+            y += 24
+            cv2.putText(col, f"  read : {ascii_only(read)[:18] or '(empty)'}  [{j}]", (12, y),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.55, JCOL[j], 2, cv2.LINE_AA)
+    y += 44
+    if show_read:
+        cv2.putText(col, "O=exact  ~=contains  X=wrong", (12, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (120, 120, 120), 1, cv2.LINE_AA)
+    return col
+
+
 def compose(g, results, caption, truth_norm="", show_read=True):
     """2×2 : 잘라낸 알약 / CRAFT / Paddle 기본 / Paddle 0.0"""
     H, W = g.shape[:2]
@@ -186,6 +212,7 @@ def compose(g, results, caption, truth_norm="", show_read=True):
         else:                                              # 검출만 볼 때는 박스 개수만
             cells.append(pad_cell(img, head, COLORS[m], w, h, f"boxes: {len(boxes)}", (60, 60, 60)))
     grid = np.vstack([np.hstack(cells[:2]), np.hstack(cells[2:])])
+    grid = np.hstack([grid, summary_column(results, truth_norm, grid.shape[0], show_read)])
     bar = np.full((34, grid.shape[1], 3), 245, np.uint8)
     cv2.putText(bar, caption, (8, 23), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 0, 0), 2, cv2.LINE_AA)
     return np.vstack([bar, grid])
@@ -257,8 +284,8 @@ def main():
             read = joined_read(boxes, texts)
             j = judge(read, truth_norm)
             im, head = draw_panel(g, m, boxes, texts, polys, err)
-            if fb:
-                head += " (fallback)"
+            if fb:                                       # CRAFT 박스 0개 → 알약 전체를 한 줄로 읽음
+                head = f"{TITLES[m]}  boxes=0 (fallback)"
             results[m] = (im, head, boxes, read, j)
             csv_rows.append({"file_name": r["file_name"], "rot_deg": r.get("rot_deg", ""), "camera_la": r.get("camera_la", ""),
                              "form": r.get("form", ""), "truth": r.get("truth", ""), "method": m,
