@@ -157,15 +157,18 @@ def pad_cell(img, head, col, w, h, foot="", foot_col=(0, 0, 0)):
     return cell
 
 
-def compose(g, results, caption, truth_norm=""):
+def compose(g, results, caption, truth_norm="", show_read=True):
     """2×2 : 잘라낸 알약 / CRAFT / Paddle 기본 / Paddle 0.0"""
     H, W = g.shape[:2]
     w, h = max(CELL_W, W + 20), H + 20
     cells = [pad_cell(cv2.cvtColor(g, cv2.COLOR_GRAY2BGR), "cropped pill (P0)", (60, 60, 60), w, h,
                       f"truth: {ascii_only(truth_norm) or '(none)'}", (60, 60, 60))]
     for m in METHODS:
-        img, head, _, read, j = results[m]
-        cells.append(pad_cell(img, head, COLORS[m], w, h, f"[{j}] read: {ascii_only(read) or '(empty)'}", JCOL[j]))
+        img, head, boxes, read, j = results[m]
+        if show_read:
+            cells.append(pad_cell(img, head, COLORS[m], w, h, f"[{j}] read: {ascii_only(read) or '(empty)'}", JCOL[j]))
+        else:                                              # 검출만 볼 때는 박스 개수만
+            cells.append(pad_cell(img, head, COLORS[m], w, h, f"boxes: {len(boxes)}", (60, 60, 60)))
     grid = np.vstack([np.hstack(cells[:2]), np.hstack(cells[2:])])
     bar = np.full((34, grid.shape[1], 3), 245, np.uint8)
     cv2.putText(bar, caption, (8, 23), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 0, 0), 2, cv2.LINE_AA)
