@@ -114,8 +114,8 @@
 ## 8. 로컬(Windows) 실행 메모
 
 ```powershell
-# 처음 한 번: 가상환경 + 패키지 (파이썬 3.10~3.12 권장)
-py -3.11 -m venv .venv
+# 처음 한 번: 가상환경 + 패키지 (파이썬 3.12 로. 기본 파이썬은 3.14 라서 PaddlePaddle·PyTorch 가 아직 안 맞을 수 있음)
+py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install opencv-python numpy matplotlib easyocr timm pytorch-lightning nltk openpyxl
 pip install paddlepaddle paddleocr      # PaddleOCR 실험할 때만
