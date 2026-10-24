@@ -31,3 +31,6 @@ exp300/results/**/*.jpg
 exp300/results/**/manifest*.csv
 exp300/results/**/viz_*/
 .venv/
+
+# 학습한 모델 가중치 (합성 사진으로 학습, 용량이 큼)
+exp300/results/models/*.pt

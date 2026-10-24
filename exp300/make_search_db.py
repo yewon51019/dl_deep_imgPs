@@ -45,7 +45,19 @@ COLUMNS = [
     "front_norm",    # 앞면 각인 (검색용으로 다듬은 글자)
     "back_norm",     # 뒷면 각인 (검색용으로 다듬은 글자)
     "n_labels",      # 이 약의 라벨 파일 개수 (확인용)
+    "front_parts",   # 앞면 각인을 띄어쓰기·구분 기호로 나눈 조각 ('|' 로 이음, 예: "SAMJIN OSTEMIN" → "SAMJIN|OSTEMIN")
+    "back_parts",    # 뒷면 각인 조각 (절취선·분할 각인 처리용. 조각이 1개면 나뉘지 않은 각인)
 ]
+
+PART_SEP = r"[\s/|,]+"   # 조각을 나누는 기준: 띄어쓰기, / | ,  ('37.5' 의 점, 'RPC-A' 의 하이픈은 나누지 않음)
+
+
+def parts(text):
+    """각인 원문 → 조각 목록. 조각마다 run_exp300.norm() 과 같은 규칙(대문자·글자·숫자만)으로 다듬음"""
+    text = "" if str(text).strip().lower() == "nan" else str(text or "")
+    text = unicodedata.normalize("NFKC", text.replace("마크", " "))
+    out = ["".join(ch for ch in p.upper() if ch.isalnum()) for p in re.split(PART_SEP, text)]
+    return [p for p in out if p]
 
 
 # 각인 글자 다듬기: manifest.py 와 "똑같은 규칙"이어야 비교가 공정해요.
@@ -112,6 +124,8 @@ def main():
             "front_norm": normalize(pf),
             "back_norm": normalize(pb),
             "n_labels": len(infos),
+            "front_parts": "|".join(parts(pf)),
+            "back_parts": "|".join(parts(pb)),
         })
 
     # 3) 저장 (utf-8-sig: 엑셀에서 한글 안 깨짐)
@@ -127,6 +141,8 @@ def main():
     print(f"읽은 라벨 파일: {n_files}개 (읽기 실패 {n_bad}개)")
     print(f"약 종류: {len(rows)}종  (앞/뒤 각인이 모두 빈 약 {no_print}종)")
     print(f"각인이 똑같은 약끼리 겹치는 경우: {dup}종  ← 각인만으로는 구분이 안 돼서 색/모양이 필요")
+    n_split = sum(1 for r in rows if "|" in r["front_parts"] or "|" in r["back_parts"])
+    print(f"조각으로 나뉜(분할·절취선) 각인이 있는 약: {n_split}종")
     print(f"저장 완료: {args.out}")
 
 

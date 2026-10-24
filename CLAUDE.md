@@ -49,7 +49,13 @@
 |---|---|
 | `exp300/make_manifest.py` | 사진+라벨 → 채점표 `manifest.csv` (정답, 제형, 카메라각도, 회전각, dev/test) |
 | `exp300/make_search_db.py` | 라벨 → 검색 DB `search_db.csv` (약 1종 = 1줄, 앞/뒷면 각인) |
-| `exp300/run_exp300.py` | **본 파이프라인.** 자르기 → 전처리 P0~P4 → 회전하며 OCR → 다수결 → DB 매칭 → 예측 CSV. 모델: tesseract, easyocr, doctr, parseq, trocr |
+| `exp300/run_exp300.py` | **본 파이프라인.** 자르기 → 전처리 P0~P4 → 회전하며 OCR → 다수결 → DB 매칭 → 예측 CSV. 모델: tesseract, easyocr, doctr, parseq, trocr. `--align vote(기본)/conf(②)/box(①+③)/...` 로 방향 고르기, `--match dbscore` 로 DB 제약 점수 열 추가 |
+| `exp300/align_exp300.py` | 정렬 2차 방법: ①PaddleOCR 상자(+글줄 방향 분류기) · ③ 단독 · ④ 극좌표 · ⑤ 각도 CNN · ⑥ TPS 펴기. `run_exp300.py --align pbox/pbox_cls/stroke/polar/polar_conf/cnn/tps` 로 호출 |
+| `exp300/viz_align_exp300.py` | 정렬 실험 비교: 사진마다 13가지 방식(위 + 길A ②+박스 순서 바꾸기, 두 길 합치기 ×2)을 한 번에 돌려 3줄×5칸 그림 + `align_results.csv` + `align_metrics.csv` (`results\viz_align2\`). 1차(4칸) 그림은 `results\viz_align\` |
+| `exp300/synth_pills.py` | ⑤⑥ 학습용 합성(가짜) 둥근 알약 생성기 (Windows 글꼴, 음각 그늘, 질감, 카메라 60° 띠, 분할선. 반사광은 없음) |
+| `exp300/train_align_exp300.py` | ⑤ `--task cnn`, ⑥ `--task tps`, 합성 검증표 `--task tps_eval`. 모델은 `results\models\` (합성 사진만으로 학습) |
+| `exp300/dbscore_exp300.py` | DB 제약 점수 매기기: DB 각인 후보를 PARSeq 에 teacher forcing 으로 넣어 점수 (규칙 4가지 비교, 개발용만). `run_exp300.py --match dbscore` 로도 사용 |
+| `exp300/split_exp300.py` | 절취선·분할 각인 실험 (박스 순서 바꾸기, 조각 짝짓기). DB 는 `search_db_parts.csv` (`front_parts`/`back_parts` 열 추가) |
 | `exp300/evaluate_exp300.py` | 채점: 정확도, macro 정밀도/재현율/F1, 각인 일치율, 조건별 정확도, 혼동행렬 |
 | `exp300/correct_exp300.py` | 보정 실험 V0~V5 (OCR 재실행 없이 저장된 후보로 재채점) |
 | `exp300/analyze_exp300.py` | 보정 분리 실험 + 남은 오류 원인 분류 |
@@ -111,6 +117,53 @@
 - 정렬 자체가 맞았는지 재는 법: 같은 약이면 "추정 각도 − 파일 이름의 회전각"이 일정해야 한다.
 - 비교 기준은 지금 방식(12방향 다수결). 고르는 건 개발용, 평가용은 마지막에 한 번.
 
+### 정렬 실험 1차 결과 (2026-10-24, 개발용 51장, PARSeq + P0, 로컬 GPU, 보정 없음) — ⚠ OpenCV 5.0 환경 숫자, 2차와 직접 비교 금지
+
+| 방식 | 전체 정확도 / F1 | 둥근 23장 정확도 / F1 | 둥근 각인 정답률 |
+|---|---|---|---|
+| 12방향 다수결 (지금) | 62.7 / 70.0 | 47.8 / 45.7 | 26.1 |
+| ② 신뢰도 최고 | **68.6 / 75.1** | **60.9 / 64.6** | 34.8 |
+| ①+③ 상자·획 정렬 | 64.7 / 72.7 | 52.2 / 55.8 | 26.1 |
+
+- 길쭉 28장은 세 방식이 같다 (모두 0°/180°). 차이는 둥근 알약 몇 장에서만 난다: ② 는 다수결보다 3장 더 맞힘, ①+③ 은 1장 더. 둥근 1장 = 4.3%p 라 **우연 범위일 수 있음 (확정 아님)**.
+- ①+③: 둥근 23장 중 CRAFT 상자로 각도를 얻은 것 8장, 나머지 15장은 획 PCA (그중 8장은 방향이 애매해서 4방향 읽음).
+  획 마스크는 한쪽 조명 때문에 그늘진 획(주로 한 방향)만 잡혀서 방향이 자주 틀린다.
+- PARSeq 는 180° 뒤집힌 글자도 높은 확신도로 똑바로 읽는다 (가짜 사진 시험) → θ/θ+180 고르기는 큰 문제가 아님.
+- ARICEPT 처럼 가장자리를 따라 원형으로 새긴 각인은 어느 한 방향으로 돌려도 일부만 읽힌다 → ④ 극좌표 펼치기 후보.
+- '고른 각도 ± 회전각' 일관성 확인은 약당 사진이 2~4장뿐이라 결론이 안 남.
+- `pred_dev_parseq_P0_align_{vote,conf,box}.csv` 와 `viz_align\align_results.csv` 의 읽은 글자가 51장 모두 같음을 확인.
+
+### 정렬 실험 2차 결과 (2026-10-24, 개발용 51장, OpenCV 4.10 환경, `results\viz_align2\`) — 평가용은 아직 안 돌림 (사용자가 방식 정한 뒤)
+
+| 방식 | 전체 정확도 / F1 | 둥근 23 정확도 / F1 | 길쭉 28 정확도 | 둥근 1장 시간 |
+|---|---|---|---|---|
+| 12방향 다수결 (지금) | 58.8 / 64.7 | 47.8 / 45.1 | 67.9 | 0.77초 |
+| ② 신뢰도 최고 | 64.7 / 70.2 | 60.9 / 65.5 | 67.9 | 0.77초 |
+| ①+③ CRAFT / ① Paddle(+분류기) / ③ 단독 | 60.8 / 67.6~68.0 | 52.2 / 55.8~57.2 | 67.9 | 0.18 / 1.39(CPU) / 0.19초 |
+| ④ 극좌표 단독 / ④+② | 41.2 / 56.4 · 64.7 / 70.2 | 8.7 · 60.9 | 67.9 | 0.07 · 0.84초 |
+| ⑤ 각도 CNN | 58.8 / 65.0 | 47.8 / 46.3 | 67.9 | 0.13초 |
+| ⑥ TPS + 12방향 | 58.8 / 64.8 | 47.8 / 51.7 | 67.9 | 0.04초 |
+| **길A: ② + 박스 순서 바꾸기** | **72.5 / 79.2** | 60.9 / 65.5 | **82.1** | 0.77초 |
+| 두 길(A \| ⑥) PARSeq 확신도로 | 70.6 / 76.2 | 56.5 / 59.4 | 82.1 | 0.81초 |
+| 두 길(A \| ⑥) dbscore 로 | 72.5 / 78.5 (각인 정답률 45.1, 최고) | 60.9 / 65.9 | 82.1 | 0.81초 |
+
+- **환경 변화:** PaddleOCR 설치가 OpenCV 5.0→4.10, numpy 2.5.4→2.3.5 로 바꿔서 같은 방식도 결과가 달라짐 (다수결 62.7→58.8). 2차는 13가지 모두 같은 환경.
+- **ARICEPT 6장(둥근)은 구조적으로 판별 불가:** K-023336·K-023337 앞면이 둘 다 'ARICEPT' (뒷면 5/10 만 다름) → 앞면만 보이면 동점 = 판정없음. 개발용 둥근 최고 가능 정확도 17/23 = 73.9%. ④·⑥ 이 노린 휜 글자가 바로 이 약이라 약 정확도는 못 올림 (각인 정답률로만 효과 확인).
+- **⑥ 합성 검증표 (합성 1,000장):** 학습 전 곧은 76.2 / 휜 0.0 → 학습 후 곧은 78.4 / 휜 34.6. 읽기 손실만으로는 학습 안 됨(50% 정체) → 기준점(글자 띠 테두리) 위치 손실을 더해 해결.
+- **⑤ 합성 검증:** ±20° 81%, 180° 뒤집힘 허용 99%. 실제 사진에서는 효과 없음 (합성↔실제 차이 추정).
+- **정렬 정답률**(같은 약·면 기준 20° 안)은 개발용에서 약·면당 사진이 적어 10장만 계산됨 → 결론 못 냄.
+- **박스 순서 바꾸기**가 가장 큰 개선: 길쭉 분할 각인('REP AIN' → 'AINREP' 등)에서 +4장.
+
+### dbscore (DB 제약 점수, 개발용, `results\dbscore_cv410\`)
+- 전체 정확도/F1: concat_mean 74.5/74.1, max_mean 72.5/65.6 (vote 58.8/64.7, V3 76.5/81.2). 각인 정답률은 64.7 로 크게 높음.
+- 둥근은 max_mean 73.9% (V3 60.9), 길쭉은 V3 89.3% 가 최고. dbscore 는 언제나 약 하나를 골라 '판정 없음'이 없어서 정밀도가 낮아지는 편.
+- `run_exp300.py --match dbscore` (기본 concat_mean) 결과가 별도 스크립트와 51장 일치.
+
+### 절취선·분할 각인 (개발용, `results\split_cv410\`)
+- 개발용 51장 중 분할 각인 20장 (모두 길쭉). 분할 기준: 띄어쓰기·`/`·`|`·`,` (소수점·하이픈은 안 나눔).
+- 다수결 + 박스 순서 바꾸기: 분할 사진 3장 좋아짐 / 0장 나빠짐 (전체 +4 / −0). V3 + 순서 바꾸기: 변화 없음 (V3 는 부분일치로 이미 95%).
+- dbscore (a) 여러 순서 이어 붙이기: mean 변화 없음, sum 은 손해. (b) 조각 짝짓기: mean 전체 +2 / −0 (둥근에서), sum 은 −5.
+
 ## 8. 로컬(Windows) 실행 메모
 
 ```powershell
@@ -128,6 +181,24 @@ python exp300\make_search_db.py --label-roots "<폴더1>\labels" "<폴더2>\labe
 - 결과는 `exp300\results\` 아래에 저장 (CSV 는 올려도 되지만 PNG 그림은 `.gitignore` 로 막혀 있음).
 - PARSeq·PaddleOCR 모델 파일은 처음 실행할 때 인터넷으로 내려받는다.
 - NVIDIA GPU 가 없으면 PARSeq·TrOCR 은 Colab(T4)보다 느리다. PaddleOCR 은 원래 CPU 로 돌렸다(사진당 약 15초, 12방향).
+- **실행 위치:** `manifest.csv` 의 사진 경로가 저장소 맨 위 기준(`exp300\data\...`)이라 스크립트는 `D:\dl_deep_imgps` 에서 `python exp300\...py` 로 실행한다.
+
+### GPU (PyTorch CUDA 버전) 설치
+
+이 컴퓨터: **GeForce GTX 1070 Ti (8GB)**, 드라이버 560.94 → 지원 CUDA **12.6**.
+GTX 10xx(Pascal, sm_61)는 CUDA 12.8 이상용 PyTorch 빌드에서 지원이 빠졌으므로 **cu126** 빌드를 쓴다.
+
+```powershell
+nvidia-smi                                   # 오른쪽 위 'CUDA Version' = 드라이버가 지원하는 최대 CUDA
+.\.venv\Scripts\python.exe -m pip uninstall -y torch torchvision
+.\.venv\Scripts\python.exe -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cu126
+.\.venv\Scripts\python.exe -c "import torch; print(torch.__version__, torch.cuda.is_available(), torch.cuda.get_device_name(0))"
+# 기대: 2.14.1+cu126 True NVIDIA GeForce GTX 1070 Ti
+```
+- `pip install easyocr` 등이 CPU 판 torch 를 다시 끌어오면 위 두 줄(uninstall/install)을 다시 한다.
+- **PaddleOCR(CPU 판 paddlepaddle 3.3.1 + paddleocr 3.7.0)** 을 같은 .venv 에 깔면 opencv-contrib-python 4.10 이 같이 깔려 `cv2` 가 4.10 이 되고 numpy 도 2.3.5 로 내려감 → 결과가 바뀜 (2차 실험부터 이 환경).
+- Windows 에서 **Paddle 을 torch 보다 먼저 import 하면 torch DLL 오류(shm.dll)** → 항상 `import torch` 를 먼저 (align_exp300.py 등에 반영).
+- GPU 에서 PARSeq + P0 12방향은 둥근 알약 1장에 약 1초.
 
 ## 9. 커밋
 

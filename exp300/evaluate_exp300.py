@@ -124,7 +124,8 @@ def main():
     ap = argparse.ArgumentParser(description="predictions.csv 채점")
     ap.add_argument("--pred", required=True)
     ap.add_argument("--out-dir", default="eval")
-    ap.add_argument("--rank-by", default="edit", choices=list(MATCH), help="순위를 매길 매칭 방식 (기본 edit)")
+    ap.add_argument("--rank-by", default="edit", choices=list(MATCH) + ["dbscore"],
+                    help="순위를 매길 매칭 방식 (기본 edit, dbscore 는 --match dbscore 결과일 때만)")
     ap.add_argument("--top", type=int, default=4, help="상위 몇 개 조합을 고를지")
     ap.add_argument("--cm", default="best", help="혼동행렬을 그릴 조합: best / all / easyocr:P2,...")
     a = ap.parse_args()
@@ -132,6 +133,8 @@ def main():
 
     with open(a.pred, encoding="utf-8-sig") as f:
         rows = list(csv.DictReader(f))
+    if rows and "pred_dbscore" in rows[0]:                      # run_exp300.py --match dbscore 결과면 dbscore 도 채점
+        MATCH["dbscore"] = "pred_dbscore"
     by_combo = defaultdict(list)
     for r in rows:
         by_combo[r["combo"]].append(r)

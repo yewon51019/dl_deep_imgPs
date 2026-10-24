@@ -26,6 +26,12 @@
 #    1단계(개발용, 25조합 전부):  python run_exp300.py --manifest manifest.csv --db search_db.csv --split dev
 #    2단계(평가용, 상위 조합만): python run_exp300.py ... --split test --combos easyocr:P2,doctr:P3
 #
+#  [방향 고르기 --align]  (둥근 알약만 달라짐. 길쭉한 알약은 언제나 0°/180°)
+#    vote : 30°씩 12방향 읽고 다수결 (기본, 지금까지의 모든 결과)
+#    conf : ② 12방향 중 신뢰도가 가장 높은 방향 하나
+#    box  : ①+③ CRAFT 기울어진 상자(없으면 획 PCA)로 글줄 방향을 찾고 θ/θ+180 만 읽기
+#    예) python run_exp300.py ... --split dev --combos parseq:P0 --align conf --out pred_dev_parseq_P0_align_conf.csv
+#
 #  [이어하기]  Colab이 끊겨도 같은 --out 으로 다시 실행하면, 이미 한 것은 건너뛰고 이어서 해요.
 # =====================================================================
 
@@ -310,15 +316,21 @@ class _CraftThenRead:
     def read_crop(self, crop_gray):          # 자식 클래스가 채움: (글자, 신뢰도0~1)
         raise NotImplementedError
 
-    def __call__(self, g):
+    def read_boxes(self, g):
+        """(글자, 신뢰도, 상자 목록, 상자별 글자). 그림 그릴 때 상자도 필요해서 따로 둠"""
         boxes = craft_boxes(g) or [(0, 0, g.shape[1], g.shape[0])]
-        items = []
+        items, texts = [], []
         for x0, y0, x1, y1 in boxes:
             t, c = self.read_crop(g[y0:y1, x0:x1])
             t = "".join(ch for ch in t if ch.isalnum())
+            texts.append(t)
             if t:
                 items.append((x0, y0, t, c))
-        return join_boxes(items)
+        text, conf = join_boxes(items)
+        return text, conf, boxes, texts
+
+    def __call__(self, g):
+        return self.read_boxes(g)[:2]
 
 
 class PARSeq(_CraftThenRead):
@@ -388,12 +400,8 @@ def rotate(g, ang):
     return cv2.warpAffine(g, M, (nw, nh), borderMode=cv2.BORDER_REPLICATE)
 
 
-def read_with_rotation(g, aspect, ocr, step):
-    """둥근 알약은 각인 방향을 모르니 step도씩 360도 돌며 읽고(30도면 12번),
-       길쭉한 알약은 이미 가로로 폈으니 0도/180도 2번만 읽음.
-       → 가장 많이 나온 글자(다수결), 동점이면 신뢰도가 높은 것을 고름.
-       ※ 파일 이름의 회전각(정답 정보)은 쓰지 않아요. 실제 앱에서는 모르는 값이니까요."""
-    angles = [0, 180] if aspect > 1.3 else list(range(0, 360, step))
+def read_angles(g, angles, ocr):
+    """주어진 각도마다 돌려서 읽음 → [(글자, 신뢰도, 각도)]"""
     cands = []
     for a in angles:
         try:
@@ -401,10 +409,155 @@ def read_with_rotation(g, aspect, ocr, step):
         except Exception as e:                       # 한 각도에서 오류가 나도 나머지는 계속
             text, conf = "", 0.0
             print(f"    [경고] {a}도 읽기 실패: {e}")
-        cands.append((norm(text), float(conf)))
-    votes = Counter(t for t, _ in cands if 1 <= len(t) <= 12)
-    pick = max(cands, key=lambda c: (votes.get(c[0], 0) if c[0] else -1, c[1]))
-    return pick[0], pick[1], cands
+        cands.append((norm(text), float(conf), a))
+    return cands
+
+
+def pick_by_conf(cands):
+    """글자가 나온(1~12자) 후보 중 신뢰도가 가장 높은 것"""
+    return max(cands, key=lambda c: (1 <= len(c[0]) <= 12, c[1]))
+
+
+def read_with_rotation(g, aspect, ocr, step, pick="vote"):
+    """둥근 알약은 각인 방향을 모르니 step도씩 360도 돌며 읽고(30도면 12번),
+       길쭉한 알약은 이미 가로로 폈으니 0도/180도 2번만 읽음.
+       pick="vote" : 가장 많이 나온 글자(다수결), 동점이면 신뢰도가 높은 것  ← 지금 방식
+       pick="conf" : 다수결 없이 신뢰도가 가장 높은 방향 하나              ← 정렬 실험 ②
+       ※ 파일 이름의 회전각(정답 정보)은 쓰지 않아요. 실제 앱에서는 모르는 값이니까요.
+       돌려주는 값: (글자, 신뢰도, 후보 [(글자, 신뢰도, 각도)], 고른 각도)"""
+    angles = [0, 180] if aspect > 1.3 else list(range(0, 360, step))
+    cands = read_angles(g, angles, ocr)
+    if pick == "conf":
+        best = pick_by_conf(cands)
+    else:
+        votes = Counter(t for t, *_ in cands if 1 <= len(t) <= 12)
+        best = max(cands, key=lambda c: (votes.get(c[0], 0) if c[0] else -1, c[1]))
+    return best[0], best[1], cands, best[2]
+
+
+# ---------------- 정렬 실험 ①+③ : 각인 방향을 먼저 찾고 그 방향만 읽기 ----------------
+#  ① 0° 사진에서 CRAFT 로 '기울어진 글자 상자'를 찾아 상자의 긴 변 방향 = 글줄 방향(θ)으로 봄
+#  ③ 상자를 못 찾으면 블랙햇+탑햇으로 획(음각 홈의 그늘·밝은 테두리)만 뽑아 PCA 로 가장 길게 퍼진 방향을 θ 로 봄
+#     (STROKE_TOP 8% 는 가짜 사진 1장과 개발용 3장 그림을 보고 정한 값이라 다듬지 않은 값)
+#  → θ 만큼 돌려 글줄을 가로로 세운 뒤, 거꾸로일 수 있으니 θ / θ+180 두 번 읽고 신뢰도가 높은 쪽을 고름
+#    (상자가 정사각형에 가깝거나 획이 고르게 퍼져서 방향이 애매하면 θ+90, θ+270 도 같이 읽어 4번)
+#  ※ 각도는 rotate() 와 같은 기준(양수 = 반시계)으로, 0~360 으로 돌려줌
+
+ALIGN_MIN_ASPECT = 1.3    # 상자 긴변/짧은변이 이보다 작으면 방향이 애매 (글자 1~2개짜리 상자)
+STROKE_MIN_RATIO = 1.5    # 획 PCA 의 긴축/짧은축 길이 비가 이보다 작으면 방향이 애매
+STROKE_TOP = 0.08         # 알약 안쪽에서 블랙햇+탑햇 반응이 가장 센 8% 를 획으로 봄
+
+
+def craft_rotated_boxes(g):
+    """CRAFT 의 단어 상자를 묶기(group_text_box) 전 상태로 받음 → 기울기가 살아 있는 4점 상자 목록"""
+    from easyocr.utils import reformat_input
+    r = easy_reader()
+    img, _ = reformat_input(g)
+    res = r.get_textbox(r.detector, img, canvas_size=2560, mag_ratio=1.0, text_threshold=0.7,
+                        link_threshold=0.4, low_text=0.4, poly=False, device=r.device,
+                        optimal_num_chars=None, threshold=0.2, bbox_min_score=0.2, bbox_min_size=3,
+                        max_candidates=0)
+    polys = [np.asarray(p, np.float32).reshape(-1, 2) for p in res[0]]
+    return [p for p in polys if cv2.contourArea(p) >= 40]            # 아주 작은 점은 버림
+
+
+def box_line_angle(polys):
+    """상자들의 긴 변 방향을 넓이 가중으로 평균 → (θ, 애매한지). 상자가 없으면 None
+       방향은 180° 주기라서 각도를 2배로 만들어 평균한 뒤 반으로 나눔"""
+    vec, vec_all = np.zeros(2), np.zeros(2)
+    for p in polys:
+        e1, e2 = p[1] - p[0], p[2] - p[1]
+        l1, l2 = np.hypot(*e1), np.hypot(*e2)
+        if min(l1, l2) < 1:
+            continue
+        e = e1 if l1 >= l2 else e2
+        t = np.arctan2(e[1], e[0])
+        w = l1 * l2
+        v = w * np.array([np.cos(2 * t), np.sin(2 * t)])
+        vec_all += v
+        if max(l1, l2) / min(l1, l2) >= ALIGN_MIN_ASPECT:
+            vec += v
+    if not vec.any() and not vec_all.any():
+        return None
+    ambiguous = not vec.any()                             # 길쭉한 상자가 하나도 없음 → 90° 주기로만 앎
+    v = vec_all if ambiguous else vec
+    return float(np.degrees(np.arctan2(v[1], v[0])) / 2) % 180, ambiguous
+
+
+def stroke_angle(g):
+    """③ 획 방향: 블랙햇(어두운 홈) + 탑햇(밝은 테두리) → Otsu 이진화 → 알약 가장자리 링은 빼고 → PCA.
+       돌려주는 값: (θ, 애매한지, 획 마스크)"""
+    k = max(9, int(min(g.shape) * 0.06)) | 1                 # 획 굵기보다 큰 구조 요소 (긴 변 400px 기준 약 13~25px)
+    se = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k))
+    resp = cv2.add(cv2.morphologyEx(g, cv2.MORPH_BLACKHAT, se), cv2.morphologyEx(g, cv2.MORPH_TOPHAT, se))
+    resp = cv2.GaussianBlur(resp, (3, 3), 0)
+    h, w = g.shape
+    yy, xx = np.mgrid[:h, :w]
+    inner = ((xx - w / 2) / (w / 2)) ** 2 + ((yy - h / 2) / (h / 2)) ** 2 <= 0.72 ** 2   # 가장자리 링 빼기
+    # 바깥(배경을 한 색으로 칠한 곳)은 반응이 0 이라 Otsu 기준이 너무 낮아짐 → 안쪽에서 반응 상위 STROKE_TOP 만 획으로
+    thr = np.percentile(resp[inner], 100 * (1 - STROKE_TOP))
+    m = (resp > max(thr, 1)) & inner
+    n, lab, st, _ = cv2.connectedComponentsWithStats(m.astype(np.uint8))
+    keep = np.isin(lab, [i for i in range(1, n) if st[i, cv2.CC_STAT_AREA] >= 8])          # 작은 점 잡음 빼기
+    ys, xs = np.nonzero(keep)
+    if len(xs) < 30:
+        return None, True, keep
+    wts = resp[ys, xs].astype(np.float64)
+    pts = np.stack([xs, ys], 1).astype(np.float64)
+    mu = (pts * wts[:, None]).sum(0) / wts.sum()
+    cov = ((pts - mu) * wts[:, None]).T @ (pts - mu) / wts.sum()
+    ev, evec = np.linalg.eigh(cov)                           # 오름차순 → 마지막이 긴 축
+    v = evec[:, 1]
+    ratio = float(np.sqrt(ev[1] / max(ev[0], 1e-6)))
+    return float(np.degrees(np.arctan2(v[1], v[0]))) % 180, ratio < STROKE_MIN_RATIO, keep
+
+
+def read_aligned(g, aspect, ocr, boxes_fn=None):
+    """정렬 실험 ①+③. 길쭉한 알약은 이미 가로로 폈으므로 지금 방식과 같이 0°/180° 를 읽고 신뢰도로 고름.
+       boxes_fn : 기울어진 글자 상자를 찾는 함수 (기본 CRAFT, align_exp300 의 PaddleOCR 판, 상자 없이 ③ 만 쓰려면 lambda g: [])
+       돌려주는 값: (글자, 신뢰도, 후보 [(글자, 신뢰도, 각도)], 고른 각도, 정보 dict)"""
+    info = {"src": "long", "theta": "", "n_box": 0, "polys": [], "stroke": None}
+    if aspect > 1.3:
+        angles = [0, 180]
+    else:
+        polys = (boxes_fn or craft_rotated_boxes)(g)
+        info["polys"], info["n_box"] = polys, len(polys)
+        est = box_line_angle(polys)
+        if est is not None:
+            theta, amb = est
+            info["src"] = "box"
+        else:
+            theta, amb, info["stroke"] = stroke_angle(g)
+            info["src"] = "stroke"
+            if theta is None:                                 # 획도 못 찾음 → 0° 기준 4방향
+                theta, amb, info["src"] = 0.0, True, "none"
+        if amb:
+            info["src"] += "4"
+        info["theta"] = round(theta, 1)
+        # 글줄이 θ 방향이면 반시계로 θ 만큼 돌려야 가로가 됨 (rotate 의 양수 = 반시계 = 화면에서 y 가 아래인 좌표의 각도와 같음)
+        steps = (0, 90, 180, 270) if amb else (0, 180)
+        angles = [round((theta + s) % 360, 1) for s in steps]
+    cands = read_angles(g, angles, ocr)
+    best = pick_by_conf(cands)
+    return best[0], best[1], cands, best[2], info
+
+
+ALIGNS = {"vote": "12방향 다수결 (지금 방식)", "conf": "② 12방향 중 신뢰도 최고", "box": "①+③ CRAFT 상자/획 방향 정렬",
+          "pbox": "①+③ Paddle 상자/획, 위아래는 신뢰도", "pbox_cls": "①+③ Paddle 상자/획, 위아래는 Paddle 분류기",
+          "stroke": "③ 획 방향만", "polar": "④ 극좌표 펼치기", "polar_conf": "④+② 펼친 띠와 12방향 중 신뢰도 최고",
+          "cnn": "⑤ 각도 분류기 (합성 사진 학습)", "tps": "⑥ TPS 펴기 (합성 사진 학습) + 12방향 신뢰도"}
+
+
+def read_pill(g, aspect, ocr, step, align="vote"):
+    """--align 에 따라 읽기 방식을 고름 → (글자, 신뢰도, 후보, 고른 각도, 정보 dict)
+       ①(Paddle)·③ 단독·④·⑤·⑥ 은 align_exp300.py 에 있어요 (필요할 때만 불러옴)"""
+    if align not in ("vote", "conf", "box"):
+        import align_exp300
+        return align_exp300.read_pill_ext(g, aspect, ocr, step, align)
+    if align == "box":
+        return read_aligned(g, aspect, ocr)
+    pred, conf, cands, ang = read_with_rotation(g, aspect, ocr, step, pick=align)
+    return pred, conf, cands, ang, {"src": "long" if aspect > 1.3 else "rot", "theta": "", "n_box": ""}
 
 
 # ╔════════════════════════════════════════════════════════════════════╗
@@ -475,7 +628,9 @@ def identify(pred, shape, color, db):
 OUT_COLS = ["file_name", "split", "model", "prep", "combo", "truth_drug", "truth_imprint",
             "pred_imprint", "conf", "pred_exact", "pred_edit", "pred_attr", "sim", "n_attr_cands",
             "det_shape", "det_color", "crop_ok", "candidates", "ms",
-            "form", "drug_dir", "camera_la", "rot_deg"]
+            "form", "drug_dir", "camera_la", "rot_deg",
+            "align", "angle", "align_src", "align_theta", "n_align_box"]
+DBSCORE_COLS = ["pred_dbscore", "db_imprint", "db_angle", "db_score1", "db_cand2", "db_imprint2", "db_gap", "db_rule"]   # --match dbscore 일 때만
 
 
 def load_manifest(path, split):
@@ -511,9 +666,16 @@ def main():
     ap.add_argument("--combos", default="", help="조합을 직접 지정 (예: easyocr:P2,doctr:P3). 지정하면 위 두 옵션 무시")
     ap.add_argument("--out", default="predictions.csv")
     ap.add_argument("--step", type=int, default=30, help="둥근 알약 회전 간격(도)")
+    ap.add_argument("--align", default="vote", choices=list(ALIGNS),
+                    help="읽을 방향 고르기: vote=12방향 다수결(기본) / conf=② 신뢰도 최고 / box=①+③ 상자·획 방향 정렬")
+    ap.add_argument("--match", default="edit", choices=["edit", "dbscore"],
+                    help="edit=지금처럼 자유 읽기→편집거리 (기본) / dbscore=DB 각인 후보를 PARSeq 에 넣어 점수(dbscore_exp300.py), "
+                         "결과는 pred_dbscore 열에 추가 (parseq 만)")
+    ap.add_argument("--dbscore-rule", default="concat_mean", help="dbscore 규칙 (개발용 F1 최고: concat_mean)")
     ap.add_argument("--seed", type=int, default=0, help="사진 순서 섞기 시드")
     ap.add_argument("--limit", type=int, default=0, help="시험용: 앞에서 N장만 (0=전부)")
     a = ap.parse_args()
+    cols = OUT_COLS + (DBSCORE_COLS if a.match == "dbscore" else [])
 
     items = load_manifest(a.manifest, a.split)
     rng = np.random.default_rng(a.seed)
@@ -522,17 +684,18 @@ def main():
         items = items[: a.limit]
     db = load_db(a.db)
     combos = parse_combos(a.combos, [m.strip() for m in a.models.split(",")], [p.strip() for p in a.preps.split(",")])
-    print(f"사진 {len(items)}장 ({a.split}) × 조합 {len(combos)}개, 검색 DB {len(db)}종")
+    print(f"사진 {len(items)}장 ({a.split}) × 조합 {len(combos)}개, 검색 DB {len(db)}종, 방향 고르기: {ALIGNS[a.align]}")
 
-    # 이어하기: 이미 저장된 (사진, 모델, 전처리)는 건너뜀
+    # 이어하기: 이미 저장된 (사진, 모델, 전처리)는 건너뜀 (방향 고르기 방식이 다른 줄은 섞이지 않게 같이 봄)
     done = set()
     if os.path.exists(a.out):
         with open(a.out, encoding="utf-8-sig") as f:
-            done = {(r["file_name"], r["model"], r["prep"]) for r in csv.DictReader(f)}
+            done = {(r["file_name"], r["model"], r["prep"]) for r in csv.DictReader(f)
+                    if (r.get("align") or "vote") == a.align}
         print(f"이어하기: 이미 {len(done)}건 완료")
     new_file = not os.path.exists(a.out)
     fout = open(a.out, "a", newline="", encoding="utf-8-sig")
-    writer = csv.DictWriter(fout, fieldnames=OUT_COLS)
+    writer = csv.DictWriter(fout, fieldnames=cols)
     if new_file:
         writer.writeheader()
 
@@ -550,6 +713,11 @@ def main():
         except Exception as e:
             print(f"  [건너뜀] {model_name} 을(를) 불러오지 못했어요: {e}")
             continue
+        scorer = None
+        if a.match == "dbscore" and model_name == "parseq":
+            import dbscore_exp300 as dbs
+            db_cands = dbs.db_candidates(a.db)
+            scorer = dbs.DBScorer(ocr, [c["text"] for c in db_cands])
 
         for k, (it, prep) in enumerate(need, 1):
             fn = it["file_name"]
@@ -562,17 +730,30 @@ def main():
             gray, aspect, color, ok = crops[fn]
             t0 = time.time()
             g = PREPS[prep][1](gray)
-            pred, conf, cands = read_with_rotation(g, aspect, ocr, a.step)
+            pred, conf, cands, ang, info = read_pill(g, aspect, ocr, a.step, a.align)
             shape = shape_group(aspect)
             exact, edit, attr, sim, n_c = identify(pred, shape, color, db)
-            writer.writerow({
+            combo = f"{model_name}:{prep}" + ("" if a.align == "vote" else f":{a.align}")
+            extra = {}
+            if scorer is not None:                         # DB 제약 점수 (방향은 다수결과 같은 12방향/0·180, 따로 계산)
+                sc, ang_db, nb = dbs.score_image(scorer, g, aspect, a.step)[a.dbscore_rule]
+                i1, i2 = dbs.top2(db_cands, sc)
+                extra = {"pred_dbscore": db_cands[i1]["drug_N"], "db_imprint": db_cands[i1]["text"],
+                         "db_angle": int(ang_db[i1]), "db_score1": round(float(sc[i1]), 3),
+                         "db_cand2": db_cands[i2]["drug_N"] if i2 is not None else "",
+                         "db_imprint2": db_cands[i2]["text"] if i2 is not None else "",
+                         "db_gap": round(float(sc[i1] - sc[i2]), 3) if i2 is not None else "",
+                         "db_rule": a.dbscore_rule}
+            writer.writerow({**extra,
                 "file_name": fn, "split": it["split"], "model": model_name, "prep": prep,
-                "combo": f"{model_name}:{prep}", "truth_drug": it["drug_N"], "truth_imprint": norm(it["truth"]),
+                "combo": combo, "truth_drug": it["drug_N"], "truth_imprint": norm(it["truth"]),
                 "pred_imprint": pred, "conf": round(conf, 1), "pred_exact": exact, "pred_edit": edit,
                 "pred_attr": attr, "sim": round(sim, 3), "n_attr_cands": n_c, "det_shape": shape,
                 "det_color": color, "crop_ok": int(ok), "candidates": json.dumps([c[0] for c in cands]),
                 "ms": int((time.time() - t0) * 1000), "form": it.get("form", ""), "drug_dir": it.get("drug_dir", ""),
                 "camera_la": it.get("camera_la", ""), "rot_deg": it.get("rot_deg", ""),
+                "align": a.align, "angle": ang, "align_src": info["src"], "align_theta": info["theta"],
+                "n_align_box": info["n_box"],
             })
             fout.flush()                                  # 끊겨도 여기까지는 남도록 바로 저장
             if k % 20 == 0 or k == len(need):
