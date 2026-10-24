@@ -24,3 +24,10 @@ imprint_ocr/shots2/fused*
 # 300장 실험 데이터(AI Hub, 재배포 금지 여부 확인 전)
 exp300/data/
 exp300/manifest*.csv
+
+# 로컬(Windows) 실험 결과: CSV 점수표는 올려도 되지만, 사진이 들어간 그림·채점표는 올리지 않음
+exp300/results/**/*.png
+exp300/results/**/*.jpg
+exp300/results/**/manifest*.csv
+exp300/results/**/viz_*/
+.venv/
