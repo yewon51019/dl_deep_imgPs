@@ -356,6 +356,7 @@ def main():
     ap.add_argument("--step", type=int, default=30)
     ap.add_argument("--limit", type=int, default=0, help="시험용: 앞에서 N장만")
     ap.add_argument("--no-png", action="store_true", help="그림 없이 CSV·지표만")
+    ap.add_argument("--aligned-dir", default="", help="방식별 하위 폴더에 '고른 방향으로 세운 알약'만 저장 (원본 사진 포함, GitHub 금지)")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
 
@@ -400,6 +401,17 @@ def main():
                 "camera_la": it.get("camera_la", ""), "rot_deg": it.get("rot_deg", ""), "form": it.get("form", ""),
             })
         tag = "round" if shape == "둥근" else "long"
+        if a.aligned_dir:                                  # 세운 알약만: 번호_약코드_rot회전각_cam_ang고른각도_각인판정_약판정
+            for m in METHODS:
+                r = res[m]
+                src = r["view_src"][0] if r["view_src"] is not None else al.rotate_same(g0, r["angle"])
+                sub = os.path.join(a.aligned_dir, m)
+                os.makedirs(sub, exist_ok=True)
+                jn = {"O": "O", "~": "part", "X": "X", "-": "none"}[r["judge"]]
+                ok = "OK" if r["pred_drug"] == it["drug_N"] else "NG"
+                ang = str(ang_txt(r["angle"])).replace(".", "p")
+                cv2.imencode(".png", src)[1].tofile(os.path.join(
+                    sub, f"{k:03d}_{it['drug_N']}_rot{it.get('rot_deg', '')}_cam{it.get('camera_la', '')}_ang{ang}_{jn}_{ok}.png"))
         if not a.no_png:
             cap = (f"{k:02d}  {ascii_only(it['drug_N'])}  {tag}  rot={it.get('rot_deg', '')}  "
                    f"camera={it.get('camera_la', '')}  truth={ascii_only(truth)}")
