@@ -47,6 +47,13 @@ COLUMNS = [
     "n_labels",      # 이 약의 라벨 파일 개수 (확인용)
     "front_parts",   # 앞면 각인을 띄어쓰기·구분 기호로 나눈 조각 ('|' 로 이음, 예: "SAMJIN OSTEMIN" → "SAMJIN|OSTEMIN")
     "back_parts",    # 뒷면 각인 조각 (절취선·분할 각인 처리용. 조각이 1개면 나뉘지 않은 각인)
+    "leng_long",     # 장축 길이 (mm)      ↓ 색·크기 동점 처리용 (글자 점수가 비길 때만 씀)
+    "leng_short",    # 단축 길이 (mm)
+    "thick",         # 두께 (mm)
+    "size_ratio",    # 장축/단축 (잘라낸 알약의 긴변/짧은변과 비교)
+    "line_front",    # 앞면 분할선 표시 (라벨 원문)
+    "line_back",     # 뒷면 분할선 표시
+    "chart",         # 성상 (예: '흰색의 원형 정제', 라벨 원문)
 ]
 
 PART_SEP = r"[\s/|,]+"   # 조각을 나누는 기준: 띄어쓰기, / | ,  ('37.5' 의 점, 'RPC-A' 의 하이픈은 나누지 않음)
@@ -126,6 +133,14 @@ def main():
             "n_labels": len(infos),
             "front_parts": "|".join(parts(pf)),
             "back_parts": "|".join(parts(pb)),
+            "leng_long": pick("leng_long"),
+            "leng_short": pick("leng_short"),
+            "thick": pick("thick"),
+            "size_ratio": (round(float(pick("leng_long")) / float(pick("leng_short")), 3)
+                           if pick("leng_long") and pick("leng_short") else ""),
+            "line_front": pick("line_front"),
+            "line_back": pick("line_back"),
+            "chart": pick("chart"),
         })
 
     # 3) 저장 (utf-8-sig: 엑셀에서 한글 안 깨짐)

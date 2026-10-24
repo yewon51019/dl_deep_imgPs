@@ -55,6 +55,7 @@
 | `exp300/synth_pills.py` | ⑤⑥ 학습용 합성(가짜) 둥근 알약 생성기 (Windows 글꼴, 음각 그늘, 질감, 카메라 60° 띠, 분할선. 반사광은 없음) |
 | `exp300/train_align_exp300.py` | ⑤ `--task cnn`, ⑥ `--task tps`, 합성 검증표 `--task tps_eval`. 모델은 `results\models\` (합성 사진만으로 학습) |
 | `exp300/dbscore_exp300.py` | DB 제약 점수 매기기: DB 각인 후보를 PARSeq 에 teacher forcing 으로 넣어 점수 (규칙 4가지 비교, 개발용만). `run_exp300.py --match dbscore` 로도 사용 |
+| `exp300/combined_exp300.py` | 색·크기 동점 처리, 합친 방식(C1~C4), 남은 오류 분류 (개발용만). DB 는 `search_db_v3.csv` |
 | `exp300/split_exp300.py` | 절취선·분할 각인 실험 (박스 순서 바꾸기, 조각 짝짓기). DB 는 `search_db_parts.csv` (`front_parts`/`back_parts` 열 추가) |
 | `exp300/evaluate_exp300.py` | 채점: 정확도, macro 정밀도/재현율/F1, 각인 일치율, 조건별 정확도, 혼동행렬 |
 | `exp300/correct_exp300.py` | 보정 실험 V0~V5 (OCR 재실행 없이 저장된 후보로 재채점) |
@@ -158,6 +159,17 @@
 - 전체 정확도/F1: concat_mean 74.5/74.1, max_mean 72.5/65.6 (vote 58.8/64.7, V3 76.5/81.2). 각인 정답률은 64.7 로 크게 높음.
 - 둥근은 max_mean 73.9% (V3 60.9), 길쭉은 V3 89.3% 가 최고. dbscore 는 언제나 약 하나를 골라 '판정 없음'이 없어서 정밀도가 낮아지는 편.
 - `run_exp300.py --match dbscore` (기본 concat_mean) 결과가 별도 스크립트와 51장 일치.
+
+### 색·크기 동점 처리 + 합친 방식 + 남은 오류 (개발용, `results\combined_cv410\`, `combined_exp300.py`)
+- `search_db_v3.csv`: 기존 열 + leng_long/leng_short/thick/size_ratio/line_front/line_back/chart. 색·크기까지 같은 약은 없음.
+- **ARICEPT 5mg(하양)/10mg(노랑)은 색으로만 구분** (크기 9.5×9.5×4mm 같음). crop_pill 의 색 이름 판정은 흰 알약을 '파랑'으로 봐서 못 씀
+  → Lab a·b 의 색 이름별 대표값을 개발용으로 구해(자기 사진 빼고, leave-one-out) 가장 가까운 쪽. ARICEPT 10/10, 한 가지 색 알약 25/32 맞음.
+- 정확도 / F1 (51장): 길A 72.5/79.2 · V3 76.5/81.2 · **V3+색 86.3/84.1** · **C4(V3 후보→색→dbscore) 86.3/82.5** · C3(길A 모든 후보→색→dbscore) 84.3/81.8 ·
+  C1(글자→dbscore→색) 82.4/81.0 · dbscore+색 74.5/74.1. 모두 길A 대비 나빠진 사진 0장.
+- dbscore 를 색보다 먼저 쓰면 ARICEPT 동점을 뒷면 후보('10') 점수로 잘못 깨서 손해 → 색을 먼저.
+- 남은 오류 (V3+색·C4, 7장): 각인 같은 약 1 · 마크뿐(라벨 앞뒤 뒤바뀜, E10) 2 · 라벨에 없는 면(CMC YJ, 한글) 1 · 박스 못 찾음(LIT, T41×2) 3.
+  사진을 봐야 하는 원인은 `error_notes_dev.csv` 에 사람이 본 기록으로 남김.
+- 주의: 색 대표값·동점 처리 방법은 개발용을 보고 고쳤음 (같은 글자 동점 처리, 두 색 캡슐 평균, 색 먼저). 평가용에서 다시 확인 필요.
 
 ### 절취선·분할 각인 (개발용, `results\split_cv410\`)
 - 개발용 51장 중 분할 각인 20장 (모두 길쭉). 분할 기준: 띄어쓰기·`/`·`|`·`,` (소수점·하이픈은 안 나눔).
