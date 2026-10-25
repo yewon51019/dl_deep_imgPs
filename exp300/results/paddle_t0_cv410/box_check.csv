@@ -1,0 +1,4 @@
+﻿setting,prep,photos,reads,reads_0_box,reads_0_text,mean_boxes,mean_texts,photos_all_0_box,photos_all_0_text,photos_vote_empty
+paddleocr_t0,P0,51,332,15,33,1.04,0.98,0,0,0
+paddleocr_t0,P1,51,332,9,37,1.05,0.96,0,0,0
+paddleocr(기본),P0,51,332,22,40,1.01,0.95,0,0,0
