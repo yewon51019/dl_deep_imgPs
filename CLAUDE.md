@@ -58,6 +58,7 @@
 | `exp300/viz_boxes_exp300.py` | 30장(회전각 6종×5, 카메라 60/90° 반반)에 CRAFT+PARSeq / Paddle 기본 / Paddle 0.0 의 박스·읽은 글자·정답 비교(O/~/X) 그림 |
 | `exp300/viz_round_exp300.py` | 둥근 알약 134장 전부에 같은 그림 + 요약표 |
 | `exp300/round_metrics_exp300.py` | 둥근 알약 그림 결과 → 정답률·정확도·정밀도·민감도·F1 엑셀 |
+| `exp300/angle_select_exp300.py` | 각인 정렬 ②: 저장된 각도별 [각도, 글자, 확신도](`cand_detail` 열)로 다수결 / 확신도 최고 / 확신도 합산 / 0° 한 번을 재채점 + 정렬 일관성 |
 | `exp300/diag_paddle.py` | PaddleOCR 검출 기준별 박스 수 진단 |
 | `exp300/run_exp300_paddle_b.py` | 팀원 방식('읽은 조각 중 하나라도 맞으면 성공') 보조 점수. 지금은 안 씀 |
 | `exp300/*.ipynb` | Colab 용 노트북 (A실험 `run_exp300.ipynb`, B실험 `run_exp300_paddle.ipynb`) |
@@ -107,6 +108,12 @@
 | ⑥ TPS 펴기 | RARE/ASTER/TPS++ 처럼 읽기 모델 앞에 펴는 네트워크 | 필요 |
 
 - 권장 순서: ② → ①(+못 찾으면 ③) → ④ → ⑤.
+- ② 준비 완료: `run_exp300.py` 가 이제 `cand_detail` 열(각도별 글자·확신도)을 저장한다. 예전 CSV 에는 없으므로 개발용을 새 파일 이름으로 다시 돌린 뒤 `angle_select_exp300.py` 로 채점.
+  ```powershell
+  python exp300\run_exp300.py --manifest exp300\results\manifest.csv --db exp300\results\search_db.csv --split dev --combos parseq:P0 --out exp300\results\pred_dev_angle.csv
+  python exp300\angle_select_exp300.py --pred exp300\results\pred_dev_angle.csv --db exp300\results\search_db.csv --combo parseq:P0 --out exp300\results\angle_select_dev.csv
+  ```
+- ④ 극좌표 펼치기는 '곡선 각인 박스 복구' 작업과 겹치므로 그쪽 결과를 보고 정한다.
 - 참고 논문: GO-PILL (Jo et al., 2026, Mathematics 14(2):356 — 중심선으로 직선/곡선/대각선 분류 후 펴서 ABINet), Heo et al. (2023, JMIR — 알약을 가로로 돌린 뒤 YOLOv5 글자 검출 + GRU 보정).
 - 정렬 자체가 맞았는지 재는 법: 같은 약이면 "추정 각도 − 파일 이름의 회전각"이 일정해야 한다.
 - 비교 기준은 지금 방식(12방향 다수결). 고르는 건 개발용, 평가용은 마지막에 한 번.

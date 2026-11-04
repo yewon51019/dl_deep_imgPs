@@ -388,12 +388,17 @@ def rotate(g, ang):
     return cv2.warpAffine(g, M, (nw, nh), borderMode=cv2.BORDER_REPLICATE)
 
 
+def rotation_angles(aspect, step):
+    """읽을 각도 목록. 둥근 알약은 step도 간격 360도, 길쭉한 알약은 0도/180도"""
+    return [0, 180] if aspect > 1.3 else list(range(0, 360, step))
+
+
 def read_with_rotation(g, aspect, ocr, step):
     """둥근 알약은 각인 방향을 모르니 step도씩 360도 돌며 읽고(30도면 12번),
        길쭉한 알약은 이미 가로로 폈으니 0도/180도 2번만 읽음.
        → 가장 많이 나온 글자(다수결), 동점이면 신뢰도가 높은 것을 고름.
        ※ 파일 이름의 회전각(정답 정보)은 쓰지 않아요. 실제 앱에서는 모르는 값이니까요."""
-    angles = [0, 180] if aspect > 1.3 else list(range(0, 360, step))
+    angles = rotation_angles(aspect, step)
     cands = []
     for a in angles:
         try:
@@ -475,7 +480,9 @@ def identify(pred, shape, color, db):
 OUT_COLS = ["file_name", "split", "model", "prep", "combo", "truth_drug", "truth_imprint",
             "pred_imprint", "conf", "pred_exact", "pred_edit", "pred_attr", "sim", "n_attr_cands",
             "det_shape", "det_color", "crop_ok", "candidates", "ms",
-            "form", "drug_dir", "camera_la", "rot_deg"]
+            "form", "drug_dir", "camera_la", "rot_deg", "cand_detail"]
+# cand_detail: 각도별 [각도, 읽은 글자, 확신도] 목록(JSON). 각인 정렬 실험 ②(확신도로 각도 고르기)를
+#              OCR 재실행 없이 채점하려고 추가 (angle_select_exp300.py 가 읽음). 예전 CSV 에는 이 열이 없음.
 
 
 def load_manifest(path, split):
@@ -531,8 +538,14 @@ def main():
             done = {(r["file_name"], r["model"], r["prep"]) for r in csv.DictReader(f)}
         print(f"이어하기: 이미 {len(done)}건 완료")
     new_file = not os.path.exists(a.out)
+    cols = OUT_COLS
+    if not new_file:                                     # 예전 형식 파일에 이어 쓰면 열이 어긋나지 않게 그 파일의 열을 그대로 씀
+        with open(a.out, encoding="utf-8-sig") as f:
+            cols = next(csv.reader(f), None) or OUT_COLS
+        if "cand_detail" not in cols:
+            print("  [알림] 기존 파일에 cand_detail 열이 없어 각도별 확신도는 저장되지 않아요. 새 파일 이름(--out)을 쓰세요.")
     fout = open(a.out, "a", newline="", encoding="utf-8-sig")
-    writer = csv.DictWriter(fout, fieldnames=OUT_COLS)
+    writer = csv.DictWriter(fout, fieldnames=cols, extrasaction="ignore")
     if new_file:
         writer.writeheader()
 
@@ -573,6 +586,8 @@ def main():
                 "det_color": color, "crop_ok": int(ok), "candidates": json.dumps([c[0] for c in cands]),
                 "ms": int((time.time() - t0) * 1000), "form": it.get("form", ""), "drug_dir": it.get("drug_dir", ""),
                 "camera_la": it.get("camera_la", ""), "rot_deg": it.get("rot_deg", ""),
+                "cand_detail": json.dumps([[ang, t, round(c, 3)] for ang, (t, c)
+                                           in zip(rotation_angles(aspect, a.step), cands)], ensure_ascii=False),
             })
             fout.flush()                                  # 끊겨도 여기까지는 남도록 바로 저장
             if k % 20 == 0 or k == len(need):
