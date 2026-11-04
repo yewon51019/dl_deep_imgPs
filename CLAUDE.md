@@ -58,6 +58,7 @@
 | `exp300/viz_boxes_exp300.py` | 30장(회전각 6종×5, 카메라 60/90° 반반)에 CRAFT+PARSeq / Paddle 기본 / Paddle 0.0 의 박스·읽은 글자·정답 비교(O/~/X) 그림 |
 | `exp300/viz_round_exp300.py` | 둥근 알약 134장 전부에 같은 그림 + 요약표 |
 | `exp300/round_metrics_exp300.py` | 둥근 알약 그림 결과 → 정답률·정확도·정밀도·민감도·F1 엑셀 |
+| `exp300/curve_boxes_exp300.py` | 휜 각인 박스 되찾기: CRAFT 글자 점수 지도 → 글자 하나씩 → 원 맞추기(글자별 기울기) → 원호 따라 다음 글자 탐색·추가 → IoU 정리 → 펴서 PARSeq 로 읽기. `--selftest` 는 합성 ARICEPT 로 확인 |
 | `exp300/diag_paddle.py` | PaddleOCR 검출 기준별 박스 수 진단 |
 | `exp300/run_exp300_paddle_b.py` | 팀원 방식('읽은 조각 중 하나라도 맞으면 성공') 보조 점수. 지금은 안 씀 |
 | `exp300/*.ipynb` | Colab 용 노트북 (A실험 `run_exp300.ipynb`, B실험 `run_exp300_paddle.ipynb`) |
