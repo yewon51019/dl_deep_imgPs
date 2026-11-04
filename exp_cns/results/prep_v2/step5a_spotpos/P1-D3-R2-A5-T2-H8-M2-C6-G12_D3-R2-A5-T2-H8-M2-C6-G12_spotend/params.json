@@ -1,0 +1,28 @@
+{
+  "step": "5a",
+  "code": "P1-D3-R2-A5-T2-H8-M2-C6-G12",
+  "params": {
+    "ch": "auto",
+    "k": 7,
+    "s": 1.0,
+    "gauss": "G12",
+    "prev": "D3-R2-A5-T2-H8-M2-C6-G12",
+    "mean_k": 5,
+    "clip": 8.0,
+    "tile": 8,
+    "hist": "clahe",
+    "amount": 2.0,
+    "sigma": 1.5,
+    "thr": 10,
+    "spot_pos": "end",
+    "h": 12,
+    "bh": 13,
+    "min_len": 18,
+    "dark": 6,
+    "color": 6,
+    "max_area": 60,
+    "final_h": 6
+  },
+  "n_images": 432,
+  "date": "2026-10-31 20:56"
+}

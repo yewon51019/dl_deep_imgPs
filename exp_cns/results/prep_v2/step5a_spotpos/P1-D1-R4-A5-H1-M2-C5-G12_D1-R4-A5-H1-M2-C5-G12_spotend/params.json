@@ -1,0 +1,28 @@
+{
+  "step": "5a",
+  "code": "P1-D1-R4-A5-H1-M2-C5-G12",
+  "params": {
+    "ch": "min",
+    "k": 7,
+    "s": 1.0,
+    "gauss": "G12",
+    "prev": "D1-R4-A5-H1-M2-C5-G12",
+    "mean_k": 5,
+    "clip": 2.0,
+    "tile": 8,
+    "hist": "he",
+    "amount": 2.0,
+    "sigma": 3.0,
+    "thr": 2,
+    "spot_pos": "end",
+    "h": 12,
+    "bh": 13,
+    "min_len": 18,
+    "dark": 6,
+    "color": 6,
+    "max_area": 60,
+    "final_h": 6
+  },
+  "n_images": 432,
+  "date": "2026-10-31 21:02"
+}

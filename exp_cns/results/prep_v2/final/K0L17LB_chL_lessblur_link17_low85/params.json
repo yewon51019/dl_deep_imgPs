@@ -1,0 +1,33 @@
+{
+  "step": "6",
+  "code": "K0L17LB_chL_lessblur_link17_low85",
+  "params": {
+    "ch": "L",
+    "k": 3,
+    "s": 0.8,
+    "gauss": "k3s0.8",
+    "prev": "c3-Q4-F4-P1-D3-R3-A5-T3-H8-M2-C6-G12",
+    "mean_k": 1,
+    "clip": 3.0,
+    "tile": 12,
+    "hist": "clahe",
+    "amount": 2.0,
+    "sigma": 2.0,
+    "thr": 10,
+    "spot_pos": "end",
+    "h": 12,
+    "bh": 13,
+    "min_len": 18,
+    "dark": 6,
+    "color": 4,
+    "max_area": 60,
+    "final_h": 0,
+    "bright": true,
+    "protect": true,
+    "add_alpha": 0,
+    "link_len": 17,
+    "link_low": 85
+  },
+  "date": "2026-10-31 23:43",
+  "from": "K0L17-c3-Q4-F4-P1-D3-R3-A5-T3-H8-M2-C6-G12_auto_link17_low85"
+}

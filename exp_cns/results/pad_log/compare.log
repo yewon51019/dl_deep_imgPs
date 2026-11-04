@@ -1,0 +1,5 @@
+{'part': 'dev', 'photos': 468, 'read_pft1': 323, 'read_pad': 224, 'read_better': 15, 'read_worse': 114, 'drug_pft1': 409, 'drug_pad': 292, 'drug_better': 3, 'drug_worse': 120, 'F_read_pft1': 11, 'F_read_pad': 5}
+{'part': 'val', 'photos': 828, 'read_pft1': 548, 'read_pad': 392, 'read_better': 18, 'read_worse': 174, 'drug_pft1': 648, 'drug_pad': 521, 'drug_better': 1, 'drug_worse': 128, 'F_read_pft1': 0, 'F_read_pad': 0}
+각인별 변화: [(('YI', '나빠짐'), 16), (('H5', '나빠짐'), 12), (('S', '나빠짐'), 12), (('BM', '나빠짐'), 12), (('MSD711', '나빠짐'), 12), (('RN', '나빠짐'), 11), (('HB', '나빠짐'), 11), (('JICA', '나빠짐'), 11), (('XL', '나빠짐'), 10), (('T', '나빠짐'), 10), (('DID', '나빠짐'), 10), (('DA', '나빠짐'), 9), (('SINILMCM500', '나빠짐'), 9), (('SCDGF', '나빠짐'), 9), (('YH', '나빠짐'), 8), (('DASRC', '좋아짐'), 7)]
+읽기 합계 -255장, 좋아짐 33 / 나빠짐 288, 약 정확도 안 떨어짐 False → 채택 안 함
+저장: D:\dl_deep_imgps\exp_cns\results\pad_v1

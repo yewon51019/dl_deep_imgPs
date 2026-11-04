@@ -1,0 +1,10 @@
+{
+  "code": "Sclahe4_L_c4_t8",
+  "from": "",
+  "params": {
+    "kind": "simple",
+    "blur_k": 0,
+    "clip": 4.0,
+    "tile": 8
+  }
+}

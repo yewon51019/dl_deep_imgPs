@@ -1,0 +1,50 @@
+Using cache found in C:\Users\a4696/.cache\torch\hub\baudm_parseq_main
+W1102 01:18:54.194000 12672 Lib\site-packages\torch\utils\flop_counter.py:113] triton not found; flop counting will not work for triton kernels
+D:\dl_deep_imgps\.venv\Lib\site-packages\timm\models\helpers.py:7: FutureWarning: Importing from timm.models.helpers is deprecated, please import via timm.models
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.models", FutureWarning)
+[trainval] 828장, 글자 찾기 paddle_ft1_u2.0 (저장된 상자 사용), 전처리 orig → D:\dl_deep_imgps\exp_cns\results\ocr_v1\trainval\paddle_ft1_u2.0\orig_alignlong_line_porient
+  20/828  정답률 40.0%
+  40/828  정답률 67.5%
+  60/828  정답률 78.3%
+  80/828  정답률 83.8%
+  100/828  정답률 82.0%
+  120/828  정답률 68.3%
+  140/828  정답률 70.0%
+  160/828  정답률 71.9%
+  180/828  정답률 73.9%
+  200/828  정답률 72.5%
+  220/828  정답률 66.4%
+  240/828  정답률 64.6%
+  260/828  정답률 67.3%
+  280/828  정답률 68.6%
+  300/828  정답률 68.3%
+  320/828  정답률 70.3%
+  340/828  정답률 69.4%
+  360/828  정답률 70.8%
+  380/828  정답률 72.1%
+  400/828  정답률 73.0%
+  420/828  정답률 71.0%
+  440/828  정답률 71.8%
+  460/828  정답률 72.4%
+  480/828  정답률 73.5%
+  500/828  정답률 73.0%
+  520/828  정답률 70.4%
+  540/828  정답률 68.5%
+  560/828  정답률 68.6%
+  580/828  정답률 69.7%
+  600/828  정답률 68.7%
+  620/828  정답률 68.4%
+  640/828  정답률 68.8%
+  660/828  정답률 69.4%
+  680/828  정답률 68.5%
+  700/828  정답률 67.9%
+  720/828  정답률 67.5%
+  740/828  정답률 68.2%
+  760/828  정답률 68.2%
+  780/828  정답률 66.4%
+  800/828  정답률 66.2%
+  820/828  정답률 66.1%
+  828/828  정답률 65.5%
+
+정답률 65.5% (542/828), CER 평균 0.296, fallback 3장, O·0 끼어듦 25장
+한 장당 평균 ms: 전처리 1 / 글자 찾기 202 / 읽기 117 (12방향 합)

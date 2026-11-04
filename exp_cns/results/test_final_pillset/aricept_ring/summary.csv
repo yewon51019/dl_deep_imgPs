@@ -1,0 +1,4 @@
+﻿method,맞음,다른 용량,판정 없음 (ARICEPT 동점),판정 없음 (그 밖),다른 약,truth_top1,truth_top3,median_rank
+pft1,0,0,9,7,8,9,16,2
+SIM,0,0,5,8,11,5,11,5
+RING,0,0,9,6,9,9,12,4

@@ -1,0 +1,7 @@
+﻿det,prep,n,acc,n_correct,cer,fallback,extra_o0,acc_cam75,acc_cam90,vs_orig_better,vs_orig_worse,ms_prep,ms_det_12dir,ms_rec_12dir
+craft,K0L17-c3-Q4-F4-P1-D3-R3-A5-T3-H8-M2-C6-G12_auto_link17_low85,468,42.5,199,0.469,39,36,41.9,43.2,32,49,456.5,663.3,261.6
+craft,K0L17R6-q2-Q2-F4-P1-D4-R4-A4-T4-H8-M2-C6-G12_auto_link17_low85_rim0.6,468,48.1,225,0.442,38,41,45.7,50.4,53,44,485.6,570.4,196.8
+craft,orig,468,46.2,216,0.448,66,25,43.2,49.1,,,1.1,598.6,202.9
+paddle_t0,K0L17-c3-Q4-F4-P1-D3-R3-A5-T3-H8-M2-C6-G12_auto_link17_low85,468,50.0,234,0.42,9,24,47.9,52.1,41,52,456.5,398.5,225.6
+paddle_t0,K0L17R6-q2-Q2-F4-P1-D4-R4-A4-T4-H8-M2-C6-G12_auto_link17_low85_rim0.6,468,50.0,234,0.442,17,24,49.1,50.9,36,47,485.6,359.9,203.4
+paddle_t0,orig,468,52.4,245,0.428,39,22,53.4,51.3,,,1.0,513.7,200.8

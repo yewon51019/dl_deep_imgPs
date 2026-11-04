@@ -1,0 +1,45 @@
+﻿.\.venv_paddle_gpu\Scripts\python.exe : INFO: Could not find files for the given pattern(s).
+At line:1 char:406
++ ... \dbpp_all'; .\.venv_paddle_gpu\Scripts\python.exe exp_cns\det2x_boxes ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (INFO: Could not...ven pattern(s).:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+D:\dl_deep_imgps\.venv_paddle_gpu\Lib\site-packages\paddle\utils\cpp_extension\extension_utils.py:712: UserWarning: No 
+ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache fr
+om: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[2026/11/01 11:42:15] ppocr WARNING: Skipping import of the encryption module.
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+W1101 11:42:15.777064  5040 gpu_resources.cc:116] Please NOTE: device: 0, GPU Compute Capability: 6.1, Driver API Versi
+on: 12.6, Runtime API Version: 11.8
+[2026/11/01 11:42:16] ppocr INFO: load pretrain successful from D:\dl_deep_imgps\third_party\PaddleOCR_2x\pretrain\det_r50_db++_icdar15_train\best_accuracy
+W1101 11:42:16.186878  5040 gpu_resources.cc:245] WARNING: device: 0. The installed Paddle is compiled with CUDNN 8.9, 
+but CUDNN version in your machine is 8.9, which may cause serious incompatible bug. Please recompile or reinstall Paddl
+e with compatible CUDNN version.
+[dev] 전체 468장, dbpp_th0.1, 전처리 orig → D:\dl_deep_imgps\exp_cns\results\ocr_v1\dev\dbpp_th0.1\orig_alignlong
+  20/468  경과 15초
+  40/468  경과 30초
+  60/468  경과 45초
+  80/468  경과 59초
+  100/468  경과 74초
+  120/468  경과 81초
+  140/468  경과 89초
+  160/468  경과 100초
+  180/468  경과 108초
+  200/468  경과 110초
+  220/468  경과 115초
+  240/468  경과 123초
+  260/468  경과 136초
+  280/468  경과 148초
+  300/468  경과 155초
+  320/468  경과 170초
+  340/468  경과 178초
+  360/468  경과 185초
+  380/468  경과 195초
+  400/468  경과 206초
+  420/468  경과 210초
+  440/468  경과 218초
+  460/468  경과 232초
+  468/468  경과 233초
+저장: D:\dl_deep_imgps\exp_cns\results\ocr_v1\dev\dbpp_th0.1\orig_alignlong\boxes.json  /  방향당 상자 평균 0.9개, 상자 0개인 방향 43%

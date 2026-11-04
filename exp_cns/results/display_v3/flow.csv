@@ -1,0 +1,5 @@
+﻿part,group,n,sure,sure_share,sure_right,sure_wrong,cands,cands_share,cands_include,request,request_share,shown_include_all
+val,전체,828,403,48.7,403,0,391,47.2,83.4,34,4.1,88.0
+dev,전체,468,274,58.5,273,1,183,39.1,80.3,11,2.4,89.7
+dev,K-000147 제외,444,274,61.7,273,1,159,35.8,92.5,11,2.5,94.6
+test,전체,432,170,39.4,166,4,251,58.1,94.4,11,2.5,93.3

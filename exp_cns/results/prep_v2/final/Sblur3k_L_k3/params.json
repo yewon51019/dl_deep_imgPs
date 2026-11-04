@@ -1,0 +1,10 @@
+{
+  "code": "Sblur3k_L_k3",
+  "from": "",
+  "params": {
+    "kind": "simple",
+    "blur_k": 3,
+    "clip": 0,
+    "tile": 0
+  }
+}

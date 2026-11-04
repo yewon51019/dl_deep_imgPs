@@ -1,0 +1,5 @@
+try5/K-000041_0_2_1_2_75_000_200.png	[{"transcription": "B", "points": [[134, 131], [263, 154], [244, 230], [131, 211]], "difficult": false}]
+try5/K-000059_0_0_0_2_75_300_200.png	[{"transcription": "G", "points": [[277, 257], [125, 257], [125, 102], [277, 102]], "difficult": false}]
+try5/K-000030_0_2_0_2_75_180_200.png	[{"transcription": "CKD", "points": [[135, 154], [65, 100], [85, 76], [152, 130]], "difficult": false}]
+try5/K-000260_0_0_0_2_75_060_200.png	[{"transcription": "TEMPORARY", "points": [[85, 135], [230, 68], [306, 228], [169, 285]], "difficult": false}]
+try5/K-000034_0_0_0_2_75_240_200.png	[{"transcription": "YH", "points": [[63, 162], [287, 93], [323, 195], [141, 250]], "difficult": false}]

@@ -1,0 +1,17 @@
+{
+  "step": "3b",
+  "code": "T3-H8-M2-C6-G12",
+  "params": {
+    "ch": "auto",
+    "k": 7,
+    "s": 1.0,
+    "gauss": "G12",
+    "prev": "H8-M2-C6-G12",
+    "mean_k": 5,
+    "clip": 8.0,
+    "tile": 12,
+    "hist": "clahe"
+  },
+  "n_images": 432,
+  "date": "2026-10-31 20:18"
+}

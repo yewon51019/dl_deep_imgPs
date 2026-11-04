@@ -1,0 +1,40 @@
+﻿.\.venv\Scripts\python.exe : Using cache found in C:\Users\a4696/.cache\torch\hub\baudm_parseq_main
+At line:1 char:333
++ ... deep_imgps; .\.venv\Scripts\python.exe exp_cns\ocr_cns.py --split dev ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Using cache fou...udm_parseq_main:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+W1101 11:08:10.338000 26316 Lib\site-packages\torch\utils\flop_counter.py:113] triton not found; flop counting will not
+ work for triton kernels
+D:\dl_deep_imgps\.venv\Lib\site-packages\timm\models\helpers.py:7: FutureWarning: Importing from timm.models.helpers is
+ deprecated, please import via timm.models
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.models", FutureWarning)
+[dev] 468장, 글자 찾기 paddle_t0 (저장된 상자 사용), 전처리 orig → D:\dl_deep_imgps\exp_cns\results\ocr_v1\dev\paddle_t0\orig_alignlong_line_retryK0L17R6
+  20/468  정답률 80.0%
+  40/468  정답률 80.0%
+  60/468  정답률 53.3%
+  80/468  정답률 43.8%
+  100/468  정답률 47.0%
+  120/468  정답률 49.2%
+  140/468  정답률 50.7%
+  160/468  정답률 51.9%
+  180/468  정답률 57.2%
+  200/468  정답률 59.5%
+  220/468  정답률 61.8%
+  240/468  정답률 59.2%
+  260/468  정답률 57.3%
+  280/468  정답률 59.3%
+  300/468  정답률 59.7%
+  320/468  정답률 60.3%
+  340/468  정답률 62.1%
+  360/468  정답률 62.2%
+  380/468  정답률 63.7%
+  400/468  정답률 63.0%
+  420/468  정답률 64.8%
+  440/468  정답률 64.1%
+  460/468  정답률 61.5%
+  468/468  정답률 61.1%
+
+정답률 61.1% (286/468), CER 평균 0.356, fallback 12장, O·0 끼어듦 22장
+한 장당 평균 ms: 전처리 1 / 글자 찾기 370 / 읽기 126 (12방향 합)

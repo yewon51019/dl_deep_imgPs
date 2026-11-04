@@ -1,0 +1,17 @@
+{
+  "step": "3a",
+  "code": "H6-M2-C5-G12",
+  "params": {
+    "ch": "min",
+    "k": 7,
+    "s": 1.0,
+    "gauss": "G12",
+    "prev": "M2-C5-G12",
+    "mean_k": 5,
+    "clip": 4.0,
+    "tile": 8,
+    "hist": "clahe"
+  },
+  "n_images": 432,
+  "date": "2026-10-31 20:14"
+}

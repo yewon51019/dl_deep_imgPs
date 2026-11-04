@@ -1,0 +1,12 @@
+정보: 제공된 패턴에 해당되는 파일을 찾지 못했습니다.
+D:\dl_deep_imgps\.venv_paddle_train\Lib\site-packages\paddle\utils\cpp_extension\extension_utils.py:712: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+W1101 20:47:39.062718 15392 gpu_resources.cc:116] Please NOTE: device: 0, GPU Compute Capability: 6.1, Driver API Version: 12.6, Runtime API Version: 11.8
+Skipping import of the encryption module.
+[2026/11/01 20:47:39] ppocr INFO: load pretrain successful from D:/dl_deep_imgps/exp_cns/results/det_ft2/model/iter_epoch_50
+[2026/11/01 20:47:39] ppocr INFO: Export inference config file to D:/dl_deep_imgps/exp_cns/results/det_ft2/infer_ep50\inference.yml
+W1101 20:47:39.467584 15392 gpu_resources.cc:245] WARNING: device: 0. The installed Paddle is compiled with CUDNN 8.9, but CUDNN version in your machine is 8.9, which may cause serious incompatible bug. Please recompile or reinstall Paddle with compatible CUDNN version.
+W1101 20:47:40.533010 15392 eager_utils.cc:3584] Paddle static graph(PIR) not support input out tensor for now!!!!!
+Skipping import of the encryption module
+[2026/11/01 20:47:41] ppocr INFO: inference model is saved to D:/dl_deep_imgps/exp_cns/results/det_ft2/infer_ep50\inference

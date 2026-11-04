@@ -1,0 +1,15 @@
+����: ������ ���Ͽ� �ش�Ǵ� ������ ã�� ���߽��ϴ�.
+D:\dl_deep_imgps\.venv_paddle_gpu\Lib\site-packages\paddle\utils\cpp_extension\extension_utils.py:712: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+W1102 02:12:27.610430 24528 gpu_resources.cc:116] Please NOTE: device: 0, GPU Compute Capability: 6.1, Driver API Version: 12.6, Runtime API Version: 11.8
+W1102 02:12:27.819620 24528 gpu_resources.cc:245] WARNING: device: 0. The installed Paddle is compiled with CUDNN 8.9, but CUDNN version in your machine is 8.9, which may cause serious incompatible bug. Please recompile or reinstall Paddle with compatible CUDNN version.
+[주의] 평가용(test)입니다. 규칙상 마지막에 한 번만 돌립니다.
+  Paddle 장치: gpu:0
+  50/288  경과 23초
+  100/288  경과 38초
+  150/288  경과 58초
+  200/288  경과 71초
+  250/288  경과 88초
+  288/288  경과 99초
+저장: D:\dl_deep_imgps\exp_cns\results\ocr_v1\exp300test\paddle_ft1_u2.0\orig_alignlong\boxes.json  /  한 장당 검출 평균 317ms (첫 장 4074ms 포함 — 모델 준비 시간)

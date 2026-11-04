@@ -1,0 +1,24 @@
+Using cache found in C:\Users\a4696/.cache\torch\hub\baudm_parseq_main
+W1102 02:14:41.934000 16196 Lib\site-packages\torch\utils\flop_counter.py:113] triton not found; flop counting will not work for triton kernels
+D:\dl_deep_imgps\.venv\Lib\site-packages\timm\models\helpers.py:7: FutureWarning: Importing from timm.models.helpers is deprecated, please import via timm.models
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.models", FutureWarning)
+[주의] 평가용(test)입니다. 규칙상 마지막에 한 번만 돌립니다.
+[exp300test] 288장, 글자 찾기 paddle_ft1_u2.0 (저장된 상자 사용), 전처리 orig → D:\dl_deep_imgps\exp_cns\results\ocr_v1\exp300test\paddle_ft1_u2.0\orig_alignlong_line
+  20/288  정답률 45.0%
+  40/288  정답률 32.5%
+  60/288  정답률 21.7%
+  80/288  정답률 32.5%
+  100/288  정답률 37.0%
+  120/288  정답률 45.8%
+  140/288  정답률 41.4%
+  160/288  정답률 47.5%
+  180/288  정답률 53.3%
+  200/288  정답률 50.0%
+  220/288  정답률 48.2%
+  240/288  정답률 49.2%
+  260/288  정답률 48.5%
+  280/288  정답률 51.8%
+  288/288  정답률 50.7%
+
+정답률 50.7% (146/288), CER 평균 0.367, fallback 0장, O·0 끼어듦 28장
+한 장당 평균 ms: 전처리 3 / 글자 찾기 317 / 읽기 190 (12방향 합)

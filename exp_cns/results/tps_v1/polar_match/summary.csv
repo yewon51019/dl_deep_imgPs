@@ -1,0 +1,6 @@
+﻿group,n,unsure,base_correct,base_acc,polar_correct,polar_acc,better,worse,changed_still_wrong,base_none,polar_none,base_top3,polar_top3
+dev 전체,468,207,408,87.2,393,84.0,2,17,13,32,41,91.2,90.8
+dev K-000147 제외,444,183,408,91.9,393,88.5,2,17,7,20,27,96.2,95.7
+dev 긴 알약,189,69,188,99.5,184,97.4,0,4,1,0,1,99.5,97.9
+dev 그 외,279,138,220,78.9,209,74.9,2,13,12,32,40,85.7,86.0
+싱귤레어 SINGULAIR 면 (참고),12,12,10,83.3,11,91.7,1,0,0,1,0,91.7,100.0

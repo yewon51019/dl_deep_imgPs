@@ -1,0 +1,11 @@
+﻿sheet,no,file_name,truth,read,auto_reason,cls,need_fix,visible_text,note
+1,1,K-000030_0_2_0_2_75_180_200.png,CKD250,CKD,wrong_read,A,0,CKD,CKD 상자 맞음. 250 은 어두운 쪽 반에 있을 텐데 사진에서 안 보임
+1,2,K-000030_0_2_0_2_90_120_200.png,CKD250,CKD,wrong_read,B,1,CKD250,어두운 반쪽에 250 이 흐리게 보임 - 상자 없음
+1,3,K-000034_0_0_0_2_75_240_200.png,YH,YH,big_box,E,1,YH,알약 전체 상자 - YH 둘레로 다시
+1,4,K-000034_0_0_0_2_90_240_200.png,YH,YH,big_box,E,1,YH,알약 전체 상자 - YH 둘레로 다시
+1,5,K-000043_0_0_1_2_90_240_200.png,DG,X,wrong_read+no_box,G,0,,"십자 분할선만 보임, DG 각인 없음 (라벨 앞뒤 뒤바뀜 추정) - 상자 0개가 맞는 라벨"
+2,6,K-000080_0_0_0_2_75_300_200.png,YH,MB,wrong_read+big_box,E,1,MB,"알약 전체 상자. 사진은 MB (정답 YH 는 다른 면, 라벨 뒤바뀜 추정)"
+2,7,K-000080_0_0_0_2_90_180_200.png,YH,MB,wrong_read+big_box,E,1,MB,사진 전체 상자. 사진은 MB (라벨 뒤바뀜 추정)
+2,8,K-000105_0_2_0_2_90_180_200.png,CKD250,250CKD,wrong_read,A,0,CKD250,"CKD·250 상자 둘 다 맞음, 이어 붙인 순서만 틀림"
+2,9,K-000163_0_2_0_2_75_240_200.png,JEILKT40,KT40,wrong_read,B,1,JEILKT40,두 줄(JEIL / KT40)인데 상자 하나가 KT40 + JEIL 일부만 덮음 - 줄마다 상자
+2,10,K-000180_0_0_0_2_75_180_200.png,DW,5,wrong_read+big_box,E,1,5,"알약 전체 상자. 사진은 5 (정답 DW 는 다른 면, 라벨 뒤바뀜 추정)"

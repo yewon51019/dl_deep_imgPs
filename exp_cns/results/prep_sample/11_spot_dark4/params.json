@@ -1,0 +1,39 @@
+{
+  "folder": "11_spot_dark4",
+  "group": "11",
+  "target": "spot",
+  "changed": {
+    "spot_dark": 4
+  },
+  "config": {
+    "gauss_k": 5,
+    "gauss_s": 1.0,
+    "mean_k": 3,
+    "hist": "clahe",
+    "clip": 2.0,
+    "tile": 8,
+    "sobel_k": 3,
+    "close_k": 5,
+    "canny": "50_150",
+    "dil_k": 3,
+    "dil_it": 1,
+    "sift_ct": 0.04,
+    "lbp_r": 1,
+    "spot_h": 12,
+    "spot_bh": 13,
+    "spot_len": 18,
+    "spot_dark": 4,
+    "spot_color": 6,
+    "spot_area": 60,
+    "spot_final": 6
+  },
+  "n_images": 72,
+  "sample_only": false,
+  "env": {
+    "cpu": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+    "opencv": "4.10.0",
+    "numpy": "2.3.5",
+    "cv2_threads": 12,
+    "date": "2026-10-31 18:46"
+  }
+}

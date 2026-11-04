@@ -1,0 +1,4 @@
+﻿config,photos,truth_top1_tied,truth_top3,none,other_drug
+base,24,9,16,16,8
+pft1SUP,24,10,17,16,8
+SIMSUP,24,6,12,13,11

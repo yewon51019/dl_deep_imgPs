@@ -1,0 +1,20 @@
+{
+  "step": "4a",
+  "code": "A5-T2-H8-M2-C6-G12",
+  "params": {
+    "ch": "auto",
+    "k": 7,
+    "s": 1.0,
+    "gauss": "G12",
+    "prev": "T2-H8-M2-C6-G12",
+    "mean_k": 5,
+    "clip": 8.0,
+    "tile": 8,
+    "hist": "clahe",
+    "amount": 2.0,
+    "sigma": 2.0,
+    "thr": 0
+  },
+  "n_images": 432,
+  "date": "2026-10-31 20:33"
+}

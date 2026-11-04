@@ -1,0 +1,257 @@
+정보: 제공된 패턴에 해당되는 파일을 찾지 못했습니다.
+D:\dl_deep_imgps\.venv_paddle_train\Lib\site-packages\paddle\utils\cpp_extension\extension_utils.py:712: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+Skipping import of the encryption module.
+[2026/11/01 15:58:59] ppocr INFO: Architecture : 
+[2026/11/01 15:58:59] ppocr INFO:     Backbone : 
+[2026/11/01 15:58:59] ppocr INFO:         det : True
+[2026/11/01 15:58:59] ppocr INFO:         model_size : medium
+[2026/11/01 15:58:59] ppocr INFO:         name : PPLCNetV4
+[2026/11/01 15:58:59] ppocr INFO:     Head : 
+[2026/11/01 15:58:59] ppocr INFO:         aux_in_channels : 256
+[2026/11/01 15:58:59] ppocr INFO:         fix_nan : True
+[2026/11/01 15:58:59] ppocr INFO:         k : 50
+[2026/11/01 15:58:59] ppocr INFO:         name : DBHead
+[2026/11/01 15:58:59] ppocr INFO:     Neck : 
+[2026/11/01 15:58:59] ppocr INFO:         intracl : True
+[2026/11/01 15:58:59] ppocr INFO:         name : RepLKPAN
+[2026/11/01 15:58:59] ppocr INFO:         out_channels : 256
+[2026/11/01 15:58:59] ppocr INFO:     Transform : None
+[2026/11/01 15:58:59] ppocr INFO:     algorithm : DB
+[2026/11/01 15:58:59] ppocr INFO:     model_type : det
+[2026/11/01 15:58:59] ppocr INFO: Eval : 
+[2026/11/01 15:58:59] ppocr INFO:     dataset : 
+[2026/11/01 15:58:59] ppocr INFO:         data_dir : D:/dl_deep_imgps/exp_cns/results/det_ft1/data/
+[2026/11/01 15:58:59] ppocr INFO:         label_file_list : ['D:/dl_deep_imgps/exp_cns/results/det_ft1/data/val.txt']
+[2026/11/01 15:58:59] ppocr INFO:         name : SimpleDataSet
+[2026/11/01 15:58:59] ppocr INFO:         transforms : 
+[2026/11/01 15:58:59] ppocr INFO:             DecodeImage : 
+[2026/11/01 15:58:59] ppocr INFO:                 channel_first : False
+[2026/11/01 15:58:59] ppocr INFO:                 img_mode : BGR
+[2026/11/01 15:58:59] ppocr INFO:             DetLabelEncode : None
+[2026/11/01 15:58:59] ppocr INFO:             DetResizeForTest : None
+[2026/11/01 15:58:59] ppocr INFO:             NormalizeImage : 
+[2026/11/01 15:58:59] ppocr INFO:                 mean : [0.485, 0.456, 0.406]
+[2026/11/01 15:58:59] ppocr INFO:                 order : hwc
+[2026/11/01 15:58:59] ppocr INFO:                 scale : 1./255.
+[2026/11/01 15:58:59] ppocr INFO:                 std : [0.229, 0.224, 0.225]
+[2026/11/01 15:58:59] ppocr INFO:             ToCHWImage : None
+[2026/11/01 15:58:59] ppocr INFO:             KeepKeys : 
+[2026/11/01 15:58:59] ppocr INFO:                 keep_keys : ['image', 'shape', 'polys', 'ignore_tags']
+[2026/11/01 15:58:59] ppocr INFO:     loader : 
+[2026/11/01 15:58:59] ppocr INFO:         batch_size_per_card : 1
+[2026/11/01 15:58:59] ppocr INFO:         drop_last : False
+[2026/11/01 15:58:59] ppocr INFO:         num_workers : 2
+[2026/11/01 15:58:59] ppocr INFO:         shuffle : False
+[2026/11/01 15:58:59] ppocr INFO: Global : 
+[2026/11/01 15:58:59] ppocr INFO:     cal_metric_during_train : False
+[2026/11/01 15:58:59] ppocr INFO:     checkpoints : None
+[2026/11/01 15:58:59] ppocr INFO:     d2s_train_image_shape : [3, 640, 640]
+[2026/11/01 15:58:59] ppocr INFO:     debug : False
+[2026/11/01 15:58:59] ppocr INFO:     distributed : False
+[2026/11/01 15:58:59] ppocr INFO:     ema_decay : 0.9996
+[2026/11/01 15:58:59] ppocr INFO:     ema_decay_type : threshold
+[2026/11/01 15:58:59] ppocr INFO:     epoch_num : 50
+[2026/11/01 15:58:59] ppocr INFO:     eval_batch_step : [0, 100000]
+[2026/11/01 15:58:59] ppocr INFO:     infer_img : doc/imgs_en/img_10.jpg
+[2026/11/01 15:58:59] ppocr INFO:     log_smooth_window : 20
+[2026/11/01 15:58:59] ppocr INFO:     model_name : PP-OCRv6_medium_det
+[2026/11/01 15:58:59] ppocr INFO:     pretrained_model : D:/dl_deep_imgps/exp_cns/results/det_ft1/pretrained/PP-OCRv6_medium_det_pretrained
+[2026/11/01 15:58:59] ppocr INFO:     print_batch_step : 10
+[2026/11/01 15:58:59] ppocr INFO:     save_epoch_step : 10
+[2026/11/01 15:58:59] ppocr INFO:     save_inference_dir : None
+[2026/11/01 15:58:59] ppocr INFO:     save_model_dir : D:/dl_deep_imgps/exp_cns/results/det_ft1/model_speed
+[2026/11/01 15:58:59] ppocr INFO:     save_res_path : ./checkpoints/det_db/predicts_db.txt
+[2026/11/01 15:58:59] ppocr INFO:     use_ema : True
+[2026/11/01 15:58:59] ppocr INFO:     use_gpu : True
+[2026/11/01 15:58:59] ppocr INFO:     use_visualdl : False
+[2026/11/01 15:58:59] ppocr INFO: Loss : 
+[2026/11/01 15:58:59] ppocr INFO:     alpha : 5
+[2026/11/01 15:58:59] ppocr INFO:     aux_weight_p2 : 0.4
+[2026/11/01 15:58:59] ppocr INFO:     aux_weight_p3 : 0.3
+[2026/11/01 15:58:59] ppocr INFO:     aux_weight_p4 : 0.2
+[2026/11/01 15:58:59] ppocr INFO:     beta : 10
+[2026/11/01 15:58:59] ppocr INFO:     focal_alpha : 0.25
+[2026/11/01 15:58:59] ppocr INFO:     focal_gamma : 2.5
+[2026/11/01 15:58:59] ppocr INFO:     main_loss_type : DiceFocalLoss
+[2026/11/01 15:58:59] ppocr INFO:     name : DBLoss
+[2026/11/01 15:58:59] ppocr INFO: Metric : 
+[2026/11/01 15:58:59] ppocr INFO:     main_indicator : hmean
+[2026/11/01 15:58:59] ppocr INFO:     name : DetMetric
+[2026/11/01 15:58:59] ppocr INFO: Optimizer : 
+[2026/11/01 15:58:59] ppocr INFO:     beta1 : 0.9
+[2026/11/01 15:58:59] ppocr INFO:     beta2 : 0.999
+[2026/11/01 15:58:59] ppocr INFO:     lr : 
+[2026/11/01 15:58:59] ppocr INFO:         learning_rate : 0.0001
+[2026/11/01 15:58:59] ppocr INFO:         name : Cosine
+[2026/11/01 15:58:59] ppocr INFO:         warmup_epoch : 2
+[2026/11/01 15:58:59] ppocr INFO:     name : Adam
+[2026/11/01 15:58:59] ppocr INFO:     regularizer : 
+[2026/11/01 15:58:59] ppocr INFO:         factor : 1e-05
+[2026/11/01 15:58:59] ppocr INFO:         name : L2
+[2026/11/01 15:58:59] ppocr INFO: PostProcess : 
+[2026/11/01 15:58:59] ppocr INFO:     box_thresh : 0.45
+[2026/11/01 15:58:59] ppocr INFO:     max_candidates : 3000
+[2026/11/01 15:58:59] ppocr INFO:     name : DBPostProcess
+[2026/11/01 15:58:59] ppocr INFO:     thresh : 0.2
+[2026/11/01 15:58:59] ppocr INFO:     unclip_ratio : 1.4
+[2026/11/01 15:58:59] ppocr INFO: Train : 
+[2026/11/01 15:58:59] ppocr INFO:     dataset : 
+[2026/11/01 15:58:59] ppocr INFO:         data_dir : D:/dl_deep_imgps/exp_cns/results/det_ft1/data/
+[2026/11/01 15:58:59] ppocr INFO:         label_file_list : ['D:/dl_deep_imgps/exp_cns/results/det_ft1/data/train.txt']
+[2026/11/01 15:58:59] ppocr INFO:         name : SimpleDataSet
+[2026/11/01 15:58:59] ppocr INFO:         ratio_list : [1.0]
+[2026/11/01 15:58:59] ppocr INFO:         transforms : 
+[2026/11/01 15:58:59] ppocr INFO:             DecodeImage : 
+[2026/11/01 15:58:59] ppocr INFO:                 channel_first : False
+[2026/11/01 15:58:59] ppocr INFO:                 img_mode : BGR
+[2026/11/01 15:58:59] ppocr INFO:             DetLabelEncode : None
+[2026/11/01 15:58:59] ppocr INFO:             CopyPaste : None
+[2026/11/01 15:58:59] ppocr INFO:             ColorJitter : 
+[2026/11/01 15:58:59] ppocr INFO:                 brightness : 0.4
+[2026/11/01 15:58:59] ppocr INFO:                 contrast : 0.4
+[2026/11/01 15:58:59] ppocr INFO:                 hue : 0.1
+[2026/11/01 15:58:59] ppocr INFO:                 saturation : 0.7
+[2026/11/01 15:58:59] ppocr INFO:             IaaAugment : 
+[2026/11/01 15:58:59] ppocr INFO:                 augmenter_args : 
+[2026/11/01 15:58:59] ppocr INFO:                     args : 
+[2026/11/01 15:58:59] ppocr INFO:                         fit_output : True
+[2026/11/01 15:58:59] ppocr INFO:                         p : 0.5
+[2026/11/01 15:58:59] ppocr INFO:                         rotate : [-45, 45]
+[2026/11/01 15:58:59] ppocr INFO:                     type : Affine
+[2026/11/01 15:58:59] ppocr INFO:                     args : 
+[2026/11/01 15:58:59] ppocr INFO:                         size : [0.1, 2]
+[2026/11/01 15:58:59] ppocr INFO:                     type : Resize
+[2026/11/01 15:58:59] ppocr INFO:             RandomPerspective : 
+[2026/11/01 15:58:59] ppocr INFO:                 fill_value : [0, 0, 0]
+[2026/11/01 15:58:59] ppocr INFO:                 fit_output : True
+[2026/11/01 15:58:59] ppocr INFO:                 perspective : 0.001
+[2026/11/01 15:58:59] ppocr INFO:                 prob : 0.3
+[2026/11/01 15:58:59] ppocr INFO:                 scale : 0.0
+[2026/11/01 15:58:59] ppocr INFO:                 shear : 20.0
+[2026/11/01 15:58:59] ppocr INFO:             RandomCrop : 
+[2026/11/01 15:58:59] ppocr INFO:                 keep_ratio : True
+[2026/11/01 15:58:59] ppocr INFO:                 max_tries : 50
+[2026/11/01 15:58:59] ppocr INFO:                 size : [416, 416]
+[2026/11/01 15:58:59] ppocr INFO:             MakeBorderMap : 
+[2026/11/01 15:58:59] ppocr INFO:                 shrink_ratio : 0.4
+[2026/11/01 15:58:59] ppocr INFO:                 thresh_max : 0.7
+[2026/11/01 15:58:59] ppocr INFO:                 thresh_min : 0.3
+[2026/11/01 15:58:59] ppocr INFO:                 total_epoch : 50
+[2026/11/01 15:58:59] ppocr INFO:             MakeShrinkMap : 
+[2026/11/01 15:58:59] ppocr INFO:                 min_text_size : 8
+[2026/11/01 15:58:59] ppocr INFO:                 shrink_ratio : 0.4
+[2026/11/01 15:58:59] ppocr INFO:                 total_epoch : 50
+[2026/11/01 15:58:59] ppocr INFO:             NormalizeImage : 
+[2026/11/01 15:58:59] ppocr INFO:                 mean : [0.485, 0.456, 0.406]
+[2026/11/01 15:58:59] ppocr INFO:                 order : hwc
+[2026/11/01 15:58:59] ppocr INFO:                 scale : 1./255.
+[2026/11/01 15:58:59] ppocr INFO:                 std : [0.229, 0.224, 0.225]
+[2026/11/01 15:58:59] ppocr INFO:             ToCHWImage : None
+[2026/11/01 15:58:59] ppocr INFO:             KeepKeys : 
+[2026/11/01 15:58:59] ppocr INFO:                 keep_keys : ['image', 'threshold_map', 'threshold_mask', 'shrink_map', 'shrink_mask']
+[2026/11/01 15:58:59] ppocr INFO:     loader : 
+[2026/11/01 15:58:59] ppocr INFO:         batch_size_per_card : 4
+[2026/11/01 15:58:59] ppocr INFO:         drop_last : False
+[2026/11/01 15:58:59] ppocr INFO:         num_workers : 2
+[2026/11/01 15:58:59] ppocr INFO:         shuffle : True
+[2026/11/01 15:58:59] ppocr INFO: profiler_options : None
+[2026/11/01 15:58:59] ppocr INFO: train with paddle 3.3.1 and device Place(gpu:0)
+[2026/11/01 15:58:59] ppocr INFO: Initialize indexs of datasets:['D:/dl_deep_imgps/exp_cns/results/det_ft1/data/train.txt']
+[2026/11/01 15:58:59] ppocr INFO: Initialize indexs of datasets:['D:/dl_deep_imgps/exp_cns/results/det_ft1/data/val.txt']
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+W1101 15:58:59.526984 23632 gpu_resources.cc:116] Please NOTE: device: 0, GPU Compute Capability: 6.1, Driver API Version: 12.6, Runtime API Version: 11.8
+[2026-11-01 15:58:59,793] [    INFO] optimizer.py:254 - If regularizer of a Parameter has been set by 'paddle.ParamAttr' or 'static.WeightNormParamAttr' already. The weight_decay[1e-05] in Optimizer will not take effect, and it will only be applied to other Parameters!
+[2026/11/01 15:58:59] ppocr INFO: train dataloader has 228 iters
+[2026/11/01 15:58:59] ppocr INFO: valid dataloader has 26 iters
+[2026/11/01 15:58:59] ppocr INFO: EMA enabled: decay=0.9996, gamma=2000, type=threshold, filter_no_grad=False
+[2026/11/01 15:58:59] ppocr INFO: load pretrain successful from D:/dl_deep_imgps/exp_cns/results/det_ft1/pretrained/PP-OCRv6_medium_det_pretrained
+[2026/11/01 15:58:59] ppocr INFO: During the training process, after the 0th iteration, an evaluation is run every 100000 iterations
+W1101 15:59:00.062711 23632 gpu_resources.cc:245] WARNING: device: 0. The installed Paddle is compiled with CUDNN 8.9, but CUDNN version in your machine is 8.9, which may cause serious incompatible bug. Please recompile or reinstall Paddle with compatible CUDNN version.
+[2026/11/01 15:59:05] ppocr INFO: epoch: [1/50], global_step: 10, lr: 0.000001, loss: 3.977679, loss_shrink_maps: 1.161736, loss_threshold_maps: 0.613150, loss_binary_maps: 0.298615, loss_cbn: 0.000000, loss_aux_maps_p4: 2.081285, loss_aux_maps_p3: 2.063942, loss_aux_maps_p2: 2.062097, avg_reader_cost: 0.01314 s, avg_batch_cost: 0.55085 s, avg_samples: 4.0, ips: 7.26153 samples/s, eta: 1:44:34, max_mem_reserved: 4381 MB, max_mem_allocated: 4316 MB
+[2026/11/01 15:59:10] ppocr INFO: epoch: [1/50], global_step: 20, lr: 0.000002, loss: 4.142314, loss_shrink_maps: 1.303730, loss_threshold_maps: 0.619659, loss_binary_maps: 0.302442, loss_cbn: 0.000000, loss_aux_maps_p4: 2.194857, loss_aux_maps_p3: 2.188998, loss_aux_maps_p2: 2.209202, avg_reader_cost: 0.00262 s, avg_batch_cost: 0.47149 s, avg_samples: 4.0, ips: 8.48374 samples/s, eta: 1:36:57, max_mem_reserved: 4381 MB, max_mem_allocated: 4316 MB
+[2026/11/01 15:59:15] ppocr INFO: epoch: [1/50], global_step: 30, lr: 0.000004, loss: 4.316956, loss_shrink_maps: 1.352313, loss_threshold_maps: 0.612998, loss_binary_maps: 0.305279, loss_cbn: 0.000000, loss_aux_maps_p4: 2.259144, loss_aux_maps_p3: 2.243458, loss_aux_maps_p2: 2.290290, avg_reader_cost: 0.00325 s, avg_batch_cost: 0.48580 s, avg_samples: 4.0, ips: 8.23388 samples/s, eta: 1:35:15, max_mem_reserved: 4381 MB, max_mem_allocated: 4316 MB
+[2026/11/01 15:59:20] ppocr INFO: epoch: [1/50], global_step: 40, lr: 0.000006, loss: 4.016226, loss_shrink_maps: 1.178966, loss_threshold_maps: 0.588827, loss_binary_maps: 0.283313, loss_cbn: 0.000000, loss_aux_maps_p4: 2.149739, loss_aux_maps_p3: 2.115160, loss_aux_maps_p2: 2.147075, avg_reader_cost: 0.00000 s, avg_batch_cost: 0.48575 s, avg_samples: 4.0, ips: 8.23469 samples/s, eta: 1:34:22, max_mem_reserved: 4381 MB, max_mem_allocated: 4316 MB
+[2026/11/01 15:59:25] ppocr INFO: epoch: [1/50], global_step: 50, lr: 0.000009, loss: 3.579716, loss_shrink_maps: 1.089158, loss_threshold_maps: 0.554135, loss_binary_maps: 0.252835, loss_cbn: 0.000000, loss_aux_maps_p4: 1.872213, loss_aux_maps_p3: 1.884675, loss_aux_maps_p2: 1.897531, avg_reader_cost: 0.00244 s, avg_batch_cost: 0.48820 s, avg_samples: 4.0, ips: 8.19341 samples/s, eta: 1:33:54, max_mem_reserved: 4381 MB, max_mem_allocated: 4316 MB
+[2026/11/01 15:59:29] ppocr INFO: epoch: [1/50], global_step: 60, lr: 0.000011, loss: 3.622707, loss_shrink_maps: 1.089743, loss_threshold_maps: 0.573165, loss_binary_maps: 0.263354, loss_cbn: 0.000000, loss_aux_maps_p4: 1.879207, loss_aux_maps_p3: 1.900555, loss_aux_maps_p2: 1.898643, avg_reader_cost: 0.00000 s, avg_batch_cost: 0.47906 s, avg_samples: 4.0, ips: 8.34968 samples/s, eta: 1:33:16, max_mem_reserved: 4381 MB, max_mem_allocated: 4316 MB
+[2026/11/01 15:59:34] ppocr INFO: epoch: [1/50], global_step: 70, lr: 0.000013, loss: 3.930493, loss_shrink_maps: 1.168251, loss_threshold_maps: 0.589375, loss_binary_maps: 0.290465, loss_cbn: 0.000000, loss_aux_maps_p4: 2.049165, loss_aux_maps_p3: 2.068910, loss_aux_maps_p2: 2.120598, avg_reader_cost: 0.00150 s, avg_batch_cost: 0.48617 s, avg_samples: 4.0, ips: 8.22753 samples/s, eta: 1:32:59, max_mem_reserved: 4381 MB, max_mem_allocated: 4316 MB
+[2026/11/01 15:59:39] ppocr INFO: epoch: [1/50], global_step: 80, lr: 0.000015, loss: 3.685593, loss_shrink_maps: 1.125883, loss_threshold_maps: 0.572897, loss_binary_maps: 0.251274, loss_cbn: 0.000000, loss_aux_maps_p4: 1.870230, loss_aux_maps_p3: 1.946628, loss_aux_maps_p2: 1.937562, avg_reader_cost: 0.00000 s, avg_batch_cost: 0.47842 s, avg_samples: 4.0, ips: 8.36079 samples/s, eta: 1:32:34, max_mem_reserved: 4381 MB, max_mem_allocated: 4316 MB
+[2026/11/01 15:59:44] ppocr INFO: epoch: [1/50], global_step: 90, lr: 0.000017, loss: 3.732062, loss_shrink_maps: 1.176837, loss_threshold_maps: 0.593871, loss_binary_maps: 0.269502, loss_cbn: 0.000000, loss_aux_maps_p4: 1.915387, loss_aux_maps_p3: 1.951667, loss_aux_maps_p2: 1.970867, avg_reader_cost: 0.00163 s, avg_batch_cost: 0.47481 s, avg_samples: 4.0, ips: 8.42437 samples/s, eta: 1:32:10, max_mem_reserved: 4381 MB, max_mem_allocated: 4316 MB
+[2026/11/01 15:59:49] ppocr INFO: epoch: [1/50], global_step: 100, lr: 0.000020, loss: 3.773097, loss_shrink_maps: 1.137213, loss_threshold_maps: 0.601994, loss_binary_maps: 0.250970, loss_cbn: 0.000000, loss_aux_maps_p4: 1.952414, loss_aux_maps_p3: 1.986205, loss_aux_maps_p2: 2.000988, avg_reader_cost: 0.00053 s, avg_batch_cost: 0.47632 s, avg_samples: 4.0, ips: 8.39773 samples/s, eta: 1:31:50, max_mem_reserved: 4381 MB, max_mem_allocated: 4316 MB
+[2026/11/01 15:59:53] ppocr INFO: epoch: [1/50], global_step: 110, lr: 0.000022, loss: 3.230930, loss_shrink_maps: 0.907034, loss_threshold_maps: 0.525430, loss_binary_maps: 0.222626, loss_cbn: 0.000000, loss_aux_maps_p4: 1.667144, loss_aux_maps_p3: 1.702290, loss_aux_maps_p2: 1.731108, avg_reader_cost: 0.00027 s, avg_batch_cost: 0.47048 s, avg_samples: 4.0, ips: 8.50195 samples/s, eta: 1:31:28, max_mem_reserved: 4381 MB, max_mem_allocated: 4316 MB
+[2026/11/01 15:59:58] ppocr INFO: epoch: [1/50], global_step: 120, lr: 0.000024, loss: 3.256061, loss_shrink_maps: 1.010224, loss_threshold_maps: 0.517588, loss_binary_maps: 0.237207, loss_cbn: 0.000000, loss_aux_maps_p4: 1.665196, loss_aux_maps_p3: 1.693533, loss_aux_maps_p2: 1.735022, avg_reader_cost: 0.00261 s, avg_batch_cost: 0.48081 s, avg_samples: 4.0, ips: 8.31929 samples/s, eta: 1:31:18, max_mem_reserved: 4381 MB, max_mem_allocated: 4316 MB
+[2026/11/01 16:00:03] ppocr INFO: epoch: [1/50], global_step: 130, lr: 0.000026, loss: 3.578716, loss_shrink_maps: 1.069860, loss_threshold_maps: 0.556853, loss_binary_maps: 0.238879, loss_cbn: 0.000000, loss_aux_maps_p4: 1.848675, loss_aux_maps_p3: 1.872577, loss_aux_maps_p2: 1.884777, avg_reader_cost: 0.00008 s, avg_batch_cost: 0.49500 s, avg_samples: 4.0, ips: 8.08080 samples/s, eta: 1:31:21, max_mem_reserved: 4381 MB, max_mem_allocated: 4316 MB
+[2026/11/01 16:00:08] ppocr INFO: epoch: [1/50], global_step: 140, lr: 0.000028, loss: 3.183067, loss_shrink_maps: 0.950716, loss_threshold_maps: 0.519761, loss_binary_maps: 0.206560, loss_cbn: 0.000000, loss_aux_maps_p4: 1.590000, loss_aux_maps_p3: 1.654145, loss_aux_maps_p2: 1.687654, avg_reader_cost: 0.00207 s, avg_batch_cost: 0.50688 s, avg_samples: 4.0, ips: 7.89145 samples/s, eta: 1:31:33, max_mem_reserved: 4381 MB, max_mem_allocated: 4316 MB
+[2026/11/01 16:00:13] ppocr INFO: epoch: [1/50], global_step: 150, lr: 0.000031, loss: 3.216770, loss_shrink_maps: 0.944693, loss_threshold_maps: 0.544297, loss_binary_maps: 0.204618, loss_cbn: 0.000000, loss_aux_maps_p4: 1.632179, loss_aux_maps_p3: 1.665749, loss_aux_maps_p2: 1.687654, avg_reader_cost: 0.00162 s, avg_batch_cost: 0.48339 s, avg_samples: 4.0, ips: 8.27483 samples/s, eta: 1:31:25, max_mem_reserved: 4381 MB, max_mem_allocated: 4316 MB
+[2026/11/01 16:00:18] ppocr INFO: epoch: [1/50], global_step: 160, lr: 0.000033, loss: 3.060452, loss_shrink_maps: 0.850456, loss_threshold_maps: 0.533781, loss_binary_maps: 0.196065, loss_cbn: 0.000000, loss_aux_maps_p4: 1.618739, loss_aux_maps_p3: 1.637194, loss_aux_maps_p2: 1.658304, avg_reader_cost: 0.00337 s, avg_batch_cost: 0.49455 s, avg_samples: 4.0, ips: 8.08816 samples/s, eta: 1:31:25, max_mem_reserved: 4381 MB, max_mem_allocated: 4316 MB
+[2026/11/01 16:00:23] ppocr INFO: epoch: [1/50], global_step: 170, lr: 0.000035, loss: 2.975378, loss_shrink_maps: 0.825682, loss_threshold_maps: 0.531303, loss_binary_maps: 0.188990, loss_cbn: 0.000000, loss_aux_maps_p4: 1.570877, loss_aux_maps_p3: 1.588068, loss_aux_maps_p2: 1.593939, avg_reader_cost: 0.00142 s, avg_batch_cost: 0.48778 s, avg_samples: 4.0, ips: 8.20046 samples/s, eta: 1:31:20, max_mem_reserved: 4381 MB, max_mem_allocated: 4316 MB
+[2026/11/01 16:00:28] ppocr INFO: epoch: [1/50], global_step: 180, lr: 0.000037, loss: 2.935314, loss_shrink_maps: 0.801263, loss_threshold_maps: 0.538169, loss_binary_maps: 0.180885, loss_cbn: 0.000000, loss_aux_maps_p4: 1.575577, loss_aux_maps_p3: 1.567179, loss_aux_maps_p2: 1.590776, avg_reader_cost: 0.00000 s, avg_batch_cost: 0.47302 s, avg_samples: 4.0, ips: 8.45631 samples/s, eta: 1:31:05, max_mem_reserved: 4381 MB, max_mem_allocated: 4316 MB
+[2026/11/01 16:00:33] ppocr INFO: epoch: [1/50], global_step: 190, lr: 0.000039, loss: 2.795890, loss_shrink_maps: 0.771952, loss_threshold_maps: 0.489648, loss_binary_maps: 0.174852, loss_cbn: 0.000000, loss_aux_maps_p4: 1.484116, loss_aux_maps_p3: 1.479682, loss_aux_maps_p2: 1.505053, avg_reader_cost: 0.00008 s, avg_batch_cost: 0.47235 s, avg_samples: 4.0, ips: 8.46823 samples/s, eta: 1:30:52, max_mem_reserved: 4381 MB, max_mem_allocated: 4316 MB
+[2026/11/01 16:00:38] ppocr INFO: epoch: [1/50], global_step: 200, lr: 0.000042, loss: 2.562773, loss_shrink_maps: 0.713883, loss_threshold_maps: 0.453116, loss_binary_maps: 0.153864, loss_cbn: 0.000000, loss_aux_maps_p4: 1.319800, loss_aux_maps_p3: 1.346646, loss_aux_maps_p2: 1.377451, avg_reader_cost: 0.00156 s, avg_batch_cost: 0.48755 s, avg_samples: 4.0, ips: 8.20424 samples/s, eta: 1:30:48, max_mem_reserved: 4381 MB, max_mem_allocated: 4316 MB
+[2026/11/01 16:00:43] ppocr INFO: epoch: [1/50], global_step: 210, lr: 0.000044, loss: 2.428489, loss_shrink_maps: 0.645970, loss_threshold_maps: 0.456282, loss_binary_maps: 0.139099, loss_cbn: 0.000000, loss_aux_maps_p4: 1.269623, loss_aux_maps_p3: 1.303081, loss_aux_maps_p2: 1.324440, avg_reader_cost: 0.00167 s, avg_batch_cost: 0.49805 s, avg_samples: 4.0, ips: 8.03129 samples/s, eta: 1:30:49, max_mem_reserved: 4381 MB, max_mem_allocated: 4316 MB
+[2026/11/01 16:00:48] ppocr INFO: epoch: [1/50], global_step: 220, lr: 0.000046, loss: 2.464803, loss_shrink_maps: 0.638963, loss_threshold_maps: 0.460911, loss_binary_maps: 0.140994, loss_cbn: 0.000000, loss_aux_maps_p4: 1.281227, loss_aux_maps_p3: 1.309606, loss_aux_maps_p2: 1.329164, avg_reader_cost: 0.00119 s, avg_batch_cost: 0.49601 s, avg_samples: 4.0, ips: 8.06433 samples/s, eta: 1:30:49, max_mem_reserved: 4381 MB, max_mem_allocated: 4316 MB
+[2026/11/01 16:00:52] ppocr INFO: save model in D:/dl_deep_imgps/exp_cns/results/det_ft1/model_speed\latest
+[2026/11/01 16:00:53] ppocr INFO: epoch: [2/50], global_step: 230, lr: 0.000048, loss: 2.369576, loss_shrink_maps: 0.638797, loss_threshold_maps: 0.423732, loss_binary_maps: 0.142926, loss_cbn: 0.000000, loss_aux_maps_p4: 1.265579, loss_aux_maps_p3: 1.243737, loss_aux_maps_p2: 1.265954, avg_reader_cost: 0.01204 s, avg_batch_cost: 0.48987 s, avg_samples: 4.0, ips: 8.16536 samples/s, eta: 1:30:44, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:00:58] ppocr INFO: epoch: [2/50], global_step: 240, lr: 0.000050, loss: 2.369576, loss_shrink_maps: 0.637134, loss_threshold_maps: 0.423732, loss_binary_maps: 0.138304, loss_cbn: 0.000000, loss_aux_maps_p4: 1.267808, loss_aux_maps_p3: 1.243737, loss_aux_maps_p2: 1.265954, avg_reader_cost: 0.00000 s, avg_batch_cost: 0.48524 s, avg_samples: 4.0, ips: 8.24340 samples/s, eta: 1:30:39, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:01:03] ppocr INFO: epoch: [2/50], global_step: 250, lr: 0.000053, loss: 2.261730, loss_shrink_maps: 0.608795, loss_threshold_maps: 0.429495, loss_binary_maps: 0.131329, loss_cbn: 0.000000, loss_aux_maps_p4: 1.241376, loss_aux_maps_p3: 1.218267, loss_aux_maps_p2: 1.250905, avg_reader_cost: 0.00177 s, avg_batch_cost: 0.49174 s, avg_samples: 4.0, ips: 8.13443 samples/s, eta: 1:30:36, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:01:08] ppocr INFO: epoch: [2/50], global_step: 260, lr: 0.000055, loss: 2.738196, loss_shrink_maps: 0.744111, loss_threshold_maps: 0.501217, loss_binary_maps: 0.159631, loss_cbn: 0.000000, loss_aux_maps_p4: 1.490493, loss_aux_maps_p3: 1.451874, loss_aux_maps_p2: 1.456471, avg_reader_cost: 0.00097 s, avg_batch_cost: 0.49494 s, avg_samples: 4.0, ips: 8.08186 samples/s, eta: 1:30:34, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:01:13] ppocr INFO: epoch: [2/50], global_step: 270, lr: 0.000057, loss: 2.865939, loss_shrink_maps: 0.777681, loss_threshold_maps: 0.507296, loss_binary_maps: 0.163335, loss_cbn: 0.000000, loss_aux_maps_p4: 1.533970, loss_aux_maps_p3: 1.521653, loss_aux_maps_p2: 1.525927, avg_reader_cost: 0.00200 s, avg_batch_cost: 0.49550 s, avg_samples: 4.0, ips: 8.07270 samples/s, eta: 1:30:32, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:01:18] ppocr INFO: epoch: [2/50], global_step: 280, lr: 0.000059, loss: 2.839784, loss_shrink_maps: 0.777681, loss_threshold_maps: 0.497766, loss_binary_maps: 0.170119, loss_cbn: 0.000000, loss_aux_maps_p4: 1.506359, loss_aux_maps_p3: 1.499895, loss_aux_maps_p2: 1.492492, avg_reader_cost: 0.00000 s, avg_batch_cost: 0.49059 s, avg_samples: 4.0, ips: 8.15344 samples/s, eta: 1:30:28, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:01:23] ppocr INFO: epoch: [2/50], global_step: 290, lr: 0.000061, loss: 2.709242, loss_shrink_maps: 0.728986, loss_threshold_maps: 0.474808, loss_binary_maps: 0.156577, loss_cbn: 0.000000, loss_aux_maps_p4: 1.473094, loss_aux_maps_p3: 1.413766, loss_aux_maps_p2: 1.414885, avg_reader_cost: 0.00211 s, avg_batch_cost: 0.47986 s, avg_samples: 4.0, ips: 8.33579 samples/s, eta: 1:30:20, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:01:28] ppocr INFO: epoch: [2/50], global_step: 300, lr: 0.000063, loss: 2.661200, loss_shrink_maps: 0.745042, loss_threshold_maps: 0.479054, loss_binary_maps: 0.167166, loss_cbn: 0.000000, loss_aux_maps_p4: 1.419180, loss_aux_maps_p3: 1.367171, loss_aux_maps_p2: 1.395152, avg_reader_cost: 0.00033 s, avg_batch_cost: 0.47673 s, avg_samples: 4.0, ips: 8.39051 samples/s, eta: 1:30:11, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:01:33] ppocr INFO: epoch: [2/50], global_step: 310, lr: 0.000066, loss: 2.728314, loss_shrink_maps: 0.768483, loss_threshold_maps: 0.475735, loss_binary_maps: 0.178179, loss_cbn: 0.000000, loss_aux_maps_p4: 1.419299, loss_aux_maps_p3: 1.396523, loss_aux_maps_p2: 1.432287, avg_reader_cost: 0.00176 s, avg_batch_cost: 0.48553 s, avg_samples: 4.0, ips: 8.23836 samples/s, eta: 1:30:05, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:01:37] ppocr INFO: epoch: [2/50], global_step: 320, lr: 0.000068, loss: 2.651442, loss_shrink_maps: 0.722171, loss_threshold_maps: 0.467167, loss_binary_maps: 0.168546, loss_cbn: 0.000000, loss_aux_maps_p4: 1.410419, loss_aux_maps_p3: 1.410702, loss_aux_maps_p2: 1.440778, avg_reader_cost: 0.00000 s, avg_batch_cost: 0.47034 s, avg_samples: 4.0, ips: 8.50446 samples/s, eta: 1:29:55, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:01:42] ppocr INFO: epoch: [2/50], global_step: 330, lr: 0.000070, loss: 2.482732, loss_shrink_maps: 0.684446, loss_threshold_maps: 0.459387, loss_binary_maps: 0.147185, loss_cbn: 0.000000, loss_aux_maps_p4: 1.322803, loss_aux_maps_p3: 1.315787, loss_aux_maps_p2: 1.321678, avg_reader_cost: 0.00136 s, avg_batch_cost: 0.49747 s, avg_samples: 4.0, ips: 8.04062 samples/s, eta: 1:29:53, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:01:47] ppocr INFO: epoch: [2/50], global_step: 340, lr: 0.000072, loss: 2.547878, loss_shrink_maps: 0.692587, loss_threshold_maps: 0.456246, loss_binary_maps: 0.149209, loss_cbn: 0.000000, loss_aux_maps_p4: 1.365360, loss_aux_maps_p3: 1.333811, loss_aux_maps_p2: 1.356968, avg_reader_cost: 0.00441 s, avg_batch_cost: 0.50111 s, avg_samples: 4.0, ips: 7.98220 samples/s, eta: 1:29:53, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:01:52] ppocr INFO: epoch: [2/50], global_step: 350, lr: 0.000074, loss: 2.749407, loss_shrink_maps: 0.753082, loss_threshold_maps: 0.491671, loss_binary_maps: 0.161975, loss_cbn: 0.000000, loss_aux_maps_p4: 1.489819, loss_aux_maps_p3: 1.464062, loss_aux_maps_p2: 1.477909, avg_reader_cost: 0.00247 s, avg_batch_cost: 0.47821 s, avg_samples: 4.0, ips: 8.36446 samples/s, eta: 1:29:45, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:01:57] ppocr INFO: epoch: [2/50], global_step: 360, lr: 0.000077, loss: 3.302149, loss_shrink_maps: 0.895754, loss_threshold_maps: 0.502236, loss_binary_maps: 0.194084, loss_cbn: 0.000000, loss_aux_maps_p4: 1.797647, loss_aux_maps_p3: 1.760853, loss_aux_maps_p2: 1.761540, avg_reader_cost: 0.00156 s, avg_batch_cost: 0.47230 s, avg_samples: 4.0, ips: 8.46917 samples/s, eta: 1:29:36, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:02:02] ppocr INFO: epoch: [2/50], global_step: 370, lr: 0.000079, loss: 2.447325, loss_shrink_maps: 0.696130, loss_threshold_maps: 0.455131, loss_binary_maps: 0.156335, loss_cbn: 0.000000, loss_aux_maps_p4: 1.310281, loss_aux_maps_p3: 1.298697, loss_aux_maps_p2: 1.327046, avg_reader_cost: 0.00156 s, avg_batch_cost: 0.47692 s, avg_samples: 4.0, ips: 8.38720 samples/s, eta: 1:29:28, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:02:07] ppocr INFO: epoch: [2/50], global_step: 380, lr: 0.000081, loss: 2.422844, loss_shrink_maps: 0.675317, loss_threshold_maps: 0.455131, loss_binary_maps: 0.147432, loss_cbn: 0.000000, loss_aux_maps_p4: 1.279418, loss_aux_maps_p3: 1.287195, loss_aux_maps_p2: 1.308430, avg_reader_cost: 0.00166 s, avg_batch_cost: 0.49601 s, avg_samples: 4.0, ips: 8.06436 samples/s, eta: 1:29:25, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:02:12] ppocr INFO: epoch: [2/50], global_step: 390, lr: 0.000083, loss: 2.558840, loss_shrink_maps: 0.701490, loss_threshold_maps: 0.477346, loss_binary_maps: 0.148686, loss_cbn: 0.000000, loss_aux_maps_p4: 1.380414, loss_aux_maps_p3: 1.353186, loss_aux_maps_p2: 1.383309, avg_reader_cost: 0.00350 s, avg_batch_cost: 0.49052 s, avg_samples: 4.0, ips: 8.15463 samples/s, eta: 1:29:22, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:02:17] ppocr INFO: epoch: [2/50], global_step: 400, lr: 0.000085, loss: 2.701461, loss_shrink_maps: 0.758991, loss_threshold_maps: 0.489316, loss_binary_maps: 0.167134, loss_cbn: 0.000000, loss_aux_maps_p4: 1.452797, loss_aux_maps_p3: 1.442172, loss_aux_maps_p2: 1.459425, avg_reader_cost: 0.00428 s, avg_batch_cost: 0.49060 s, avg_samples: 4.0, ips: 8.15333 samples/s, eta: 1:29:18, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:02:22] ppocr INFO: epoch: [2/50], global_step: 410, lr: 0.000088, loss: 2.872874, loss_shrink_maps: 0.823449, loss_threshold_maps: 0.501251, loss_binary_maps: 0.178341, loss_cbn: 0.000000, loss_aux_maps_p4: 1.530949, loss_aux_maps_p3: 1.526137, loss_aux_maps_p2: 1.523598, avg_reader_cost: 0.00179 s, avg_batch_cost: 0.48627 s, avg_samples: 4.0, ips: 8.22584 samples/s, eta: 1:29:13, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:02:26] ppocr INFO: epoch: [2/50], global_step: 420, lr: 0.000090, loss: 2.872874, loss_shrink_maps: 0.815340, loss_threshold_maps: 0.514590, loss_binary_maps: 0.178341, loss_cbn: 0.000000, loss_aux_maps_p4: 1.530949, loss_aux_maps_p3: 1.526137, loss_aux_maps_p2: 1.523598, avg_reader_cost: 0.00293 s, avg_batch_cost: 0.48527 s, avg_samples: 4.0, ips: 8.24289 samples/s, eta: 1:29:07, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:02:31] ppocr INFO: epoch: [2/50], global_step: 430, lr: 0.000092, loss: 2.537315, loss_shrink_maps: 0.672110, loss_threshold_maps: 0.508215, loss_binary_maps: 0.149986, loss_cbn: 0.000000, loss_aux_maps_p4: 1.368475, loss_aux_maps_p3: 1.379129, loss_aux_maps_p2: 1.381644, avg_reader_cost: 0.00331 s, avg_batch_cost: 0.48692 s, avg_samples: 4.0, ips: 8.21487 samples/s, eta: 1:29:02, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:02:36] ppocr INFO: epoch: [2/50], global_step: 440, lr: 0.000094, loss: 2.428228, loss_shrink_maps: 0.652691, loss_threshold_maps: 0.469136, loss_binary_maps: 0.147723, loss_cbn: 0.000000, loss_aux_maps_p4: 1.298041, loss_aux_maps_p3: 1.278488, loss_aux_maps_p2: 1.292554, avg_reader_cost: 0.00043 s, avg_batch_cost: 0.48803 s, avg_samples: 4.0, ips: 8.19616 samples/s, eta: 1:28:58, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:02:41] ppocr INFO: epoch: [2/50], global_step: 450, lr: 0.000096, loss: 2.418642, loss_shrink_maps: 0.668392, loss_threshold_maps: 0.444286, loss_binary_maps: 0.147777, loss_cbn: 0.000000, loss_aux_maps_p4: 1.322200, loss_aux_maps_p3: 1.288314, loss_aux_maps_p2: 1.304367, avg_reader_cost: 0.00127 s, avg_batch_cost: 0.47902 s, avg_samples: 4.0, ips: 8.35038 samples/s, eta: 1:28:51, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:02:44] ppocr INFO: save model in D:/dl_deep_imgps/exp_cns/results/det_ft1/model_speed\latest
+[2026/11/01 16:02:47] ppocr INFO: epoch: [3/50], global_step: 460, lr: 0.000099, loss: 2.418642, loss_shrink_maps: 0.678314, loss_threshold_maps: 0.442686, loss_binary_maps: 0.152766, loss_cbn: 0.000000, loss_aux_maps_p4: 1.324048, loss_aux_maps_p3: 1.288314, loss_aux_maps_p2: 1.307306, avg_reader_cost: 0.01280 s, avg_batch_cost: 0.49150 s, avg_samples: 4.0, ips: 8.13833 samples/s, eta: 1:28:47, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:02:52] ppocr INFO: epoch: [3/50], global_step: 470, lr: 0.000100, loss: 2.389964, loss_shrink_maps: 0.676757, loss_threshold_maps: 0.435542, loss_binary_maps: 0.155282, loss_cbn: 0.000000, loss_aux_maps_p4: 1.314933, loss_aux_maps_p3: 1.263835, loss_aux_maps_p2: 1.328227, avg_reader_cost: 0.00091 s, avg_batch_cost: 0.48204 s, avg_samples: 4.0, ips: 8.29812 samples/s, eta: 1:28:41, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:02:56] ppocr INFO: epoch: [3/50], global_step: 480, lr: 0.000100, loss: 2.357266, loss_shrink_maps: 0.664625, loss_threshold_maps: 0.417893, loss_binary_maps: 0.147816, loss_cbn: 0.000000, loss_aux_maps_p4: 1.277884, loss_aux_maps_p3: 1.262565, loss_aux_maps_p2: 1.304807, avg_reader_cost: 0.00384 s, avg_batch_cost: 0.47803 s, avg_samples: 4.0, ips: 8.36762 samples/s, eta: 1:28:34, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:03:01] ppocr INFO: epoch: [3/50], global_step: 490, lr: 0.000100, loss: 2.505979, loss_shrink_maps: 0.698427, loss_threshold_maps: 0.462197, loss_binary_maps: 0.149939, loss_cbn: 0.000000, loss_aux_maps_p4: 1.368791, loss_aux_maps_p3: 1.320139, loss_aux_maps_p2: 1.356508, avg_reader_cost: 0.00010 s, avg_batch_cost: 0.47883 s, avg_samples: 4.0, ips: 8.35362 samples/s, eta: 1:28:27, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:03:06] ppocr INFO: epoch: [3/50], global_step: 500, lr: 0.000100, loss: 2.835033, loss_shrink_maps: 0.726038, loss_threshold_maps: 0.507287, loss_binary_maps: 0.180508, loss_cbn: 0.000000, loss_aux_maps_p4: 1.497318, loss_aux_maps_p3: 1.495117, loss_aux_maps_p2: 1.555236, avg_reader_cost: 0.00000 s, avg_batch_cost: 0.47437 s, avg_samples: 4.0, ips: 8.43223 samples/s, eta: 1:28:20, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:03:11] ppocr INFO: epoch: [3/50], global_step: 510, lr: 0.000100, loss: 2.622980, loss_shrink_maps: 0.728570, loss_threshold_maps: 0.462558, loss_binary_maps: 0.171660, loss_cbn: 0.000000, loss_aux_maps_p4: 1.415144, loss_aux_maps_p3: 1.385482, loss_aux_maps_p2: 1.416355, avg_reader_cost: 0.00045 s, avg_batch_cost: 0.46976 s, avg_samples: 4.0, ips: 8.51493 samples/s, eta: 1:28:11, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:03:15] ppocr INFO: epoch: [3/50], global_step: 520, lr: 0.000100, loss: 2.622980, loss_shrink_maps: 0.729860, loss_threshold_maps: 0.470074, loss_binary_maps: 0.163860, loss_cbn: 0.000000, loss_aux_maps_p4: 1.415144, loss_aux_maps_p3: 1.385482, loss_aux_maps_p2: 1.416355, avg_reader_cost: 0.00120 s, avg_batch_cost: 0.47209 s, avg_samples: 4.0, ips: 8.47303 samples/s, eta: 1:28:03, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:03:20] ppocr INFO: epoch: [3/50], global_step: 530, lr: 0.000100, loss: 2.537387, loss_shrink_maps: 0.696388, loss_threshold_maps: 0.476069, loss_binary_maps: 0.152458, loss_cbn: 0.000000, loss_aux_maps_p4: 1.354127, loss_aux_maps_p3: 1.343717, loss_aux_maps_p2: 1.350495, avg_reader_cost: 0.00393 s, avg_batch_cost: 0.48956 s, avg_samples: 4.0, ips: 8.17064 samples/s, eta: 1:27:59, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:03:25] ppocr INFO: epoch: [3/50], global_step: 540, lr: 0.000100, loss: 2.497947, loss_shrink_maps: 0.682682, loss_threshold_maps: 0.471084, loss_binary_maps: 0.148477, loss_cbn: 0.000000, loss_aux_maps_p4: 1.322228, loss_aux_maps_p3: 1.319338, loss_aux_maps_p2: 1.325887, avg_reader_cost: 0.00382 s, avg_batch_cost: 0.48971 s, avg_samples: 4.0, ips: 8.16805 samples/s, eta: 1:27:55, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:03:30] ppocr INFO: epoch: [3/50], global_step: 550, lr: 0.000100, loss: 2.781430, loss_shrink_maps: 0.784977, loss_threshold_maps: 0.480235, loss_binary_maps: 0.174572, loss_cbn: 0.000000, loss_aux_maps_p4: 1.511499, loss_aux_maps_p3: 1.473192, loss_aux_maps_p2: 1.473287, avg_reader_cost: 0.00010 s, avg_batch_cost: 0.47072 s, avg_samples: 4.0, ips: 8.49753 samples/s, eta: 1:27:47, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:03:35] ppocr INFO: epoch: [3/50], global_step: 560, lr: 0.000100, loss: 2.585154, loss_shrink_maps: 0.704342, loss_threshold_maps: 0.473933, loss_binary_maps: 0.152327, loss_cbn: 0.000000, loss_aux_maps_p4: 1.386938, loss_aux_maps_p3: 1.368999, loss_aux_maps_p2: 1.387806, avg_reader_cost: 0.00110 s, avg_batch_cost: 0.49420 s, avg_samples: 4.0, ips: 8.09383 samples/s, eta: 1:27:44, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:03:40] ppocr INFO: epoch: [3/50], global_step: 570, lr: 0.000100, loss: 2.402172, loss_shrink_maps: 0.663006, loss_threshold_maps: 0.461002, loss_binary_maps: 0.143611, loss_cbn: 0.000000, loss_aux_maps_p4: 1.256688, loss_aux_maps_p3: 1.259479, loss_aux_maps_p2: 1.256741, avg_reader_cost: 0.00174 s, avg_batch_cost: 0.49114 s, avg_samples: 4.0, ips: 8.14426 samples/s, eta: 1:27:40, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:03:45] ppocr INFO: epoch: [3/50], global_step: 580, lr: 0.000100, loss: 2.514423, loss_shrink_maps: 0.683680, loss_threshold_maps: 0.497881, loss_binary_maps: 0.153064, loss_cbn: 0.000000, loss_aux_maps_p4: 1.353103, loss_aux_maps_p3: 1.323458, loss_aux_maps_p2: 1.344434, avg_reader_cost: 0.00000 s, avg_batch_cost: 0.48704 s, avg_samples: 4.0, ips: 8.21280 samples/s, eta: 1:27:36, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:03:50] ppocr INFO: epoch: [3/50], global_step: 590, lr: 0.000100, loss: 2.520028, loss_shrink_maps: 0.689513, loss_threshold_maps: 0.451421, loss_binary_maps: 0.157939, loss_cbn: 0.000000, loss_aux_maps_p4: 1.374721, loss_aux_maps_p3: 1.323475, loss_aux_maps_p2: 1.383379, avg_reader_cost: 0.00084 s, avg_batch_cost: 0.48237 s, avg_samples: 4.0, ips: 8.29231 samples/s, eta: 1:27:30, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:03:55] ppocr INFO: epoch: [3/50], global_step: 600, lr: 0.000100, loss: 2.475349, loss_shrink_maps: 0.679013, loss_threshold_maps: 0.423077, loss_binary_maps: 0.151410, loss_cbn: 0.000000, loss_aux_maps_p4: 1.344263, loss_aux_maps_p3: 1.312634, loss_aux_maps_p2: 1.339399, avg_reader_cost: 0.00152 s, avg_batch_cost: 0.49229 s, avg_samples: 4.0, ips: 8.12534 samples/s, eta: 1:27:27, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:04:00] ppocr INFO: epoch: [3/50], global_step: 610, lr: 0.000100, loss: 2.423391, loss_shrink_maps: 0.685012, loss_threshold_maps: 0.429755, loss_binary_maps: 0.159604, loss_cbn: 0.000000, loss_aux_maps_p4: 1.330599, loss_aux_maps_p3: 1.282366, loss_aux_maps_p2: 1.298778, avg_reader_cost: 0.00176 s, avg_batch_cost: 0.48056 s, avg_samples: 4.0, ips: 8.32362 samples/s, eta: 1:27:21, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:04:04] ppocr INFO: epoch: [3/50], global_step: 620, lr: 0.000100, loss: 2.823055, loss_shrink_maps: 0.765435, loss_threshold_maps: 0.446493, loss_binary_maps: 0.164694, loss_cbn: 0.000000, loss_aux_maps_p4: 1.472116, loss_aux_maps_p3: 1.474734, loss_aux_maps_p2: 1.467877, avg_reader_cost: 0.00192 s, avg_batch_cost: 0.48235 s, avg_samples: 4.0, ips: 8.29276 samples/s, eta: 1:27:15, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:04:09] ppocr INFO: epoch: [3/50], global_step: 630, lr: 0.000100, loss: 2.966486, loss_shrink_maps: 0.812782, loss_threshold_maps: 0.501202, loss_binary_maps: 0.166973, loss_cbn: 0.000000, loss_aux_maps_p4: 1.573226, loss_aux_maps_p3: 1.548678, loss_aux_maps_p2: 1.557779, avg_reader_cost: 0.00166 s, avg_batch_cost: 0.48647 s, avg_samples: 4.0, ips: 8.22246 samples/s, eta: 1:27:10, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:04:14] ppocr INFO: epoch: [3/50], global_step: 640, lr: 0.000100, loss: 2.625354, loss_shrink_maps: 0.704729, loss_threshold_maps: 0.501143, loss_binary_maps: 0.152619, loss_cbn: 0.000000, loss_aux_maps_p4: 1.430960, loss_aux_maps_p3: 1.408007, loss_aux_maps_p2: 1.433603, avg_reader_cost: 0.00319 s, avg_batch_cost: 0.47511 s, avg_samples: 4.0, ips: 8.41908 samples/s, eta: 1:27:04, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:04:19] ppocr INFO: epoch: [3/50], global_step: 650, lr: 0.000100, loss: 2.463441, loss_shrink_maps: 0.662094, loss_threshold_maps: 0.441871, loss_binary_maps: 0.140324, loss_cbn: 0.000000, loss_aux_maps_p4: 1.309696, loss_aux_maps_p3: 1.300315, loss_aux_maps_p2: 1.312368, avg_reader_cost: 0.00000 s, avg_batch_cost: 0.49674 s, avg_samples: 4.0, ips: 8.05251 samples/s, eta: 1:27:01, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:04:24] ppocr INFO: epoch: [3/50], global_step: 660, lr: 0.000100, loss: 2.340986, loss_shrink_maps: 0.668300, loss_threshold_maps: 0.424504, loss_binary_maps: 0.149865, loss_cbn: 0.000000, loss_aux_maps_p4: 1.259227, loss_aux_maps_p3: 1.233612, loss_aux_maps_p2: 1.250969, avg_reader_cost: 0.00484 s, avg_batch_cost: 0.50185 s, avg_samples: 4.0, ips: 7.97054 samples/s, eta: 1:26:59, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:04:29] ppocr INFO: epoch: [3/50], global_step: 670, lr: 0.000100, loss: 2.588530, loss_shrink_maps: 0.713442, loss_threshold_maps: 0.422766, loss_binary_maps: 0.155149, loss_cbn: 0.000000, loss_aux_maps_p4: 1.383860, loss_aux_maps_p3: 1.367396, loss_aux_maps_p2: 1.379473, avg_reader_cost: 0.00358 s, avg_batch_cost: 0.47314 s, avg_samples: 4.0, ips: 8.45408 samples/s, eta: 1:26:52, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:04:34] ppocr INFO: epoch: [3/50], global_step: 680, lr: 0.000100, loss: 2.532715, loss_shrink_maps: 0.703268, loss_threshold_maps: 0.433004, loss_binary_maps: 0.153919, loss_cbn: 0.000000, loss_aux_maps_p4: 1.380228, loss_aux_maps_p3: 1.359265, loss_aux_maps_p2: 1.360258, avg_reader_cost: 0.00502 s, avg_batch_cost: 0.47320 s, avg_samples: 4.0, ips: 8.45309 samples/s, eta: 1:26:45, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:04:35] ppocr INFO: save model in D:/dl_deep_imgps/exp_cns/results/det_ft1/model_speed\latest
+[2026/11/01 16:04:39] ppocr INFO: epoch: [4/50], global_step: 690, lr: 0.000100, loss: 2.425946, loss_shrink_maps: 0.672061, loss_threshold_maps: 0.435004, loss_binary_maps: 0.151202, loss_cbn: 0.000000, loss_aux_maps_p4: 1.321941, loss_aux_maps_p3: 1.320130, loss_aux_maps_p2: 1.311032, avg_reader_cost: 0.01017 s, avg_batch_cost: 0.48926 s, avg_samples: 4.0, ips: 8.17565 samples/s, eta: 1:26:40, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:04:44] ppocr INFO: epoch: [4/50], global_step: 700, lr: 0.000100, loss: 2.386738, loss_shrink_maps: 0.663420, loss_threshold_maps: 0.431679, loss_binary_maps: 0.140034, loss_cbn: 0.000000, loss_aux_maps_p4: 1.265299, loss_aux_maps_p3: 1.250986, loss_aux_maps_p2: 1.279483, avg_reader_cost: 0.00252 s, avg_batch_cost: 0.47170 s, avg_samples: 4.0, ips: 8.47993 samples/s, eta: 1:26:33, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:04:49] ppocr INFO: epoch: [4/50], global_step: 710, lr: 0.000100, loss: 2.280233, loss_shrink_maps: 0.653518, loss_threshold_maps: 0.415584, loss_binary_maps: 0.138546, loss_cbn: 0.000000, loss_aux_maps_p4: 1.199626, loss_aux_maps_p3: 1.186675, loss_aux_maps_p2: 1.191172, avg_reader_cost: 0.00134 s, avg_batch_cost: 0.47950 s, avg_samples: 4.0, ips: 8.34205 samples/s, eta: 1:26:27, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:04:54] ppocr INFO: epoch: [4/50], global_step: 720, lr: 0.000100, loss: 2.122737, loss_shrink_maps: 0.578985, loss_threshold_maps: 0.388424, loss_binary_maps: 0.122232, loss_cbn: 0.000000, loss_aux_maps_p4: 1.141198, loss_aux_maps_p3: 1.111418, loss_aux_maps_p2: 1.120096, avg_reader_cost: 0.00090 s, avg_batch_cost: 0.49164 s, avg_samples: 4.0, ips: 8.13600 samples/s, eta: 1:26:23, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:04:59] ppocr INFO: epoch: [4/50], global_step: 730, lr: 0.000100, loss: 2.311285, loss_shrink_maps: 0.624212, loss_threshold_maps: 0.426349, loss_binary_maps: 0.139235, loss_cbn: 0.000000, loss_aux_maps_p4: 1.201126, loss_aux_maps_p3: 1.219557, loss_aux_maps_p2: 1.229066, avg_reader_cost: 0.00138 s, avg_batch_cost: 0.47661 s, avg_samples: 4.0, ips: 8.39257 samples/s, eta: 1:26:17, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:05:04] ppocr INFO: epoch: [4/50], global_step: 740, lr: 0.000100, loss: 2.423755, loss_shrink_maps: 0.656026, loss_threshold_maps: 0.425683, loss_binary_maps: 0.142327, loss_cbn: 0.000000, loss_aux_maps_p4: 1.283680, loss_aux_maps_p3: 1.283617, loss_aux_maps_p2: 1.289807, avg_reader_cost: 0.00410 s, avg_batch_cost: 0.50087 s, avg_samples: 4.0, ips: 7.98605 samples/s, eta: 1:26:15, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:05:09] ppocr INFO: epoch: [4/50], global_step: 750, lr: 0.000100, loss: 2.151368, loss_shrink_maps: 0.614598, loss_threshold_maps: 0.396851, loss_binary_maps: 0.131759, loss_cbn: 0.000000, loss_aux_maps_p4: 1.138467, loss_aux_maps_p3: 1.124960, loss_aux_maps_p2: 1.157832, avg_reader_cost: 0.00000 s, avg_batch_cost: 0.49994 s, avg_samples: 4.0, ips: 8.00103 samples/s, eta: 1:26:12, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:05:14] ppocr INFO: epoch: [4/50], global_step: 760, lr: 0.000100, loss: 2.338480, loss_shrink_maps: 0.652812, loss_threshold_maps: 0.437200, loss_binary_maps: 0.140028, loss_cbn: 0.000000, loss_aux_maps_p4: 1.239856, loss_aux_maps_p3: 1.199845, loss_aux_maps_p2: 1.202174, avg_reader_cost: 0.00000 s, avg_batch_cost: 0.48774 s, avg_samples: 4.0, ips: 8.20110 samples/s, eta: 1:26:07, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:05:19] ppocr INFO: epoch: [4/50], global_step: 770, lr: 0.000100, loss: 2.262511, loss_shrink_maps: 0.627777, loss_threshold_maps: 0.409875, loss_binary_maps: 0.136995, loss_cbn: 0.000000, loss_aux_maps_p4: 1.194631, loss_aux_maps_p3: 1.180583, loss_aux_maps_p2: 1.207476, avg_reader_cost: 0.00179 s, avg_batch_cost: 0.47265 s, avg_samples: 4.0, ips: 8.46290 samples/s, eta: 1:26:00, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:05:24] ppocr INFO: epoch: [4/50], global_step: 780, lr: 0.000100, loss: 2.332412, loss_shrink_maps: 0.612176, loss_threshold_maps: 0.449490, loss_binary_maps: 0.137778, loss_cbn: 0.000000, loss_aux_maps_p4: 1.231581, loss_aux_maps_p3: 1.227316, loss_aux_maps_p2: 1.265064, avg_reader_cost: 0.00355 s, avg_batch_cost: 0.50011 s, avg_samples: 4.0, ips: 7.99829 samples/s, eta: 1:25:58, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:05:28] ppocr INFO: epoch: [4/50], global_step: 790, lr: 0.000100, loss: 2.561314, loss_shrink_maps: 0.733640, loss_threshold_maps: 0.469558, loss_binary_maps: 0.155975, loss_cbn: 0.000000, loss_aux_maps_p4: 1.353029, loss_aux_maps_p3: 1.362803, loss_aux_maps_p2: 1.353653, avg_reader_cost: 0.00327 s, avg_batch_cost: 0.48419 s, avg_samples: 4.0, ips: 8.26124 samples/s, eta: 1:25:52, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:05:33] ppocr INFO: epoch: [4/50], global_step: 800, lr: 0.000100, loss: 2.423760, loss_shrink_maps: 0.667890, loss_threshold_maps: 0.434350, loss_binary_maps: 0.140924, loss_cbn: 0.000000, loss_aux_maps_p4: 1.292204, loss_aux_maps_p3: 1.294903, loss_aux_maps_p2: 1.305651, avg_reader_cost: 0.00448 s, avg_batch_cost: 0.49991 s, avg_samples: 4.0, ips: 8.00146 samples/s, eta: 1:25:50, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:05:38] ppocr INFO: epoch: [4/50], global_step: 810, lr: 0.000100, loss: 2.409016, loss_shrink_maps: 0.669354, loss_threshold_maps: 0.435084, loss_binary_maps: 0.145298, loss_cbn: 0.000000, loss_aux_maps_p4: 1.287426, loss_aux_maps_p3: 1.285464, loss_aux_maps_p2: 1.293669, avg_reader_cost: 0.00319 s, avg_batch_cost: 0.49356 s, avg_samples: 4.0, ips: 8.10441 samples/s, eta: 1:25:46, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:05:43] ppocr INFO: epoch: [4/50], global_step: 820, lr: 0.000100, loss: 2.622716, loss_shrink_maps: 0.705085, loss_threshold_maps: 0.494502, loss_binary_maps: 0.160554, loss_cbn: 0.000000, loss_aux_maps_p4: 1.418478, loss_aux_maps_p3: 1.420908, loss_aux_maps_p2: 1.437391, avg_reader_cost: 0.00037 s, avg_batch_cost: 0.47585 s, avg_samples: 4.0, ips: 8.40595 samples/s, eta: 1:25:39, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:05:48] ppocr INFO: epoch: [4/50], global_step: 830, lr: 0.000100, loss: 2.650080, loss_shrink_maps: 0.715184, loss_threshold_maps: 0.502052, loss_binary_maps: 0.159233, loss_cbn: 0.000000, loss_aux_maps_p4: 1.439630, loss_aux_maps_p3: 1.425123, loss_aux_maps_p2: 1.463535, avg_reader_cost: 0.00276 s, avg_batch_cost: 0.49841 s, avg_samples: 4.0, ips: 8.02556 samples/s, eta: 1:25:36, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB
+[2026/11/01 16:05:53] ppocr INFO: epoch: [4/50], global_step: 840, lr: 0.000100, loss: 2.628314, loss_shrink_maps: 0.726887, loss_threshold_maps: 0.494637, loss_binary_maps: 0.159233, loss_cbn: 0.000000, loss_aux_maps_p4: 1.431327, loss_aux_maps_p3: 1.395600, loss_aux_maps_p2: 1.415512, avg_reader_cost: 0.00098 s, avg_batch_cost: 0.48747 s, avg_samples: 4.0, ips: 8.20557 samples/s, eta: 1:25:31, max_mem_reserved: 4466 MB, max_mem_allocated: 4380 MB

@@ -34,3 +34,36 @@ exp300/results/**/viz_*/
 
 # 학습한 모델 가중치 (합성 사진으로 학습, 용량이 큼)
 exp300/results/models/*.pt
+
+# 정신계 약 실험(exp_cns): AI Hub 학습용·평가용 사진과 결과 그림·특징 파일은 올리지 않음
+trainset/
+pill_image_testset/
+exp_cns/results/**/*.png
+exp_cns/results/**/*.jpg
+exp_cns/results/**/*.npz
+# 검출기 파인튜닝 가중치·학습 기록 (용량 큼)
+exp_cns/results/**/*.pdparams
+exp_cns/results/**/*.pdopt
+exp_cns/results/**/*.pdstates
+exp_cns/results/det_ft*/model/
+
+# exp_cns 초해상도 모델 파일 (공개 모델, 내려받아 씀)
+exp_cns/models/
+.venv_paddle_gpu/
+
+third_party/
+.venv_label/
+.venv_paddle_train/
+
+# exp_cns 전체 압축본 (AI Hub 사진 포함, 22GB)
+exp_cns.egg
+# AI Hub 사진이 들어간 오답 시트 PDF
+exp_cns/results/**/*.pdf
+# 모델 가중치 (용량 큼, GitHub 한 파일 100MB 제한을 넘는 것도 있음)
+exp_cns/results/**/*.pt
+exp_cns/results/**/*.pdiparams
+exp_cns/results/**/*.pdema
+exp_cns/results/det_ft*/model_*/
+# 참고 논문 PDF (재배포 여부 미확인)
+applsci-13-05050.pdf
+ijerph-20-03881.pdf

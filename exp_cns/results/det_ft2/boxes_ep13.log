@@ -1,0 +1,18 @@
+Á¤º¸: Á¦°øµÈ ÆĞÅÏ¿¡ ÇØ´çµÇ´Â ÆÄÀÏÀ» Ã£Áö ¸øÇß½À´Ï´Ù.
+D:\dl_deep_imgps\.venv_paddle_gpu\Lib\site-packages\paddle\utils\cpp_extension\extension_utils.py:712: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+W1101 20:47:59.094276  2176 gpu_resources.cc:116] Please NOTE: device: 0, GPU Compute Capability: 6.1, Driver API Version: 12.6, Runtime API Version: 11.8
+W1101 20:47:59.304466  2176 gpu_resources.cc:245] WARNING: device: 0. The installed Paddle is compiled with CUDNN 8.9, but CUDNN version in your machine is 8.9, which may cause serious incompatible bug. Please recompile or reinstall Paddle with compatible CUDNN version.
+  Paddle ì¥ì¹˜: gpu:0
+  50/468  ê²½ê³¼ 21ì´ˆ
+  100/468  ê²½ê³¼ 39ì´ˆ
+  150/468  ê²½ê³¼ 49ì´ˆ
+  200/468  ê²½ê³¼ 56ì´ˆ
+  250/468  ê²½ê³¼ 66ì´ˆ
+  300/468  ê²½ê³¼ 78ì´ˆ
+  350/468  ê²½ê³¼ 92ì´ˆ
+  400/468  ê²½ê³¼ 103ì´ˆ
+  450/468  ê²½ê³¼ 112ì´ˆ
+  468/468  ê²½ê³¼ 115ì´ˆ
+ì €ì¥: D:\dl_deep_imgps\exp_cns\results\ocr_v1\dev\paddle_ft2e13_u2.0\orig_alignlong\boxes.json  /  í•œ ì¥ë‹¹ ê²€ì¶œ í‰ê·  236ms (ì²« ì¥ 4018ms í¬í•¨ â€” ëª¨ë¸ ì¤€ë¹„ ì‹œê°„)

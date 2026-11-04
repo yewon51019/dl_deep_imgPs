@@ -1,0 +1,10 @@
+{
+  "code": "Sb3cl2x_L_k3_c2_t8",
+  "from": "",
+  "params": {
+    "kind": "simple",
+    "blur_k": 3,
+    "clip": 2.0,
+    "tile": 8
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "step": "4a",
+  "code": "A5-H1-M2-C5-G12",
+  "params": {
+    "ch": "min",
+    "k": 7,
+    "s": 1.0,
+    "gauss": "G12",
+    "prev": "H1-M2-C5-G12",
+    "mean_k": 5,
+    "clip": 2.0,
+    "tile": 8,
+    "hist": "he",
+    "amount": 2.0,
+    "sigma": 2.0,
+    "thr": 0
+  },
+  "n_images": 432,
+  "date": "2026-10-31 20:33"
+}

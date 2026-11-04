@@ -1,0 +1,172 @@
+정보: 제공된 패턴에 해당되는 파일을 찾지 못했습니다.
+D:\dl_deep_imgps\.venv_paddle_train\Lib\site-packages\paddle\utils\cpp_extension\extension_utils.py:712: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+Skipping import of the encryption module.
+[2026/11/01 15:57:35] ppocr INFO: Architecture : 
+[2026/11/01 15:57:35] ppocr INFO:     Backbone : 
+[2026/11/01 15:57:35] ppocr INFO:         det : True
+[2026/11/01 15:57:35] ppocr INFO:         model_size : medium
+[2026/11/01 15:57:35] ppocr INFO:         name : PPLCNetV4
+[2026/11/01 15:57:35] ppocr INFO:     Head : 
+[2026/11/01 15:57:35] ppocr INFO:         aux_in_channels : 256
+[2026/11/01 15:57:35] ppocr INFO:         fix_nan : True
+[2026/11/01 15:57:35] ppocr INFO:         k : 50
+[2026/11/01 15:57:35] ppocr INFO:         name : DBHead
+[2026/11/01 15:57:35] ppocr INFO:     Neck : 
+[2026/11/01 15:57:35] ppocr INFO:         intracl : True
+[2026/11/01 15:57:35] ppocr INFO:         name : RepLKPAN
+[2026/11/01 15:57:35] ppocr INFO:         out_channels : 256
+[2026/11/01 15:57:35] ppocr INFO:     Transform : None
+[2026/11/01 15:57:35] ppocr INFO:     algorithm : DB
+[2026/11/01 15:57:35] ppocr INFO:     model_type : det
+[2026/11/01 15:57:35] ppocr INFO: Eval : 
+[2026/11/01 15:57:35] ppocr INFO:     dataset : 
+[2026/11/01 15:57:35] ppocr INFO:         data_dir : D:/dl_deep_imgps/exp_cns/results/det_ft1/data/
+[2026/11/01 15:57:35] ppocr INFO:         label_file_list : ['D:/dl_deep_imgps/exp_cns/results/det_ft1/data/val.txt']
+[2026/11/01 15:57:35] ppocr INFO:         name : SimpleDataSet
+[2026/11/01 15:57:35] ppocr INFO:         transforms : 
+[2026/11/01 15:57:35] ppocr INFO:             DecodeImage : 
+[2026/11/01 15:57:35] ppocr INFO:                 channel_first : False
+[2026/11/01 15:57:35] ppocr INFO:                 img_mode : BGR
+[2026/11/01 15:57:35] ppocr INFO:             DetLabelEncode : None
+[2026/11/01 15:57:35] ppocr INFO:             DetResizeForTest : None
+[2026/11/01 15:57:35] ppocr INFO:             NormalizeImage : 
+[2026/11/01 15:57:35] ppocr INFO:                 mean : [0.485, 0.456, 0.406]
+[2026/11/01 15:57:35] ppocr INFO:                 order : hwc
+[2026/11/01 15:57:35] ppocr INFO:                 scale : 1./255.
+[2026/11/01 15:57:35] ppocr INFO:                 std : [0.229, 0.224, 0.225]
+[2026/11/01 15:57:35] ppocr INFO:             ToCHWImage : None
+[2026/11/01 15:57:35] ppocr INFO:             KeepKeys : 
+[2026/11/01 15:57:35] ppocr INFO:                 keep_keys : ['image', 'shape', 'polys', 'ignore_tags']
+[2026/11/01 15:57:35] ppocr INFO:     loader : 
+[2026/11/01 15:57:35] ppocr INFO:         batch_size_per_card : 1
+[2026/11/01 15:57:35] ppocr INFO:         drop_last : False
+[2026/11/01 15:57:35] ppocr INFO:         num_workers : 2
+[2026/11/01 15:57:35] ppocr INFO:         shuffle : False
+[2026/11/01 15:57:35] ppocr INFO: Global : 
+[2026/11/01 15:57:35] ppocr INFO:     cal_metric_during_train : False
+[2026/11/01 15:57:35] ppocr INFO:     checkpoints : None
+[2026/11/01 15:57:35] ppocr INFO:     d2s_train_image_shape : [3, 640, 640]
+[2026/11/01 15:57:35] ppocr INFO:     debug : False
+[2026/11/01 15:57:35] ppocr INFO:     distributed : False
+[2026/11/01 15:57:35] ppocr INFO:     ema_decay : 0.9996
+[2026/11/01 15:57:35] ppocr INFO:     ema_decay_type : threshold
+[2026/11/01 15:57:35] ppocr INFO:     epoch_num : 100
+[2026/11/01 15:57:35] ppocr INFO:     eval_batch_step : [0, 228]
+[2026/11/01 15:57:35] ppocr INFO:     infer_img : doc/imgs_en/img_10.jpg
+[2026/11/01 15:57:35] ppocr INFO:     log_smooth_window : 20
+[2026/11/01 15:57:35] ppocr INFO:     model_name : PP-OCRv6_medium_det
+[2026/11/01 15:57:35] ppocr INFO:     pretrained_model : D:/dl_deep_imgps/exp_cns/results/det_ft1/pretrained/PP-OCRv6_medium_det_pretrained
+[2026/11/01 15:57:35] ppocr INFO:     print_batch_step : 10
+[2026/11/01 15:57:35] ppocr INFO:     save_epoch_step : 10
+[2026/11/01 15:57:35] ppocr INFO:     save_inference_dir : None
+[2026/11/01 15:57:35] ppocr INFO:     save_model_dir : D:/dl_deep_imgps/exp_cns/results/det_ft1/model
+[2026/11/01 15:57:35] ppocr INFO:     save_res_path : ./checkpoints/det_db/predicts_db.txt
+[2026/11/01 15:57:35] ppocr INFO:     use_ema : True
+[2026/11/01 15:57:35] ppocr INFO:     use_gpu : True
+[2026/11/01 15:57:35] ppocr INFO:     use_visualdl : False
+[2026/11/01 15:57:35] ppocr INFO: Loss : 
+[2026/11/01 15:57:35] ppocr INFO:     alpha : 5
+[2026/11/01 15:57:35] ppocr INFO:     aux_weight_p2 : 0.4
+[2026/11/01 15:57:35] ppocr INFO:     aux_weight_p3 : 0.3
+[2026/11/01 15:57:35] ppocr INFO:     aux_weight_p4 : 0.2
+[2026/11/01 15:57:35] ppocr INFO:     beta : 10
+[2026/11/01 15:57:35] ppocr INFO:     focal_alpha : 0.25
+[2026/11/01 15:57:35] ppocr INFO:     focal_gamma : 2.5
+[2026/11/01 15:57:35] ppocr INFO:     main_loss_type : DiceFocalLoss
+[2026/11/01 15:57:35] ppocr INFO:     name : DBLoss
+[2026/11/01 15:57:35] ppocr INFO: Metric : 
+[2026/11/01 15:57:35] ppocr INFO:     main_indicator : hmean
+[2026/11/01 15:57:35] ppocr INFO:     name : DetMetric
+[2026/11/01 15:57:35] ppocr INFO: Optimizer : 
+[2026/11/01 15:57:35] ppocr INFO:     beta1 : 0.9
+[2026/11/01 15:57:35] ppocr INFO:     beta2 : 0.999
+[2026/11/01 15:57:35] ppocr INFO:     lr : 
+[2026/11/01 15:57:35] ppocr INFO:         learning_rate : 0.0001
+[2026/11/01 15:57:35] ppocr INFO:         name : Cosine
+[2026/11/01 15:57:35] ppocr INFO:         warmup_epoch : 2
+[2026/11/01 15:57:35] ppocr INFO:     name : Adam
+[2026/11/01 15:57:35] ppocr INFO:     regularizer : 
+[2026/11/01 15:57:35] ppocr INFO:         factor : 1e-05
+[2026/11/01 15:57:35] ppocr INFO:         name : L2
+[2026/11/01 15:57:35] ppocr INFO: PostProcess : 
+[2026/11/01 15:57:35] ppocr INFO:     box_thresh : 0.45
+[2026/11/01 15:57:35] ppocr INFO:     max_candidates : 3000
+[2026/11/01 15:57:35] ppocr INFO:     name : DBPostProcess
+[2026/11/01 15:57:35] ppocr INFO:     thresh : 0.2
+[2026/11/01 15:57:35] ppocr INFO:     unclip_ratio : 1.4
+[2026/11/01 15:57:35] ppocr INFO: Train : 
+[2026/11/01 15:57:35] ppocr INFO:     dataset : 
+[2026/11/01 15:57:35] ppocr INFO:         data_dir : D:/dl_deep_imgps/exp_cns/results/det_ft1/data/
+[2026/11/01 15:57:35] ppocr INFO:         label_file_list : ['D:/dl_deep_imgps/exp_cns/results/det_ft1/data/train.txt']
+[2026/11/01 15:57:35] ppocr INFO:         name : SimpleDataSet
+[2026/11/01 15:57:35] ppocr INFO:         ratio_list : [1.0]
+[2026/11/01 15:57:35] ppocr INFO:         transforms : 
+[2026/11/01 15:57:35] ppocr INFO:             DecodeImage : 
+[2026/11/01 15:57:35] ppocr INFO:                 channel_first : False
+[2026/11/01 15:57:35] ppocr INFO:                 img_mode : BGR
+[2026/11/01 15:57:35] ppocr INFO:             DetLabelEncode : None
+[2026/11/01 15:57:35] ppocr INFO:             CopyPaste : None
+[2026/11/01 15:57:35] ppocr INFO:             ColorJitter : 
+[2026/11/01 15:57:35] ppocr INFO:                 brightness : 0.4
+[2026/11/01 15:57:35] ppocr INFO:                 contrast : 0.4
+[2026/11/01 15:57:35] ppocr INFO:                 hue : 0.1
+[2026/11/01 15:57:35] ppocr INFO:                 saturation : 0.7
+[2026/11/01 15:57:35] ppocr INFO:             IaaAugment : 
+[2026/11/01 15:57:35] ppocr INFO:                 augmenter_args : 
+[2026/11/01 15:57:35] ppocr INFO:                     args : 
+[2026/11/01 15:57:35] ppocr INFO:                         fit_output : True
+[2026/11/01 15:57:35] ppocr INFO:                         p : 0.5
+[2026/11/01 15:57:35] ppocr INFO:                         rotate : [-45, 45]
+[2026/11/01 15:57:35] ppocr INFO:                     type : Affine
+[2026/11/01 15:57:35] ppocr INFO:                     args : 
+[2026/11/01 15:57:35] ppocr INFO:                         size : [0.1, 2]
+[2026/11/01 15:57:35] ppocr INFO:                     type : Resize
+[2026/11/01 15:57:35] ppocr INFO:             RandomPerspective : 
+[2026/11/01 15:57:35] ppocr INFO:                 fill_value : [0, 0, 0]
+[2026/11/01 15:57:35] ppocr INFO:                 fit_output : True
+[2026/11/01 15:57:35] ppocr INFO:                 perspective : 0.001
+[2026/11/01 15:57:35] ppocr INFO:                 prob : 0.3
+[2026/11/01 15:57:35] ppocr INFO:                 scale : 0.0
+[2026/11/01 15:57:35] ppocr INFO:                 shear : 20.0
+[2026/11/01 15:57:35] ppocr INFO:             RandomCrop : 
+[2026/11/01 15:57:35] ppocr INFO:                 keep_ratio : True
+[2026/11/01 15:57:35] ppocr INFO:                 max_tries : 50
+[2026/11/01 15:57:35] ppocr INFO:                 size : [640, 640]
+[2026/11/01 15:57:35] ppocr INFO:             MakeBorderMap : 
+[2026/11/01 15:57:35] ppocr INFO:                 shrink_ratio : 0.4
+[2026/11/01 15:57:35] ppocr INFO:                 thresh_max : 0.7
+[2026/11/01 15:57:35] ppocr INFO:                 thresh_min : 0.3
+[2026/11/01 15:57:35] ppocr INFO:                 total_epoch : 100
+[2026/11/01 15:57:35] ppocr INFO:             MakeShrinkMap : 
+[2026/11/01 15:57:35] ppocr INFO:                 min_text_size : 8
+[2026/11/01 15:57:35] ppocr INFO:                 shrink_ratio : 0.4
+[2026/11/01 15:57:35] ppocr INFO:                 total_epoch : 100
+[2026/11/01 15:57:35] ppocr INFO:             NormalizeImage : 
+[2026/11/01 15:57:35] ppocr INFO:                 mean : [0.485, 0.456, 0.406]
+[2026/11/01 15:57:35] ppocr INFO:                 order : hwc
+[2026/11/01 15:57:35] ppocr INFO:                 scale : 1./255.
+[2026/11/01 15:57:35] ppocr INFO:                 std : [0.229, 0.224, 0.225]
+[2026/11/01 15:57:35] ppocr INFO:             ToCHWImage : None
+[2026/11/01 15:57:35] ppocr INFO:             KeepKeys : 
+[2026/11/01 15:57:35] ppocr INFO:                 keep_keys : ['image', 'threshold_map', 'threshold_mask', 'shrink_map', 'shrink_mask']
+[2026/11/01 15:57:35] ppocr INFO:     loader : 
+[2026/11/01 15:57:35] ppocr INFO:         batch_size_per_card : 4
+[2026/11/01 15:57:35] ppocr INFO:         drop_last : False
+[2026/11/01 15:57:35] ppocr INFO:         num_workers : 2
+[2026/11/01 15:57:35] ppocr INFO:         shuffle : True
+[2026/11/01 15:57:35] ppocr INFO: profiler_options : None
+[2026/11/01 15:57:35] ppocr INFO: train with paddle 3.3.1 and device Place(gpu:0)
+[2026/11/01 15:57:35] ppocr INFO: Initialize indexs of datasets:['D:/dl_deep_imgps/exp_cns/results/det_ft1/data/val.txt']
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+W1101 15:57:35.295354  9624 gpu_resources.cc:116] Please NOTE: device: 0, GPU Compute Capability: 6.1, Driver API Version: 12.6, Runtime API Version: 11.8
+[2026/11/01 15:57:35] ppocr INFO: load pretrain successful from D:/dl_deep_imgps/exp_cns/results/det_ft1/pretrained/PP-OCRv6_medium_det_pretrained
+[2026/11/01 15:57:35] ppocr INFO: metric in ckpt ***************
+[2026/11/01 15:57:35] ppocr INFO: is_float16:False
+eval model::   0%|          | 0/26 [00:00<?, ?it/s]W1101 15:57:35.695981  9624 gpu_resources.cc:245] WARNING: device: 0. The installed Paddle is compiled with CUDNN 8.9, but CUDNN version in your machine is 8.9, which may cause serious incompatible bug. Please recompile or reinstall Paddle with compatible CUDNN version.
+eval model::   4%|3         | 1/26 [00:00<00:08,  3.06it/s]eval model::  12%|#1        | 3/26 [00:00<00:03,  6.77it/s]eval model::  19%|#9        | 5/26 [00:00<00:02,  8.73it/s]eval model::  27%|##6       | 7/26 [00:00<00:01, 10.22it/s]eval model::  35%|###4      | 9/26 [00:00<00:01, 11.21it/s]eval model::  42%|####2     | 11/26 [00:01<00:01, 11.87it/s]eval model::  50%|#####     | 13/26 [00:01<00:01, 11.85it/s]eval model::  58%|#####7    | 15/26 [00:01<00:00, 12.21it/s]eval model::  65%|######5   | 17/26 [00:01<00:00, 12.28it/s]eval model::  73%|#######3  | 19/26 [00:01<00:00, 12.19it/s]eval model::  81%|########  | 21/26 [00:01<00:00, 12.00it/s]eval model::  88%|########8 | 23/26 [00:02<00:00, 12.13it/s]eval model::  96%|#########6| 25/26 [00:02<00:00, 12.47it/s]eval model::  96%|#########6| 25/26 [00:02<00:00, 11.13it/s]
+[2026/11/01 15:57:37] ppocr INFO: metric eval ***************
+[2026/11/01 15:57:37] ppocr INFO: precision:0.5526315789473685
+[2026/11/01 15:57:37] ppocr INFO: recall:0.7
+[2026/11/01 15:57:37] ppocr INFO: hmean:0.6176470588235295
+[2026/11/01 15:57:37] ppocr INFO: fps:12.00700695771939

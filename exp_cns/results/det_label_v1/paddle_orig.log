@@ -1,0 +1,31 @@
+﻿.\.venv_paddle_gpu\Scripts\python.exe : INFO: Could not find files for the given pattern(s).
+At line:1 char:364
++ ... NG='utf-8'; .\.venv_paddle_gpu\Scripts\python.exe exp_cns\paddle_boxe ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (INFO: Could not...ven pattern(s).:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+D:\dl_deep_imgps\.venv_paddle_gpu\Lib\site-packages\paddle\utils\cpp_extension\extension_utils.py:712: UserWarning: No 
+ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache fr
+om: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+Model files already exist. Using cached files. To redownload, please delete the directory manually: `C:\Users\a4696\.pa
+ddlex\official_models\PP-OCRv6_medium_det`.
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+W1101 11:29:56.745040  3632 gpu_resources.cc:116] Please NOTE: device: 0, GPU Compute Capability: 6.1, Driver API Versi
+on: 12.6, Runtime API Version: 11.8
+W1101 11:29:56.955622  3632 gpu_resources.cc:245] WARNING: device: 0. The installed Paddle is compiled with CUDNN 8.9, 
+but CUDNN version in your machine is 8.9, which may cause serious incompatible bug. Please recompile or reinstall Paddl
+e with compatible CUDNN version.
+  Paddle 장치: gpu:0
+  50/500  경과 19초
+  100/500  경과 32초
+  150/500  경과 40초
+  200/500  경과 48초
+  250/500  경과 56초
+  300/500  경과 68초
+  350/500  경과 79초
+  400/500  경과 90초
+  450/500  경과 99초
+  500/500  경과 108초
+저장: D:\dl_deep_imgps\exp_cns\results\ocr_v1\train500\paddle_t0\orig_alignlong\boxes.json  /  한 장당 검출 평균 201ms (첫 장 4144ms 포함 — 모델 준비 시간)

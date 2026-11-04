@@ -1,0 +1,10 @@
+{
+  "code": "Sclahe2_L_c2_t8",
+  "from": "",
+  "params": {
+    "kind": "simple",
+    "blur_k": 0,
+    "clip": 2.0,
+    "tile": 8
+  }
+}

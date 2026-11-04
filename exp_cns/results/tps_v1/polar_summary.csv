@@ -1,0 +1,4 @@
+﻿group,n,base_exact,base_sim_mean,polar_pick_exact,polar_pick_sim_mean,polar_any_cand_exact,polar_best_sim_mean
+전체,36,0,0.215,0,0.351,14,0.776
+SINGULAIR 12,12,0,0.349,0,0.358,7,0.876
+ARICEPT 24,24,0,0.148,0,0.348,7,0.726

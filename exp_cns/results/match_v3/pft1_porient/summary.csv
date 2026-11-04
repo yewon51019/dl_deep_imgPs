@@ -1,0 +1,3 @@
+﻿tag,part,lam,w,acc,top3,none,drug_acc,long,other,cam75,cam90,ocr_exact,n
+pft1_porient,val,0.9,0.02,77.8,90.8,137,76.9,90.6,65.0,78.0,77.5,66.7,828
+pft1_porient,dev,0.9,0.02,86.3,92.3,34,91.7,97.9,78.5,86.3,86.3,65.4,468
