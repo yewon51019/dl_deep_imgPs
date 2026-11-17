@@ -1,18 +1,19 @@
 """경로와 설정값을 한곳에 모음. 숫자는 모두 exp_cns 에서 개발·검증 사진으로 정한 값 그대로 (CLAUDE.md 10장 3-21, 3-26).
 
-모델 파일·DB 는 실험 폴더(exp_cns/results)에 있는 것을 그대로 읽는다 (가중치는 .gitignore 라 저장소에 없음).
+모든 경로는 이 최종본 폴더(exp_cns/final) 기준이라, 폴더째 옮기거나 압축해 보내도 그대로 실행된다.
+모델 파일(models/)은 용량이 커서 GitHub 에 올리지 않으므로 따로 받아 넣는다 (README 참고).
 """
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]                 # 저장소 맨 위 (D:\dl_deep_imgps)
-RESULTS = ROOT / "exp_cns" / "results"
+FINAL = Path(__file__).resolve().parents[1]                # 최종본 폴더 (exp_cns/final)
 
 # ---- 모델·DB 위치 ----
-DET_MODEL = RESULTS / "det_ft1" / "infer"                   # 파인튜닝 검출기 (PP-OCRv6_medium_det 구조)
-PARSEQ_DIR = RESULTS / "parseq_ft1_sure"                    # 파인튜닝 PARSeq (안의 best.pt)
-ATTR_WEIGHTS = RESULTS / "attr_cnn_v1" / "model" / "best.pt"   # 겉모습 CNN (ResNet18)
-DB_CSV = RESULTS / "match_v1" / "search_db_cns.csv"         # 검색 DB 1,211종
-OUT_ROOT = RESULTS / "app_v1"                               # run_photo.py 결과 (사진이 든 PNG 는 .gitignore)
+MODELS = FINAL / "models"
+DET_MODEL = MODELS / "det_ft1"                              # 파인튜닝 검출기 (PP-OCRv6_medium_det 구조, inference.* 3개)
+PARSEQ_WEIGHTS = MODELS / "parseq_ft1.pt"                   # 파인튜닝 PARSeq
+ATTR_WEIGHTS = MODELS / "attr_cnn.pt"                       # 겉모습 CNN (ResNet18)
+DB_CSV = FINAL / "db" / "search_db_cns.csv"                 # 검색 DB 1,211종
+OUT_ROOT = FINAL / "output"                                 # run_photo.py 결과 (.gitignore)
 
 # ---- 0단계 알약 찾기 ----
 WORK_SIDE = 1000            # 찾기 계산 크기 (긴 변 px)
@@ -44,6 +45,10 @@ SURE_TOP, SURE_GAP = 0.95, 0.1   # 1등 ≥ 0.95 이고 1등−2등 ≥ 0.1 이�
 CAP = 5                     # 후보가 이보다 많으면 다른 면·다시 찍기 요청
 
 
-def parseq_weights():
-    """파인튜닝 PARSeq 가중치 파일 (폴더 안 best.pt 하나)."""
-    return next(PARSEQ_DIR.rglob("best.pt"))
+def check_models():
+    """필요한 모델 파일이 다 있는지 확인. 빠진 것이 있으면 이름을 모두 알려 주고 멈춤."""
+    need = [DET_MODEL / "inference.json", DET_MODEL / "inference.pdiparams", DET_MODEL / "inference.yml",
+            PARSEQ_WEIGHTS, ATTR_WEIGHTS, DB_CSV]
+    miss = [str(p.relative_to(FINAL)) for p in need if not p.exists()]
+    if miss:
+        raise SystemExit("모델·DB 파일이 없습니다 (README 의 '모델 파일 받기' 참고): " + ", ".join(miss))

@@ -67,3 +67,13 @@ exp_cns/results/det_ft*/model_*/
 # 참고 논문 PDF (재배포 여부 미확인)
 applsci-13-05050.pdf
 ijerph-20-03881.pdf
+
+# processed.zip 압축 푼 평가 사진 (2026-11-14, AI Hub 사진이라 올리지 않음)
+exp_cns/data_processed/
+
+# 사용자가 직접 찍은 시험 사진 (photo_demo_cns.py, 2026-11-17)
+exp_cns/data_user/
+
+# exp_cns 최종본(final): 모델 복사본과 실행 결과는 올리지 않음 (모델은 용량이 크고 AI Hub 사진으로 학습, 결과에는 사진이 들어감)
+exp_cns/final/models/
+exp_cns/final/output/

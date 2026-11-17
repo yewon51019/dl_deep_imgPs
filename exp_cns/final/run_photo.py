@@ -1,11 +1,11 @@
-r"""사진 1장 → 알약마다 약 이름 후보. 가상환경이 둘이라 세 번에 나눠 실행한다 (저장소 맨 위 D:\dl_deep_imgps 에서).
+r"""사진 1장 → 알약마다 약 이름 후보. 가상환경이 둘이라 세 번에 나눠 실행한다 (어느 폴더에서 실행해도 됨).
 
-    .\.venv\Scripts\python.exe            src\run_photo.py --step crop  --photo exp_cns\data_user\photo1.png   # 0단계
-    .\.venv_paddle_gpu\Scripts\python.exe src\run_photo.py --step boxes --photo exp_cns\data_user\photo1.png   # 1~2단계
-    .\.venv\Scripts\python.exe            src\run_photo.py --step read  --photo exp_cns\data_user\photo1.png   # 3~6단계
+    <본 환경 python>    run_photo.py --step crop  --photo 사진.jpg   # 0단계 알약 찾기·자르기
+    <Paddle 환경 python> run_photo.py --step boxes --photo 사진.jpg   # 1~2단계 방향·글자 상자
+    <본 환경 python>    run_photo.py --step read  --photo 사진.jpg   # 3~6단계 읽기·겉모습·약 판별·표시
 
-저장: exp_cns\results\app_v1\<사진 이름>\  crops\pill_N.png, crops.csv, check_crop.png (crop) / boxes.json (boxes) /
-      result.csv, result.png (read). 이미 있는 파일은 덮어쓰지 않고 멈춘다. 사진이 든 PNG 는 .gitignore 로 올라가지 않는다.
+저장: output\<사진 이름>\  crops\pill_N.png, crops.csv, check_crop.png (crop) / boxes.json (boxes) /
+      result.csv, result.png (read). 이미 있는 파일은 덮어쓰지 않고 멈춘다. output\ 은 .gitignore.
 """
 import argparse
 import csv
@@ -85,6 +85,7 @@ def step_boxes(a):
     crops = load_crops(out)
     if not crops:                                     # 모델을 불러오기 전에 멈춤
         raise SystemExit(NO_PILL)
+    C.check_models()
     det = s2_detect.Detector()
     res = s2_detect.detect_all(det, [(r["file_name"], r["img"]) for r in crops], s1_orient.angles)
     save_json(out / "boxes.json", res)
@@ -105,8 +106,11 @@ def step_read(a):
     crops = load_crops(out)
     if not crops:                                     # 모델을 불러오기 전에 멈춤 (빈 목록이면 CNN 입력 np.stack 이 실패)
         raise SystemExit(NO_PILL)
+    C.check_models()
+    if not (out / "boxes.json").exists():
+        raise SystemExit(f"boxes.json 이 없습니다. 먼저 Paddle 환경에서 --step boxes 를 실행하세요: {out}")
     boxes = s2_detect.load_boxes(out / "boxes.json")
-    reader = s3_read.Reader(str(C.parseq_weights()))
+    reader = s3_read.Reader(str(C.PARSEQ_WEIGHTS))
     probs = s4_appearance.AppearanceCNN().predict([r["img"] for r in crops])
     db = s5_match.load_db()
     byid = {d["drug_N"]: d for d in db}

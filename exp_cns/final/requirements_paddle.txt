@@ -1,0 +1,6 @@
+# Paddle 환경 (1~2단계 방향·글자 상자). 파이썬 3.12. torch 는 깔지 않음.
+# paddlepaddle(-gpu) 는 컴퓨터에 맞는 판을 먼저 따로 설치 (README 참고). 아래는 2026-11-17 확인한 버전.
+paddleocr==3.7.0
+paddlex==3.7.2
+numpy==2.3.5
+opencv-contrib-python==4.10.0.84

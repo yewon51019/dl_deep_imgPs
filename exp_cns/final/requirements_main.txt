@@ -1,0 +1,11 @@
+# 본 환경 (0단계 자르기, 3~6단계 읽기·겉모습·약 판별·표시). 파이썬 3.12.
+# torch·torchvision 은 GPU 에 맞는 판을 먼저 따로 설치 (README 참고). 아래는 2026-11-17 확인한 버전.
+numpy==2.3.5
+opencv-contrib-python==4.10.0.84
+pillow==13.0.0
+matplotlib==3.11.2
+# PARSeq(torch.hub baudm/parseq) 가 쓰는 패키지
+timm==1.0.30
+pytorch-lightning==2.6.6
+nltk==3.10.4
+PyYAML==6.0.2

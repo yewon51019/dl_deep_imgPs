@@ -31,13 +31,15 @@ class Reader:
         from torchvision import transforms as T
         self.torch = torch
         self.dev = "cuda" if torch.cuda.is_available() else "cpu"
+        # 모델 구조 코드는 torch.hub 로 baudm/parseq 에서 받음 (처음 한 번 인터넷 필요, 약 1MB).
+        # 가중치는 아래에서 파인튜닝 파일로 전부 덮어쓰므로 사전학습 가중치(약 95MB)는 받지 않음 (pretrained=False).
         local = Path(torch.hub.get_dir()) / "baudm_parseq_main"
         try:
-            self.m = torch.hub.load("baudm/parseq", "parseq", pretrained=True, trust_repo=True)
-        except Exception:                             # GitHub 이 안 될 때: 내려받아 둔 사본 (모델 같음)
+            self.m = torch.hub.load("baudm/parseq", "parseq", pretrained=not weights, trust_repo=True)
+        except Exception:                             # GitHub 이 안 될 때: 전에 받아 둔 사본 (같은 코드)
             if not local.exists():
                 raise
-            self.m = torch.hub.load(str(local), "parseq", pretrained=True, source="local")
+            self.m = torch.hub.load(str(local), "parseq", pretrained=not weights, source="local")
         self.m = self.m.eval().to(self.dev)
         if weights:
             self.m.load_state_dict(torch.load(weights, map_location=self.dev))
